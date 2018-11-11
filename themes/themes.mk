@@ -14,6 +14,14 @@ PRODUCT_PACKAGES += \
     MaterialOceanSystemUIOverlay \
     DarkGreySystemOverlay \
     DarkGreySystemUIOverlay 
+
+# QS header styles
+PRODUCT_PACKAGES += \
+    QSHeaderBlack \
+    QSHeaderGrey \
+    QSHeaderLightGrey \
+    QSHeaderAccent \
+    QSHeaderTransparent
 	
 # Switch themes
 PRODUCT_PACKAGES += \
