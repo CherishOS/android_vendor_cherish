@@ -17,4 +17,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     SwitchMD2 \
     SwitchOnePlus \
-    SwitchStock
+    SwitchStock \
+	Contained \
+    Retro \
+    Stockish \
+    Narrow
