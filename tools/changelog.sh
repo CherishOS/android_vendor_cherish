@@ -8,13 +8,10 @@ export Changelog=Changelog.txt
 
 if [ -f $Changelog ];
 then
-	rm -f $Changelog
+    rm -f $Changelog
 fi
 
 touch $Changelog
-
-# Print something to build output
-echo ${bldppl}"Generating changelog..."${txtrst}
 
 for i in $(seq 7);
 do
