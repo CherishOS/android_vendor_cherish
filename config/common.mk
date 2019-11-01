@@ -236,7 +236,8 @@ PRODUCT_PACKAGES += \
 
   # Required packages
 PRODUCT_PACKAGES += \
-    ThemePicker 
+    ThemePicker \
+	 CherishThemesStub
 	
 #OmniJaws
 PRODUCT_PACKAGES += \
