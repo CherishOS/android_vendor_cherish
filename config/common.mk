@@ -223,7 +223,8 @@ ifneq ($(TARGET_DISABLE_ALTERNATIVE_FACE_UNLOCK), true)
 
 # Required packages
 PRODUCT_PACKAGES += \
-    ThemePicker 
+    ThemePicker \
+	 CherishThemesStub
 	
 PRODUCT_PACKAGES += \
     FaceUnlockService
