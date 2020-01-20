@@ -186,7 +186,9 @@ include vendor/gapps/config.mk
 # Pixel Style
 include vendor/pixelstyle/config.mk
 
-# Customization
 include vendor/google/customization/config.mk
+
+# Include Cherish theme files
+include vendor/cherish/themes/backgrounds/themes.mk
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
