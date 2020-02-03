@@ -136,6 +136,10 @@ PRODUCT_PACKAGES += \
     misc_writer_system \
     themed_bootanimation
 
+# Brightness Slider
+PRODUCT_PACKAGES += \
+    BrightnessSliderOverlay
+
 # Long Screenshot
 PRODUCT_PACKAGES += \
     StitchImage
