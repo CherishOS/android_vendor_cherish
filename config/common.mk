@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
 PRODUCT_BRAND ?= CherishOS
 
@@ -190,6 +191,13 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
 #ifneq ($(filter true, $(TARGET_PROVIDES_OWN_NO_CUTOUT_OVERLAY)),)
 #PRODUCT_PACKAGES += NoCutoutOverlay
 #endif
+
+# Enable Google Play system updates support
+PRODUCT_SOONG_NAMESPACES += \
+    vendor/cherish/apex
+
+PRODUCT_PACKAGES += \
+    ModuleMetadataGooglePrebuilt
 
 # Branding
 include vendor/cherish/config/branding.mk
