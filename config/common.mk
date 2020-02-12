@@ -75,6 +75,9 @@ PRODUCT_COPY_FILES += \
 # Log privapp-permissions whitelist
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.control_privapp_permissions=log
+	
+# Inherit from audio config
+$(call inherit-product, vendor/cherish/config/audio.mk)
 
 # Include Lawnchair
 ifeq ($(USE_LAWNCHAIR),true)
