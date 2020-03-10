@@ -221,8 +221,10 @@ endif
 TARGET_FACE_UNLOCK_SUPPORTED := true
 ifneq ($(TARGET_DISABLE_ALTERNATIVE_FACE_UNLOCK), true)
 
+# Packages
 PRODUCT_PACKAGES += \
-    SimpleDeviceConfig 
+    SimpleDeviceConfig \
+    Seedvault
 
 # Required packages
 PRODUCT_PACKAGES += \
