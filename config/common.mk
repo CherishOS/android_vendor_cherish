@@ -180,10 +180,11 @@ endif
 # Plugins
 include packages/apps/PotatoPlugins/plugins.mk
 
-#Terminal
+# Packages
 PRODUCT_PACKAGES += \
     Terminal \
-    SimpleDeviceConfig 
+    SimpleDeviceConfig \
+    Seedvault
 
   # Required packages
 PRODUCT_PACKAGES += \
