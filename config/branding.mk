@@ -1,5 +1,5 @@
 # Set all versions
-CUSTOM_BUILD_TYPE ?= UNOFFICIAL
+CHERISH_BUILD_TYPE ?= UNOFFICIAL
 
 CUSTOM_DATE_YEAR := $(shell date -u +%Y)
 CUSTOM_DATE_MONTH := $(shell date -u +%m)
@@ -11,18 +11,19 @@ CUSTOM_BUILD_DATE := $(CUSTOM_DATE_YEAR)$(CUSTOM_DATE_MONTH)$(CUSTOM_DATE_DAY)-$
 
 CUSTOM_PLATFORM_VERSION := 10.0
 
-TARGET_PRODUCT_SHORT := $(subst aosp_,,$(CUSTOM_BUILD))
+CHERISH_VERSION := v1.1
 
-CUSTOM_VERSION := PixelExperience_$(CUSTOM_BUILD)-$(CUSTOM_PLATFORM_VERSION)-$(CUSTOM_BUILD_DATE)-$(CUSTOM_BUILD_TYPE)
+CUSTOM_DATE_CODE := $(CUSTOM_DATE_HOUR)$(CUSTOM_DATE_MINUTE)
+
+TARGET_PRODUCT_SHORT := $(subst cherish_,,$(CUSTOM_BUILD))
+
+CUSTOM_VERSION := Cherish-OS-$(CHERISH_VERSION)-$(CUSTOM_BUILD_DATE)-$(CUSTOM_BUILD)-$(CHERISH_BUILD_TYPE)
 CUSTOM_VERSION_PROP := 10
 
 CUSTOM_PROPERTIES := \
-    org.pixelexperience.version=$(CUSTOM_VERSION_PROP) \
-    org.pixelexperience.version.display=$(CUSTOM_VERSION) \
-    org.pixelexperience.build_date=$(CUSTOM_BUILD_DATE) \
-    org.pixelexperience.build_date_utc=$(CUSTOM_BUILD_DATE_UTC) \
-    org.pixelexperience.build_type=$(CUSTOM_BUILD_TYPE)
-
-ifeq ($(CUSTOM_BUILD_TYPE), OFFICIAL)
-PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/secure/releasekey
-endif
+    ro.cherish.version=$(CUSTOM_VERSION_PROP) \
+    ro.cherish.version.display=$(CUSTOM_VERSION) \
+    ro.cherish.build_date=$(CUSTOM_BUILD_DATE) \
+    ro.cherish.build_date_utc=$(CUSTOM_BUILD_DATE_UTC) \
+    ro.cherish.build_type=$(CHERISH_BUILD_TYPE) \
+    ro.cherish.version=$(CHERISH_VERSION)

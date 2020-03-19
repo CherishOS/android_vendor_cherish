@@ -15,7 +15,7 @@
 -->
 
 <permissions>
-    <privapp-permissions package="org.pixelexperience.ota">
+    <privapp-permissions package="com.cherish.ota">
         <permission name="android.permission.RECOVERY"/>
         <permission name="android.permission.ACCESS_CACHE_FILESYSTEM"/>
         <permission name="android.permission.REBOOT"/>

@@ -1,14 +1,14 @@
-ifeq ($(CUSTOM_BUILD_TYPE), OFFICIAL)
+ifeq ($(CHERISH_BUILD_TYPE), OFFICIAL)
 
-CUSTOM_OTA_VERSION_CODE := ten
+CHERISH_OTA_VERSION_CODE := ten
 
 CUSTOM_PROPERTIES += \
-    org.pixelexperience.ota.version_code=$(CUSTOM_OTA_VERSION_CODE)
+    com.cherish.ota.version_code=$(CHERISH_OTA_VERSION_CODE)
 
 PRODUCT_PACKAGES += \
     Updates
 
 PRODUCT_COPY_FILES += \
-    vendor/aosp/config/permissions/org.pixelexperience.ota.xml:system/etc/permissions/org.pixelexperience.ota.xml
+    vendor/cherish/config/permissions/com.cherish.ota.xml:system/etc/permissions/com.cherish.ota.xml
 
 endif
