@@ -136,6 +136,11 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
     SystemUI \
     NexusLauncherRelease
 
+# Allows registering device to Google easier for gapps
+# Integrates package for easier Google Pay fixing
+PRODUCT_PACKAGES += \
+    sqlite3
+
 # Themed bootanimation
 TARGET_MISC_BLOCK_OFFSET ?= 0
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
