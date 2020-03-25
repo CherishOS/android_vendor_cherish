@@ -154,6 +154,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     BrightnessSliderOverlay
 
+# Screen recorder
+PRODUCT_PACKAGES += \
+    Recorder
+
 # Branding
 include vendor/cherish/config/branding.mk
 
