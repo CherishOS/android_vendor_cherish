@@ -291,7 +291,7 @@ function githubremote()
 
     local PROJECT=$(echo $REMOTE | sed -e "s#platform/#android/#g; s#/#_#g")
 
-    git remote add github https://github.com/Cherish-Future/$PROJECT
+    git remote add gitlab https://gitlab.com/CherishOS/$PROJECT
     echo "Remote 'github' created"
 }
 
