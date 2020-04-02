@@ -181,6 +181,8 @@ include packages/apps/PotatoPlugins/plugins.mk
 
 # Packages
 PRODUCT_PACKAGES += \
+    StitchImage \
+    StitchImageService \
     Terminal \
     SimpleDeviceConfig \
     Seedvault
