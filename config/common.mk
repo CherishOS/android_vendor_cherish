@@ -103,6 +103,11 @@ DEVICE_PACKAGE_OVERLAYS += \
 PRODUCT_PACKAGES += \
     TouchGestures
 
+# Packages
+PRODUCT_PACKAGES += \
+    StitchImage \
+    StitchImageService 
+
 #OmniJaws
 PRODUCT_PACKAGES += \
     OmniJaws \
