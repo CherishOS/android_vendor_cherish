@@ -205,7 +205,9 @@ include vendor/cherish/config/ota.mk
 $(call inherit-product, vendor/cherish/config/apex.mk)
 
 # Inherit from GMS product config
+ifeq ($(WITH_GAPPS),true)
 $(call inherit-product, vendor/gms/gms_full.mk)
+endif
 
 # Bootanimation
 ifeq ($(TARGET_BOOT_ANIMATION_RES),1080)
