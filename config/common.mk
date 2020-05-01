@@ -183,7 +183,7 @@ include vendor/gapps/config.mk
 # Pixel Style
 include vendor/pixelstyle/config.mk
 
-include vendor/google/customization/config.mk
+include vendor/google-customization/config.mk
 
 # Include Cherish theme files
 include vendor/cherish/themes/backgrounds/themes.mk
