@@ -186,6 +186,6 @@ include vendor/pixelstyle/config.mk
 include vendor/google-customization/config.mk
 
 # Include Cherish theme files
-include vendor/cherish/themes/backgrounds/themes.mk
+include vendor/cherish/themes/themes.mk
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk

@@ -12,3 +12,9 @@ PRODUCT_PACKAGES += \
     MaterialOceanSystemUIOverlay \
     DarkGreySystemOverlay \
     DarkGreySystemUIOverlay
+	
+# Switch themes
+PRODUCT_PACKAGES += \
+    SwitchMD2 \
+    SwitchOnePlus \
+    SwitchStock
