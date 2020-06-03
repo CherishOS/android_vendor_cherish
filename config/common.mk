@@ -155,6 +155,10 @@ PRODUCT_PACKAGES += \
 # Long Screenshot
 PRODUCT_PACKAGES += \
     StitchImage
+    
+# TouchGestures
+PRODUCT_PACKAGES += \
+    TouchGestures
 
 # Face Unlock
 TARGET_FACE_UNLOCK_SUPPORTED := false
