@@ -53,6 +53,9 @@ type Product_variables struct {
 		Cflags []string
 		Whole_static_libs []string
 	}
+	Target_uses_prebuilt_dynamic_partitions struct {
+		Cflags []string
+	}
 	Uses_generic_camera_parameter_library struct {
 		Srcs []string
 	}
@@ -114,6 +117,7 @@ type ProductVariables struct {
 	Target_camera_needs_client_info  *bool `json:",omitempty"`
 	Target_ignores_ftp_pptp_conntrack_failure  *bool `json:",omitempty"`
 	Target_surfaceflinger_fod_lib  *string `json:",omitempty"`
+	 Target_uses_prebuilt_dynamic_partitions  *bool `json:",omitempty"`
 	Uses_generic_camera_parameter_library  *bool `json:",omitempty"`
 	Uses_nvidia_enhancements  *bool `json:",omitempty"`
 	Uses_qcom_bsp_legacy  *bool `json:",omitempty"`
