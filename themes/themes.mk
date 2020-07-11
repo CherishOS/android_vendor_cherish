@@ -1,5 +1,7 @@
 # Themes
 PRODUCT_PACKAGES += \
+    ClearSpringSystemOverlay \
+    ClearSpringSystemUIOverlay \
     PitchBlackSystemOverlay \
     PitchBlackSystemUIOverlay \
     SolarizedDarkSystemOverlay \
@@ -11,7 +13,7 @@ PRODUCT_PACKAGES += \
     MaterialOceanSystemOverlay \
     MaterialOceanSystemUIOverlay \
     DarkGreySystemOverlay \
-    DarkGreySystemUIOverlay
+    DarkGreySystemUIOverlay 
 	
 # Switch themes
 PRODUCT_PACKAGES += \
