@@ -18,12 +18,9 @@
 <resources>
 
     <!-- The background color of a notification card. -->
-    <color name="notification_material_background_color">@*android:color/primary_dark_device_default_settings</color>
+    <color name="notification_material_background_color">#80000000</color>
 
-    <color name="theme_generic_semi_transparent_color">@*android:color/primary_dark_device_default_settings</color>
-
-    <color name="du_themes_qs_inactive_color">@*android:color/primary_dark_device_default_settings</color>
-
+    <color name="theme_generic_semi_transparent_color">#80000000</color>
     <!-- Resolver -->
     <color name="resolver_list_bg">@*android:color/primary_dark_device_default_settings</color>
     <color name="chooser_service_row_background_color">@*android:color/primary_dark_device_default_settings</color>
@@ -42,5 +39,3 @@
     <color name="toast_bg_color">@*android:color/primary_dark_device_default_settings</color>
 
 </resources>
-
-

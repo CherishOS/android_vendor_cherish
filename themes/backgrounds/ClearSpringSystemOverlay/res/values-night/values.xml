@@ -17,7 +17,7 @@
 
 <resources>
 
-    <style name="Theme.DeviceDefault.QuickSettings" parent="android:Theme.DeviceDefault">
+    <style name="Theme.DeviceDefault.QuickSettings" parent="@*android:Theme.DeviceDefault">
         <!-- QS panel background -->
         <item name="android:colorBackgroundFloating">@*android:color/primary_dark_device_default_settings</item>
 
