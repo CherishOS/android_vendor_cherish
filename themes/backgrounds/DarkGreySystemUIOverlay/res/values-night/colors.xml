@@ -27,6 +27,11 @@
 
     <!-- The color of the background in the top part of QSCustomizer -->
     <color name="qs_customize_background">#FF151618</color>
+ 
+    <!-- OOS dismiss style color -->
+    <color name="recents_dismiss_all_background_color">#FF151618</color>
+
+    <color name="volume_background_tint">#FF151618</color>
 
     <!-- The color of the background in the bottom part of QSCustomizer -->
     <color name="qs_customize_decoration">#FF151618</color>

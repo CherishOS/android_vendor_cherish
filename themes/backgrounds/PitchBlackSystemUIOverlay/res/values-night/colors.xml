@@ -36,4 +36,9 @@
     <!-- The color of the background in the grid of the Global Actions menu -->
     <color name="global_actions_grid_background">#ff000000</color>
 
+    <color name="volume_background_tint">#ff000000</color>
+
+    <!-- OOS dismiss style color -->
+    <color name="recents_dismiss_all_background_color">#ff000000</color>
+
 </resources>

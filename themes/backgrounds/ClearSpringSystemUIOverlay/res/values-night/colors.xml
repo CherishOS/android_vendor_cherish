@@ -25,10 +25,10 @@
     It's fine to override this color since at that point the shade was dark. -->
     <color name="notification_legacy_background_color">@*android:color/primary_dark_device_default_settings</color>
 
-    <color name="volume_background_tint">@*android:color/primary_dark_device_default_settings</color>
+    <color name="volume_background_tint">#cc000000</color>
 
     <!-- OOS dismiss style color -->
-    <color name="recents_dismiss_all_background_color">@*android:color/primary_dark_device_default_settings</color>
+    <color name="recents_dismiss_all_background_color">#ff000000</color>
 
     <!-- The color of the background in the top part of QSCustomizer -->
     <color name="qs_customize_background">@*android:color/primary_dark_device_default_settings</color>

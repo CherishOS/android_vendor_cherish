@@ -31,6 +31,11 @@
     <!-- The color of the background in the bottom part of QSCustomizer -->
     <color name="qs_customize_decoration">#FF0F111A</color>
 
+    <color name="volume_background_tint">#FF0F111A</color>
+
+    <!-- OOS dismiss style color -->
+    <color name="recents_dismiss_all_background_color">#FF0F111A</color>
+
     <!-- The color of the material notification background when dimmed -->
     <color name="notification_material_background_dimmed_color">#FF0F111A</color>
 
