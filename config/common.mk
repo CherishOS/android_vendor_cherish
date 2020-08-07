@@ -97,6 +97,9 @@ include vendor/cherish/themes/BrightnessSlider/slider.mk
 # Include CherishOS Nav bar Styles
 include vendor/cherish/themes/Navbar/navbar.mk
 
+# Include CherishOS UI Styles
+include vendor/cherish/themes/UI/ui.mk
+
 # Charger
 PRODUCT_PACKAGES += \
     charger_res_images
