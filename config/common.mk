@@ -269,8 +269,13 @@ PRODUCT_PACKAGES += \
     UdfpsResources
 endif
 
-# GApps
+# Build
+ifeq ($(CHERISH_VANILLA), true)
+include vendor/cherish/config/basicapps.mk
+else
+# Gapps
 $(call inherit-product, vendor/gapps/config.mk)
+endif
 
 # OTA
 $(call inherit-product, vendor/cherish/config/ota.mk)
