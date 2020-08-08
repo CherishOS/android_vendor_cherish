@@ -166,8 +166,13 @@ include vendor/cherish/config/branding.mk
 # OTA
 include vendor/cherish/config/ota.mk
 
-# GApps
+# Build
+ifeq ($(CHERISH_NOGAPPS), true)
+include vendor/cherish/config/basicapps.mk
+else
+# Gapps
 include vendor/gapps/config.mk
+endif
 
 # Pixel Style
 include vendor/pixelstyle/config.mk
