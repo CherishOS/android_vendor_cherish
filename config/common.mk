@@ -208,8 +208,12 @@ include vendor/themes/themes.mk
 # OTA
 include vendor/cherish/config/ota.mk
 
-# Inherit from GMS product config
-$(call inherit-product, vendor/gapps/gapps.mk)
+ifeq ($(CHERISH_WITHGAPPS), true)
+include vendor/google/gms/config.mk
+include vendor/google/pixel/config.mk
+else
+include vendor/cherish/config/basicapps.mk
+endif
 
 # Bootanimation
 ifeq ($(TARGET_BOOT_ANIMATION_RES),1080)
