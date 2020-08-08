@@ -2,10 +2,10 @@
 PRODUCT_PACKAGES += \
     messaging \
     Gallery2 \
+    Jelly \
     Contacts \
     Dialer \
-    LatinIME \
-    ViaBrowser
+    LatinIME 
 
 # Extra packages
 PRODUCT_PACKAGES += \
