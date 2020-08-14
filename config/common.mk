@@ -185,6 +185,9 @@ include vendor/pixelstyle/config.mk
 
 include vendor/google-customization/config.mk
 
+# Plugins
+include packages/apps/PotatoPlugins/plugins.mk
+
 # Include Cherish theme files
 include vendor/cherish/themes/themes.mk
 
