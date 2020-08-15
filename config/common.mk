@@ -111,7 +111,11 @@ DEVICE_PACKAGE_OVERLAYS += vendor/cherish/overlay/common
 # Cutout control overlay
 PRODUCT_PACKAGES += \
     NoCutoutOverlay
-
+    
+# OmniStyle
+PRODUCT_PACKAGES += \
+    OmniStyle \
+    
 # PixelSetupWizard overlay
 PRODUCT_PACKAGES += \
     PixelSetupWizardOverlay \
