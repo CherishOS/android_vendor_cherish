@@ -128,13 +128,6 @@ PRODUCT_PACKAGES += \
     PixelSetupWizardOverlay \
     PixelSetupWizardAodOverlay
 
-# Gestures overlay
-PRODUCT_PACKAGES += \
-    NavBarGesturalNoPillOverlay \
-    NavBarGesturalNarrowBackNoPillOverlay \
-    NavBarGesturalWideBackNoPillOverlay \
-    NavBarGesturalExtraWideBackNoPillOverlay \
-
 # Dex preopt
 PRODUCT_DEXPREOPT_SPEED_APPS += \
     SystemUI \
