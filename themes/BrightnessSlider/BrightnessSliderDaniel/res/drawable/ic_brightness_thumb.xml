@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset android:insetLeft="4.0dip" android:insetRight="4.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+/**
+ * Copyright (c) 2020 ZeniX Os Project
+ 
+ * Design by: John Andrew Camu / MrSluffy
+ *         Email: werdna.jac@gmail.com or droopsdroops27@gmail.com
+ *       Github: www.github.com/MrSluffy
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+    <vector android:tint="@*android:color/accent_device_default_light" android:height="20.0dip" android:width="20.0dip" android:viewportWidth="297.0" android:viewportHeight="297.0">
+        <path android:fillColor="#ffffffff" android:pathData="M33,66 L0,66 L66,148 L0,231 L33,231 L99,148 Z" />
+        <path android:fillColor="#ffffffff" android:pathData="M83,66 L50,66 L116,148 L50,231 L83,231 L149,148 Z" />
+        <path android:fillColor="#ffffffff" android:pathData="M133,66 L100,66 L166,148 L100,231 L133,231 L199,148 Z" />
+        <path android:fillColor="#ffffffff" android:pathData="M231,66 L149,66 L215,148 L149,231 L231,231 L297,148 Z" />
+    </vector>
+</inset>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+  xmlns:android="http://schemas.android.com/apk/res/android">
+<!--
+/**
+ * Copyright (c) 2020 ZeniX Os Project
+ 
+ * Design by: John Andrew Camu / MrSluffy
+ *         Email: werdna.jac@gmail.com or droopsdroops27@gmail.com
+ *       Github: www.github.com/MrSluffy
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+    <item android:gravity="fill_horizontal|center" android:id="@android:id/background">
+        <shape android:tint="?android:colorControlActivated" android:shape="rectangle">
+            <size android:height="20.0dip" />
+            <stroke android:width="1.5dp" android:color="@*android:color/accent_device_default_light" />
+             <solid android:color="@*android:color/white_disabled_material" />
+            <corners android:radius="10.0dip" />
+        </shape>
+    </item>
+    <item android:gravity="fill_horizontal|center" android:id="@android:id/progress">
+        <scale android:scaleWidth="100%">
+            <inset android:insetLeft="5.5dip" android:insetRight="5.5dip">
+                <shape android:shape="rectangle">
+                    <size android:height="10.0dip" />
+            <solid android:color="@*android:color/accent_device_default_light" />
+                    <corners android:radius="10.0dip" />
+                </shape>
+            </inset>
+        </scale>
+    </item>
+</layer-list>
