@@ -93,6 +93,10 @@ PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
 
 # Include CherishOS Brightness Slider Styles
 include vendor/cherish/themes/BrightnessSlider/slider.mk
+
+# Include CherishOS Nav bar Styles
+include vendor/cherish/themes/Navbar/navbar.mk
+
 # Charger
 PRODUCT_PACKAGES += \
     charger_res_images
