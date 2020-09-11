@@ -192,13 +192,6 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
 #PRODUCT_PACKAGES += NoCutoutOverlay
 #endif
 
-# Enable Google Play system updates support
-PRODUCT_SOONG_NAMESPACES += \
-    vendor/cherish/apex
-
-PRODUCT_PACKAGES += \
-    ModuleMetadataGoogle
-
 # Branding
 include vendor/cherish/config/branding.mk
 
@@ -207,6 +200,9 @@ include vendor/themes/themes.mk
 
 # OTA
 include vendor/cherish/config/ota.mk
+
+# Inherit from apex config
+$(call inherit-product, vendor/cherish/config/apex.mk)
 
 # Inherit from GMS product config
 $(call inherit-product, vendor/gms/gms_full.mk)
