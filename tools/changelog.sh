@@ -1,10 +1,8 @@
 #!/bin/sh
 
-# Exports
-dir=$ANDROID_BUILD_TOP
-out=$dir/out/target/product
-
 export Changelog=Changelog.txt
+
+DEVICE=$(echo $TARGET_PRODUCT | cut -d "_" -f2)
 
 if [ -f $Changelog ];
 then
@@ -33,17 +31,18 @@ done < ./.repo/project.list;
 echo "" >> $Changelog;
 done
 
-#sed -i 's/project/ */g' $Changelog
 sed -i 's/[/]$//' $Changelog
 
-if [ -e $out/*/$Changelog ]
+if [ -e ./out/target/product/$DEVICE/$Changelog ]
 then
-rm $out/*/$Changelog
+    rm ./out/target/product/$DEVICE/$Changelog
 fi
-if [ -e $out/*/system/etc/$Changelog ]
+
+if [ -e ./out/target/product/$DEVICE/system/etc/$Changelog ]
 then
-rm $out/*/system/etc/$Changelog
+    rm ./out/target/product/$DEVICE/system/etc/$Changelog
 fi
-cp $Changelog $OUT/system/etc/
-cp $Changelog $OUT/
+
+cp $Changelog ./out/target/product/$DEVICE/system/etc/$Changelog
+cp $Changelog ./out/target/product/$DEVICE/
 rm $Changelog
