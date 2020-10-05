@@ -17,4 +17,7 @@
 -->
 <resources>
     <dimen name="rounded_corner_content_padding">8dp</dimen>
+	
+    <!--  Blur radius on status bar window and power menu  -->
+    <dimen name="max_window_blur_radius">175px</dimen>
 </resources>
