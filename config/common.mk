@@ -85,6 +85,10 @@ PRODUCT_COPY_FILES += \
     vendor/cherish/prebuilt/common/bin/backuptool_postinstall.sh:system/bin/backuptool_postinstall.sh
 endif
 
+# Flipendo
+PRODUCT_COPY_FILES += \
+    vendor/cherish/config/permissions/pixel_experience_2020.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/pixel_experience_2020.xml
+	
 # Some permissions
 PRODUCT_COPY_FILES += \
     vendor/cherish/config/permissions/backup.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/backup.xml \
