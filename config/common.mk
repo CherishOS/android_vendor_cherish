@@ -179,6 +179,9 @@ PRODUCT_PACKAGES += \
 # Branding
 include vendor/cherish/config/branding.mk
 
+# Include CherishOS Themes Styles
+include vendor/themes/themes.mk
+
 # OTA
 include vendor/cherish/config/ota.mk
 
