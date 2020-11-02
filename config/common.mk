@@ -199,6 +199,19 @@ else
     PRODUCT_COPY_FILES += vendor/cherish/bootanimation/bootanimation_1080.zip:$(TARGET_COPY_OUT_PRODUCT)/media/bootanimation.zip
 endif
 
+# Backup Tool
+PRODUCT_COPY_FILES += \
+    vendor/cherish/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
+    vendor/cherish/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
+    vendor/cherish/prebuilt/common/bin/50-base.sh:system/addon.d/50-base.sh
+	
+ifneq ($(AB_OTA_PARTITIONS),)
+PRODUCT_COPY_FILES += \
+    vendor/cherish/prebuilt/common/bin/backuptool_ab.sh:system/bin/backuptool_ab.sh \
+    vendor/cherish/prebuilt/common/bin/backuptool_ab.functions:system/bin/backuptool_ab.functions \
+    vendor/cherish/prebuilt/common/bin/backuptool_postinstall.sh:system/bin/backuptool_postinstall.sh
+endif
+
 # Face Unlock
 TARGET_FACE_UNLOCK_SUPPORTED := true
 ifneq ($(TARGET_DISABLE_ALTERNATIVE_FACE_UNLOCK), true)
