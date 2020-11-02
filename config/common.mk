@@ -1,3 +1,17 @@
+# Copyright (C) 2019-2020 The CherishOS Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 PRODUCT_BRAND ?= CherishOS
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
@@ -30,11 +44,9 @@ else
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += ro.adb.secure=1
 endif
 
-# Backup Tool
-PRODUCT_COPY_FILES += \
-    vendor/cherish/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
-    vendor/cherish/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
-    vendor/cherish/prebuilt/common/bin/50-base.sh:system/addon.d/50-base.sh
+# Ambient Play
+#PRODUCT_PACKAGES += \
+#    AmbientPlayHistoryProvider
 
 # OTA
 ifneq ($(TARGET_BUILD_VARIANT),user)
@@ -42,19 +54,11 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.ota.allow_downgrade=true
 endif
 
-ifneq ($(AB_OTA_PARTITIONS),)
-PRODUCT_COPY_FILES += \
-    vendor/cherish/prebuilt/common/bin/backuptool_ab.sh:system/bin/backuptool_ab.sh \
-    vendor/cherish/prebuilt/common/bin/backuptool_ab.functions:system/bin/backuptool_ab.functions \
-    vendor/cherish/prebuilt/common/bin/backuptool_postinstall.sh:system/bin/backuptool_postinstall.sh
-endif
-
 # Some permissions
 PRODUCT_COPY_FILES += \
     vendor/cherish/config/permissions/backup.xml:system/etc/sysconfig/backup.xml \
-    vendor/cherish/config/permissions/privapp-permissions-livedisplay.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-livedisplay.xml \
-    vendor/cherish/config/permissions/privapp-permissions-lineagehw.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-lineagehw.xml \
-    vendor/cherish/config/permissions/privapp-permissions-cherish.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-cherish.xml
+    vendor/cherish/config/permissions/privapp-permissions-cherish.xml:system/etc/permissions/privapp-permissions-cherish.xml
+
 # Copy all custom init rc files
 $(foreach f,$(wildcard vendor/cherish/prebuilt/common/etc/init/*.rc),\
     $(eval PRODUCT_COPY_FILES += $(f):system/etc/init/$(notdir $f)))
@@ -75,9 +79,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     frameworks/base/data/keyboards/Vendor_045e_Product_028e.kl:system/usr/keylayout/Vendor_045e_Product_0719.kl
 
-# Enforce privapp-permissions whitelist
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.control_privapp_permissions=disable
+# TEMP: Enable transitional log for Privileged permissions
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.control_privapp_permissions=log
 
 # Power whitelist
 PRODUCT_COPY_FILES += \
@@ -90,15 +94,6 @@ PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
 # the size of the system image. This has no bearing on stack traces, but will
 # leave less information available via JDWP.
 PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
-
-# Include CherishOS Brightness Slider Styles
-include vendor/cherish/themes/BrightnessSlider/slider.mk
-
-# Include CherishOS Nav bar Styles
-include vendor/cherish/themes/Navbar/navbar.mk
-
-# Include CherishOS UI Styles
-include vendor/cherish/themes/UI/ui.mk
 
 # Charger
 PRODUCT_PACKAGES += \
@@ -124,28 +119,45 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/cherish/overlay
 DEVICE_PACKAGE_OVERLAYS += vendor/cherish/overlay/common
 
-# Cutout control overlay
-PRODUCT_PACKAGES += \
-    NoCutoutOverlay
-    
 # OmniStyle
-PRODUCT_PACKAGES += \
-    OmniStyle \
-    
-# PixelSetupWizard overlay
-PRODUCT_PACKAGES += \
-    PixelSetupWizardOverlay \
-    PixelSetupWizardAodOverlay
+#PRODUCT_PACKAGES += \
+#    OmniStyle
+
+# TouchGestures
+#PRODUCT_PACKAGES += \
+#    TouchGestures
 
 # Dex preopt
 PRODUCT_DEXPREOPT_SPEED_APPS += \
     SystemUI \
     NexusLauncherRelease
 
-# Allows registering device to Google easier for gapps
-# Integrates package for easier Google Pay fixing
-PRODUCT_PACKAGES += \
-    sqlite3
+# PixelSetupWizard overlay
+#PRODUCT_PACKAGES += \
+#    PixelSetupWizardOverlay \
+#    PixelSetupWizardAodOverlay
+
+# Custom Overlays
+# Settings
+#PRODUCT_PACKAGES += \
+#    SystemPitchBlackOverlay \
+#    SystemUIPitchBlackOverlay \
+#    SystemDarkGrayOverlay \
+#    SystemUIDarkGrayOverlay \
+#    SystemStyleOverlay \
+#    SystemUIStyleOverlay \
+#    SystemNightOverlay \
+#    SystemUINightOverlay \
+#    SystemSolarizedDarkOverlay \
+#    SystemUISolarizedDarkOverlay \
+#    SystemMaterialOceanOverlay \
+#    SystemUIMaterialOceanOverlay \
+#    SystemBakedGreenOverlay \
+#    SystemUIBakedGreenOverlay \
+#    SystemChocoXOverlay \
+#    SystemUIChocoXOverlay \
+#    SystemDarkAubergineOverlay \
+#    SystemUIDarkAubergineOverlay
 
 # Themed bootanimation
 TARGET_MISC_BLOCK_OFFSET ?= 0
@@ -155,29 +167,14 @@ PRODUCT_PACKAGES += \
     misc_writer_system \
     themed_bootanimation
 
-# Brightness Slider
-PRODUCT_PACKAGES += \
-    BrightnessSliderOverlay
-
 # Long Screenshot
-PRODUCT_PACKAGES += \
-    StitchImage
-    
-# TouchGestures
-PRODUCT_PACKAGES += \
-    TouchGestures
+#PRODUCT_PACKAGES += \
+#    StitchImage
 
-# Face Unlock
-TARGET_FACE_UNLOCK_SUPPORTED := false
-ifeq ($(TARGET_GAPPS_ARCH),arm64)
-ifneq ($(TARGET_DISABLE_ALTERNATIVE_FACE_UNLOCK), true)
-PRODUCT_PACKAGES += \
-    FaceUnlockService
-TARGET_FACE_UNLOCK_SUPPORTED := true
-endif
-endif
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.face.moto_unlock_service=$(TARGET_FACE_UNLOCK_SUPPORTED)
+# Cutout control overlay
+#ifneq ($(filter true, $(TARGET_PROVIDES_OWN_NO_CUTOUT_OVERLAY)),)
+#PRODUCT_PACKAGES += NoCutoutOverlay
+#endif
 
 # Branding
 include vendor/cherish/config/branding.mk
@@ -185,23 +182,20 @@ include vendor/cherish/config/branding.mk
 # OTA
 include vendor/cherish/config/ota.mk
 
-# Build
-ifeq ($(CHERISH_NOGAPPS), true)
-include vendor/cherish/config/basicapps.mk
-else
-# Gapps
-include vendor/gapps/config.mk
-endif
+# Inherit from GMS product config
+$(call inherit-product, vendor/gms/gms_full.mk)
 
 # Pixel Style
 include vendor/pixelstyle/config.mk
 
-include vendor/google-customization/config.mk
-
 # Plugins
-include packages/apps/PotatoPlugins/plugins.mk
+#include packages/apps/PotatoPlugins/plugins.mk
 
-# Include Cherish theme files
-include vendor/cherish/themes/themes.mk
+#Terminal
+PRODUCT_PACKAGES += \
+    Terminal
+
+# Customization
+#include vendor/google-customization/config.mk
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk

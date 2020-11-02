@@ -1,6 +1,6 @@
-function __print_custom_functions_help() {
+function __print_cherish_functions_help() {
 cat <<EOF
-Additional functions:
+Additional CherishOS functions:
 - cout:            Changes directory to out.
 - mmp:             Builds all of the modules in the current directory and pushes them to the device.
 - mmap:            Builds all of the modules in the current directory and its dependencies, then pushes the package to the device.
@@ -9,7 +9,7 @@ Additional functions:
 - pixelrebase:     Rebase a Gerrit change and push it again.
 - aospremote:      Add git remote for matching AOSP repository.
 - cafremote:       Add git remote for matching CodeAurora repository.
-- githubremote:    Add git remote for PixelExperience Github.
+- githubremote:    Add git remote for CherishOS Github.
 - mka:             Builds using SCHED_BATCH on all processors.
 - mkap:            Builds the module(s) using mka and pushes them to the device.
 - cmka:            Cleans and builds using mka.
@@ -93,7 +93,7 @@ alias bib=breakfast
 function eat()
 {
     if [ "$OUT" ] ; then
-        ZIPPATH=`ls -tr "$OUT"/CherishOS-*.zip | tail -1`
+        ZIPPATH=`ls -tr "$OUT"/Cherish-*.zip | tail -1`
         if [ ! -f $ZIPPATH ] ; then
             echo "Nothing to eat"
             return 1
@@ -101,13 +101,13 @@ function eat()
         echo "Waiting for device..."
         adb wait-for-device-recovery
         echo "Found device"
-        if (adb shell getprop ro.cherish.device | grep -q "$CUSTOM_BUILD"); then
+        if (adb shell getprop ro.cherish.device | grep -q "$CHERISH_BUILD"); then
             echo "Rebooting to sideload for install"
             adb reboot sideload-auto-reboot
             adb wait-for-sideload
             adb sideload $ZIPPATH
         else
-            echo "The connected device does not appear to be $CUSTOM_BUILD, run away!"
+            echo "The connected device does not appear to be $CHERISH_BUILD, run away!"
         fi
         return $?
     else
@@ -291,7 +291,7 @@ function githubremote()
 
     local PROJECT=$(echo $REMOTE | sed -e "s#platform/#android/#g; s#/#_#g")
 
-    git remote add gitlab https://gitlab.com/CherishOS/$PROJECT
+    git remote add github https://github.com/CherishOS/$PROJECT
     echo "Remote 'github' created"
 }
 
@@ -322,14 +322,14 @@ function installboot()
     adb wait-for-device-recovery
     adb root
     adb wait-for-device-recovery
-    if (adb shell getprop ro.cherish.device | grep -q "$LINEAGE_BUILD");
+    if (adb shell getprop ro.cherish.device | grep -q "$CHERISH_BUILD");
     then
         adb push $OUT/boot.img /cache/
         adb shell dd if=/cache/boot.img of=$PARTITION
         adb shell rm -rf /cache/boot.img
         echo "Installation complete."
     else
-        echo "The connected device does not appear to be $CUSTOM_BUILD, run away!"
+        echo "The connected device does not appear to be $CHERISH_BUILD, run away!"
     fi
 }
 
@@ -360,14 +360,14 @@ function installrecovery()
     adb wait-for-device-recovery
     adb root
     adb wait-for-device-recovery
-    if (adb shell getprop ro.cherish.device | grep -q "$LINEAGE_BUILD");
+    if (adb shell getprop ro.cherish.device | grep -q "$CHERISH_BUILD");
     then
         adb push $OUT/recovery.img /cache/
         adb shell dd if=/cache/recovery.img of=$PARTITION
         adb shell rm -rf /cache/recovery.img
         echo "Installation complete."
     else
-        echo "The connected device does not appear to be $CUSTOM_BUILD, run away!"
+        echo "The connected device does not appear to be $CHERISH_BUILD, run away!"
     fi
 }
 
@@ -384,7 +384,7 @@ function pixelgerrit() {
     local user=`git config --get review.gerrit.pixelexperience.org.username`
     local review=`git config --get remote.pixel.review`
     local project=`git config --get remote.pixel.projectname`
-    local remote_branch=ten
+    local remote_branch=eleven
     local command=$1
     shift
     case $command in
@@ -436,16 +436,16 @@ will $1 patch-set 1 of change 1234
 EOF
                     ;;
                 push) cat <<EOF
-usage: $FUNCNAME push [OPTIONS]
+usage: $FUNCNAME push BRANCH
 
 works as:
-    git push OPTIONS ssh://USER@DOMAIN:29418/PROJECT \\
+    git push ssh://USER@DOMAIN:29418/PROJECT \\
       HEAD:refs/for/$remote_branch
 
 Example:
-    $FUNCNAME push fix6789
-will push local branch 'fix6789' to Gerrit for branch '$remote_branch'.
-HEAD will be pushed from local if omitted.
+    $FUNCNAME push '$remote_branch'
+will push HEAD to branch '$remote_branch'.
+'$remote_branch' is the default branch.
 EOF
                     ;;
                 *)
@@ -495,6 +495,9 @@ EOF
                 return 1
             fi
             local local_branch=HEAD
+            if [ -n "$1" ]; then
+                remote_branch=$1
+            fi
             shift
             git push $@ ssh://$user@$review:29418/$project \
                 $local_branch:refs/for/$remote_branch || return 1
@@ -712,7 +715,7 @@ function dopush()
         echo "Device Found."
     fi
 
-    if (adb shell getprop ro.cherish.device | grep -q "$CUSTOM_BUILD") || [ "$FORCE_PUSH" = "true" ];
+    if (adb shell getprop ro.cherish.device | grep -q "$CHERISH_BUILD") || [ "$FORCE_PUSH" = "true" ];
     then
     # retrieve IP and PORT info if we're using a TCP connection
     TCPIPPORT=$(adb devices \
@@ -831,7 +834,7 @@ EOF
     rm -f $OUT/.log
     return 0
     else
-        echo "The connected device does not appear to be $CUSTOM_BUILD, run away!"
+        echo "The connected device does not appear to be $CHERISH_BUILD, run away!"
     fi
 }
 

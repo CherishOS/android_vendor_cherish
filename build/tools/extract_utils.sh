@@ -1,8 +1,9 @@
 #!/bin/bash
 #
 # Copyright (C) 2016 The CyanogenMod Project
-# Copyright (C) 2017-2019 The LineageOS Project
-#           (C) 2018 The PixelExperience Project
+#               2017-2020 The LineageOS Project
+#               2018 The PixelExperience Project
+#               2019-2020 The CherishOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -48,7 +49,7 @@ trap cleanup 0
 #
 # $1: device name
 # $2: vendor name
-# $3: aosp root directory
+# $3: CherishOS root directory
 # $4: is common device - optional, default to false
 # $5: cleanup - optional, default to true
 # $6: custom vendor makefile name - optional, default to false
@@ -407,6 +408,7 @@ function write_blueprint_packages() {
             if [ "$EXTRA" != "none" ]; then
                 printf '\tcompile_multilib: "%s",\n' "$EXTRA"
             fi
+            printf '\tcheck_elf_files: false,\n'
         elif [ "$CLASS" = "APPS" ]; then
             printf 'android_app_import {\n'
             printf '\tname: "%s",\n' "$PKGNAME"
@@ -438,6 +440,7 @@ function write_blueprint_packages() {
             printf '\tname: "%s",\n' "$PKGNAME"
             printf '\towner: "%s",\n' "$VENDOR"
             printf '\tsrc: "%s/etc/%s",\n' "$SRC" "$FILE"
+            printf '\tfilename_from_src: true,\n'
         elif [ "$CLASS" = "EXECUTABLES" ]; then
             if [ "$EXTENSION" = "sh" ]; then
                 printf 'sh_binary {\n'
@@ -467,9 +470,14 @@ function write_blueprint_packages() {
             printf '\t\tenabled: false,\n'
             printf '\t},\n'
         fi
-        if [ "$CLASS" = "SHARED_LIBRARIES" ] || [ "$CLASS" = "EXECUTABLES" ] || [ "$CLASS" = "ETC" ] ; then
+        if [ "$CLASS" = "SHARED_LIBRARIES" ] || [ "$CLASS" = "EXECUTABLES" ] ; then
             if [ "$DIRNAME" != "." ]; then
-                printf '\tsub_dir: "%s",\n' "$DIRNAME"
+                printf '\trelative_install_path: "%s",\n' "$DIRNAME"
+            fi
+        fi
+        if [ "$CLASS" = "ETC" ] ; then
+            if [ "$DIRNAME" != "." ]; then
+                printf '\trelative_install_path: "%s",\n' "$DIRNAME"
             fi
         fi
         if [ "$CLASS" = "SHARED_LIBRARIES" ] || [ "$CLASS" = "EXECUTABLES" ] ; then
@@ -822,7 +830,7 @@ function write_product_packages() {
         write_blueprint_packages "JAVA_LIBRARIES" "product" "" "P_FRAMEWORK" >> "$ANDROIDBP"
     fi
     local SE_FRAMEWORK=( $(prefix_match "system_ext/framework/") )
-    if [ "${#P_FRAMEWORK[@]}" -gt "0" ]; then
+    if [ "${#SE_FRAMEWORK[@]}" -gt "0" ]; then
         write_blueprint_packages "JAVA_LIBRARIES" "system_ext" "" "SE_FRAMEWORK" >> "$ANDROIDBP"
     fi
     local O_FRAMEWORK=( $(prefix_match "odm/framework/") )
@@ -931,12 +939,15 @@ function write_blueprint_header() {
 
     NUM_REGEX='^[0-9]+$'
     if [ $BLUEPRINT_INITIAL_COPYRIGHT_YEAR -eq $YEAR ]; then
+        printf " * Copyright (C) $YEAR The CherishOS Project\n" >> $1
         printf " * Copyright (C) $YEAR The LineageOS Project\n" >> $1
         printf " * Copyright (C) $YEAR The PixelExperience Project\n" >> $1
     elif [ $BLUEPRINT_INITIAL_COPYRIGHT_YEAR -le 2019 ]; then
+        printf " * Copyright (C) 2019-$YEAR The CherishOS Project\n" >> $1
         printf " * Copyright (C) 2019-$YEAR The LineageOS Project\n" >> $1
         printf " * Copyright (C) 2019-$YEAR The PixelExperience Project\n" >> $1
     else
+        printf " * Copyright (C) $BLUEPRINT_INITIAL_COPYRIGHT_YEAR-$YEAR The CherishOS Project\n" >> $1
         printf " * Copyright (C) $BLUEPRINT_INITIAL_COPYRIGHT_YEAR-$YEAR The LineageOS Project\n" >> $1
         printf " * Copyright (C) $BLUEPRINT_INITIAL_COPYRIGHT_YEAR-$YEAR The PixelExperience Project\n" >> $1
     fi
@@ -986,22 +997,22 @@ function write_makefile_header() {
         elif [ $INITIAL_COPYRIGHT_YEAR -eq 2016 ]; then
             printf "# Copyright (C) 2016 The CyanogenMod Project\n" > $1
         fi
-        if [ $YEAR -eq 2017 ]; then
+        if [ $YEAR -eq 2019 ]; then
+            printf "# Copyright (C) 2017 The CherishOS Project\n" >> $1
             printf "# Copyright (C) 2017 The LineageOS Project\n" >> $1
-            printf "# Copyright (C) 2017 The PixelExperience Project\n" >> $1
         elif [ $INITIAL_COPYRIGHT_YEAR -eq $YEAR ]; then
+            printf "# Copyright (C) $YEAR The CherishOS Project\n" >> $1
             printf "# Copyright (C) $YEAR The LineageOS Project\n" >> $1
-            printf "# Copyright (C) $YEAR The PixelExperience Project\n" >> $1
-        elif [ $INITIAL_COPYRIGHT_YEAR -le 2017 ]; then
+        elif [ $INITIAL_COPYRIGHT_YEAR -le 2019 ]; then
+            printf "# Copyright (C) 2017-$YEAR The CherishOS Project\n" >> $1
             printf "# Copyright (C) 2017-$YEAR The LineageOS Project\n" >> $1
-            printf "# Copyright (C) 2017-$YEAR The PixelExperience Project\n" >> $1
         else
+            printf "# Copyright (C) $INITIAL_COPYRIGHT_YEAR-$YEAR The CherishOS Project\n" >> $1
             printf "# Copyright (C) $INITIAL_COPYRIGHT_YEAR-$YEAR The LineageOS Project\n" >> $1
-            printf "# Copyright (C) $INITIAL_COPYRIGHT_YEAR-$YEAR The PixelExperience Project\n" >> $1
         fi
     else
+        printf "# Copyright (C) $YEAR The CherishOS Project\n" > $1
         printf "# Copyright (C) $YEAR The LineageOS Project\n" > $1
-        printf "# Copyright (C) $YEAR The PixelExperience Project\n" > $1
     fi
 
     cat << EOF >> $1
@@ -1246,7 +1257,7 @@ function get_file() {
 # Convert apk|jar .odex in the corresposing classes.dex
 #
 function oat2dex() {
-    local AOSP_TARGET="$1"
+    local CHERISH_TARGET="$1"
     local OEM_TARGET="$2"
     local SRC="$3"
     local TARGET=
@@ -1254,16 +1265,16 @@ function oat2dex() {
     local HOST="$(uname | tr '[:upper:]' '[:lower:]')"
 
     if [ -z "$BAKSMALIJAR" ] || [ -z "$SMALIJAR" ]; then
-        export BAKSMALIJAR="$CHERISH_ROOT"/prebuilts/tools-custom/common/smali/baksmali.jar
-        export SMALIJAR="$CHERISH_ROOT"/prebuilts/tools-custom/common/smali/smali.jar
+        export BAKSMALIJAR="$CHERISH_ROOT"/prebuilts/tools-cherish/common/smali/baksmali.jar
+        export SMALIJAR="$CHERISH_ROOT"/prebuilts/tools-cherish/common/smali/smali.jar
     fi
 
     if [ -z "$VDEXEXTRACTOR" ]; then
-        export VDEXEXTRACTOR="$CHERISH_ROOT"/prebuilts/tools-custom/${HOST}-x86/bin/vdexExtractor
+        export VDEXEXTRACTOR="$CHERISH_ROOT"/prebuilts/tools-cherish/${HOST}-x86/bin/vdexExtractor
     fi
 
     if [ -z "$CDEXCONVERTER" ]; then
-        export CDEXCONVERTER="$CHERISH_ROOT"/prebuilts/tools-custom/${HOST}-x86/bin/compact_dex_converter
+        export CDEXCONVERTER="$CHERISH_ROOT"/prebuilts/tools-cherish/${HOST}-x86/bin/compact_dex_converter
     fi
 
     # Extract existing boot.oats to the temp folder
@@ -1547,7 +1558,7 @@ function extract() {
                 fi
                 if [ -a "$DUMPDIR"/"$PARTITION".new.dat ]; then
                     echo "Converting "$PARTITION".new.dat to "$PARTITION".img"
-                    python "$AOSP_ROOT"/vendor/cherish/build/tools/sdat2img.py "$DUMPDIR"/"$PARTITION".transfer.list "$DUMPDIR"/"$PARTITION".new.dat "$DUMPDIR"/"$PARTITION".img 2>&1
+                    python "$CHERISH_ROOT"/vendor/cherish/build/tools/sdat2img.py "$DUMPDIR"/"$PARTITION".transfer.list "$DUMPDIR"/"$PARTITION".new.dat "$DUMPDIR"/"$PARTITION".img 2>&1
                     rm -rf "$DUMPDIR"/"$PARTITION".new.dat "$DUMPDIR"/"$PARTITION"
                     mkdir "$DUMPDIR"/"$PARTITION" "$DUMPDIR"/tmp
                     echo "Requesting sudo access to mount the "$PARTITION".img"
@@ -1772,7 +1783,7 @@ function extract2() {
     local FIXUP_HASHLIST=( ${PRODUCT_COPY_FILES_FIXUP_HASHES[@]} ${PRODUCT_PACKAGES_FIXUP_HASHES[@]} )
     local PRODUCT_COPY_FILES_COUNT=${#PRODUCT_COPY_FILES_LIST[@]}
     local COUNT=${#FILELIST[@]}
-    local OUTPUT_ROOT="$CHERISH_ROOT"/"$OUTDIR"/proprietary
+    local OUTPUT_ROOT="$LINEAGE_ROOT"/"$OUTDIR"/proprietary
     local OUTPUT_TMP="$TMPDIR"/"$OUTDIR"/proprietary
 
     if [ "$ADB" = true ]; then

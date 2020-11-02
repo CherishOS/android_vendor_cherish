@@ -1,5 +1,5 @@
 # Copyright (C) 2012 The CyanogenMod Project
-#           (C) 2017 The LineageOS Project
+#           (C) 2017-2020 The LineageOS Project
 #           (C) 2019 The PixelExperience Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,10 +33,6 @@
 #
 #   TARGET_KERNEL_CLANG_PATH           = Clang prebuilts path, optional
 #
-#   KERNEL_SUPPORTS_LLVM_TOOLS         = If set, switches ar, nm, objcopy, objdump to llvm tools instead of using GNU Binutils, optional
-#
-#   KERNEL_SUPPORTS_LLD                = If set, uses LLVM's LLD Linker
-#
 #   BOARD_KERNEL_IMAGE_NAME            = Built image name
 #                                          for ARM use: zImage
 #                                          for ARM64 use: Image.gz
@@ -48,6 +44,8 @@
 #
 #   KERNEL_CC                          = The C Compiler used. This is automatically set based
 #                                          on whether the clang version is set, optional.
+#   KERNEL_LD                          = The Linker used. This is automatically set based
+#                                          on whether the clang/gcc version is set, optional.
 #
 #   KERNEL_CLANG_TRIPLE                = Target triple for clang (e.g. aarch64-linux-gnu-)
 #                                          defaults to arm-linux-gnu- for arm
@@ -71,6 +69,7 @@ VARIANT_DEFCONFIG := $(TARGET_KERNEL_VARIANT_CONFIG)
 SELINUX_DEFCONFIG := $(TARGET_KERNEL_SELINUX_CONFIG)
 
 ## Internal variables
+DTC := $(HOST_OUT_EXECUTABLES)/dtc
 DTBS_OUT := $(PRODUCT_OUT)/dtbs
 KERNEL_OUT := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ
 KERNEL_CONFIG := $(KERNEL_OUT)/.config
@@ -174,7 +173,8 @@ KERNEL_MODULE_MOUNTPOINT := vendor
 endif
 MODULES_INTERMEDIATES := $(KERNEL_BUILD_OUT_PREFIX)$(call intermediates-dir-for,PACKAGING,kernel_modules)
 
-PATH_OVERRIDE :=
+# Add host bin out dir to path
+PATH_OVERRIDE := PATH=$(KERNEL_BUILD_OUT_PREFIX)$(HOST_OUT_EXECUTABLES):$$PATH
 ifeq ($(TARGET_KERNEL_CLANG_COMPILE),true)
     ifneq ($(TARGET_KERNEL_CLANG_VERSION),)
         KERNEL_CLANG_VERSION := clang-$(TARGET_KERNEL_CLANG_VERSION)
@@ -182,32 +182,9 @@ ifeq ($(TARGET_KERNEL_CLANG_COMPILE),true)
         # Use the default version of clang if TARGET_KERNEL_CLANG_VERSION hasn't been set by the device config
         KERNEL_CLANG_VERSION := $(LLVM_PREBUILTS_VERSION)
     endif
-    # As 
-    ifeq ($(KERNEL_SUPPORTS_LLVM_TOOLS),true)
-        KERNEL_LD := LD=ld.lld
-        KERNEL_AR := AR=llvm-ar
-        KERNEL_OBJCOPY := OBJCOPY=llvm-objcopy
-        KERNEL_OBJDUMP := OBJDUMP=llvm-objdump
-        KERNEL_NM := NM=llvm-nm
-        KERNEL_STRIP := STRIP=llvm-strip
-    else
-        KERNEL_LD :=
-        KERNEL_AR :=
-        KERNEL_OBJCOPY :=
-        KERNEL_OBJDUMP :=
-        KERNEL_NM :=
-        KERNEL_STRIP :=
-    endif
-    ifeq ($(KERNEL_SUPPORTS_LLD),true)
-        ifeq ($(KERNEL_SUPPORTS_LLVM_TOOLS),true)
-            $(warning KERNEL_SUPPORTS_LLD makes no sense when KERNEL_SUPPORTS_LVM_TOOLS is set)
-        else
-            KERNEL_LD := LD=ld.lld
-        endif
-    else ifneq ($(KERNEL_SUPPORTS_LLVM_TOOLS),true)
-        KERNEL_LD :=
-    endif
-    TARGET_KERNEL_CLANG_PATH ?= $(BUILD_TOP)/prebuilts/clang/host/$(HOST_OS)-x86/$(KERNEL_CLANG_VERSION)
+    TARGET_KERNEL_CLANG_PATH ?= $(BUILD_TOP)/prebuilts/clang/host/$(HOST_PREBUILT_TAG)/$(KERNEL_CLANG_VERSION)
+    KBUILD_COMPILER_STRING := $(shell $(TARGET_KERNEL_CLANG_PATH)/bin/clang --version | head -n 1 | $(BUILD_TOP)/prebuilts/tools-cherish/$(HOST_OS)-x86/bin/perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')
+    export KBUILD_COMPILER_STRING
     ifeq ($(KERNEL_ARCH),arm64)
         KERNEL_CLANG_TRIPLE ?= CLANG_TRIPLE=aarch64-linux-gnu-
     else ifeq ($(KERNEL_ARCH),arm)
@@ -218,6 +195,9 @@ ifeq ($(TARGET_KERNEL_CLANG_COMPILE),true)
     PATH_OVERRIDE += PATH=$(TARGET_KERNEL_CLANG_PATH)/bin:$$PATH LD_LIBRARY_PATH=$(TARGET_KERNEL_CLANG_PATH)/lib64:$$LD_LIBRARY_PATH
     ifeq ($(KERNEL_CC),)
         KERNEL_CC := CC="$(CCACHE_BIN) clang"
+    endif
+    ifeq ($(KERNEL_LD),)
+        KERNEL_LD :=
     endif
 endif
 
@@ -236,7 +216,7 @@ KERNEL_ADDITIONAL_CONFIG_OUT := $(KERNEL_OUT)/.additional_config
 # $(1): output path (The value passed to O=)
 # $(2): target to build (eg. defconfig, modules, dtbo.img)
 define internal-make-kernel-target
-$(PATH_OVERRIDE) $(KERNEL_MAKE_CMD) $(KERNEL_MAKE_FLAGS) -C $(KERNEL_SRC) O=$(KERNEL_BUILD_OUT_PREFIX)$(1) ARCH=$(KERNEL_ARCH) $(KERNEL_CROSS_COMPILE) $(KERNEL_CLANG_TRIPLE) $(KERNEL_CC) $(KERNEL_LD) $(KERNEL_AR) $(KERNEL_NM) $(KERNEL_OBJCOPY) $(KERNEL_OBJDUMP) $(KERNEL_STRIP) $(2)
+$(PATH_OVERRIDE) $(KERNEL_MAKE_CMD) $(KERNEL_MAKE_FLAGS) -C $(KERNEL_SRC) O=$(KERNEL_BUILD_OUT_PREFIX)$(1) ARCH=$(KERNEL_ARCH) $(KERNEL_CROSS_COMPILE) $(KERNEL_CLANG_TRIPLE) $(KERNEL_CC) $(KERNEL_LD) $(2)
 endef
 
 # Make a kernel target
@@ -255,6 +235,23 @@ endef
 # $(1): The DTB target to build (eg. dtbs, defconfig)
 define make-dtb-target
 $(call internal-make-kernel-target,$(DTBS_OUT),$(1))
+endef
+
+# $(1): modules list
+# $(2): output dir
+# $(3): mount point
+# $(4): staging dir
+# Depmod requires a well-formed kernel version so 0.0 is used as a placeholder.
+define build-image-kernel-modules-cherish
+    rm -rf $(2)/lib/modules
+    mkdir -p $(2)/lib/modules
+    cp $(1) $(2)/lib/modules/
+    rm -rf $(4)
+    mkdir -p $(4)/lib/modules/0.0/$(3)lib/modules
+    cp $(1) $(4)/lib/modules/0.0/$(3)lib/modules
+    $(DEPMOD) -b $(4) 0.0
+    sed -e 's/\(.*modules.*\):/\/\1:/g' -e 's/ \([^ ]*modules[^ ]*\)/ \/\1/g' $(4)/lib/modules/0.0/modules.dep > $(2)/lib/modules/modules.dep
+    cp $(4)/lib/modules/0.0/modules.alias $(2)/lib/modules
 endef
 
 $(KERNEL_OUT):
@@ -279,8 +276,8 @@ $(KERNEL_CONFIG): $(KERNEL_DEFCONFIG_SRC) $(KERNEL_ADDITIONAL_CONFIG_OUT)
 			$(call make-kernel-target,KCONFIG_ALLCONFIG=$(KERNEL_OUT)/.config alldefconfig); \
 		fi
 
-$(TARGET_PREBUILT_INT_KERNEL): $(KERNEL_CONFIG) $(DEPMOD)
-	@echo "Building Kernel"
+$(TARGET_PREBUILT_INT_KERNEL): $(KERNEL_CONFIG) $(DEPMOD) $(DTC)
+	@echo "Building Kernel Image ($(BOARD_KERNEL_IMAGE_NAME))"
 	$(call make-kernel-target,$(BOARD_KERNEL_IMAGE_NAME))
 	$(hide) if grep -q '^CONFIG_OF=y' $(KERNEL_CONFIG); then \
 			echo "Building DTBs"; \
@@ -297,7 +294,7 @@ $(TARGET_PREBUILT_INT_KERNEL): $(KERNEL_CONFIG) $(DEPMOD)
 				$(eval p := $(subst :,$(space),$(s))) \
 				; mv $$(find $$kernel_modules_dir -name $(word 1,$(p))) $$kernel_modules_dir/$(word 2,$(p))); \
 			modules=$$(find $$kernel_modules_dir -type f -name '*.ko'); \
-			($(call build-image-kernel-modules,$$modules,$(KERNEL_MODULES_OUT),$(KERNEL_MODULE_MOUNTPOINT)/,$(KERNEL_DEPMOD_STAGING_DIR))); \
+			($(call build-image-kernel-modules-cherish,$$modules,$(KERNEL_MODULES_OUT),$(KERNEL_MODULE_MOUNTPOINT)/,$(KERNEL_DEPMOD_STAGING_DIR))); \
 		fi
 
 .PHONY: kerneltags
@@ -317,7 +314,9 @@ alldefconfig: $(KERNEL_OUT)
 		 $(call make-kernel-target,alldefconfig)
 
 ifeq ($(TARGET_NEEDS_DTBOIMAGE),true)
-$(BOARD_PREBUILT_DTBOIMAGE):
+MKDTIMG := $(HOST_OUT_EXECUTABLES)/mkdtimg$(HOST_EXECUTABLE_SUFFIX)
+MKDTBOIMG := $(HOST_OUT_EXECUTABLES)/mkdtboimg.py$(HOST_EXECUTABLE_SUFFIX)
+$(BOARD_PREBUILT_DTBOIMAGE): $(DTC) $(MKDTIMG) $(MKDTBOIMG)
 	echo -e ${CL_GRN}"Building DTBO.img"${CL_RST}
 	$(call make-dtbo-target,$(KERNEL_DEFCONFIG))
 	$(call make-dtbo-target,dtbo.img)
@@ -347,7 +346,7 @@ dtboimage: $(INSTALLED_DTBOIMAGE_TARGET)
 
 ifeq ($(BOARD_INCLUDE_DTB_IN_BOOTIMG),true)
 ifeq ($(BOARD_PREBUILT_DTBIMAGE_DIR),)
-$(INSTALLED_DTBIMAGE_TARGET):
+$(INSTALLED_DTBIMAGE_TARGET): $(DTC)
 	echo -e ${CL_GRN}"Building DTBs"${CL_RST}
 	$(call make-dtb-target,$(KERNEL_DEFCONFIG))
 	$(call make-dtb-target,dtbs)

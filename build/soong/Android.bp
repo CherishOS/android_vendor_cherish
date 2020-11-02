@@ -2,12 +2,13 @@ bootstrap_go_package {
     name: "soong-cherish",
     pkgPath: "cherish/soong/android",
     srcs: [
+        "android/config.go",
         "android/variable.go",
     ],
 }
 
 bootstrap_go_package {
-    name: "soong-custom-generator",
+    name: "soong-cherish-generator",
     pkgPath: "cherish/soong/generator",
     deps: [
         "blueprint",
@@ -23,7 +24,7 @@ bootstrap_go_package {
     pluginFor: ["soong_build"],
 }
 
-custom_generator {
+cherish_generator {
     name: "generated_kernel_includes",
 
     // The headers make command
@@ -34,8 +35,7 @@ custom_generator {
         "usr/audio/include/uapi",
         "usr/include",
         "usr/include/audio/include/uapi",
-        "usr/techpack/audio/include",
-        "usr/audio/include/uapi"
+        "usr/techpack/audio/include"
     ],
 
     // Sources for dependency tracking

@@ -1,14 +1,12 @@
 ifeq ($(CHERISH_BUILD_TYPE), OFFICIAL)
 
-CHERISH_OTA_VERSION_CODE := ten
+CHERISH_OTA_VERSION_CODE := eleven
 
-CUSTOM_PROPERTIES += \
-    com.cherish.ota.version_code=$(CHERISH_OTA_VERSION_CODE)
+PRODUCT_GENERIC_PROPERTIES += \
+    ro.cherish.ota.version_code=$(CHERISH_OTA_VERSION_CODE) \
+    sys.ota.disable_uncrypt=1
 
 PRODUCT_PACKAGES += \
     Updates
-
-PRODUCT_COPY_FILES += \
-    vendor/cherish/config/permissions/com.cherish.ota.xml:system/etc/permissions/com.cherish.ota.xml
 
 endif

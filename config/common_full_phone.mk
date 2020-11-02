@@ -1,5 +1,4 @@
 # Telephony
-
 IS_PHONE := true
 
 # World APN list
@@ -16,5 +15,5 @@ PRODUCT_PACKAGES += \
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     net.tethering.noprovisioning=true
 
-# Inherit full common PixelExperience stuff
+# Inherit full common CherishOS stuff
 $(call inherit-product, vendor/cherish/config/common_full.mk)

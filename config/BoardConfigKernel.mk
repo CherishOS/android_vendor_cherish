@@ -1,4 +1,4 @@
-# Copyright (C) 2018-2019 The LineageOS Project
+# Copyright (C) 2018-2020 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -54,7 +54,8 @@ endif
 
 TARGET_KERNEL_HEADERS ?= $(TARGET_KERNEL_SOURCE)
 
-GCC_PREBUILTS := $(BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86
+CLANG_PREBUILTS := $(BUILD_TOP)/prebuilts/clang/host/$(HOST_PREBUILT_TAG)/clang-r383902b
+GCC_PREBUILTS := $(BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUILT_TAG)
 ifeq ($(TARGET_KERNEL_NEW_GCC_COMPILE),true)
     ifeq ($(TARGET_KERNEL_CLANG_COMPILE),true)
         $(error TARGET_KERNEL_NEW_GCC_COMPILE cannot be used with TARGET_KERNEL_CLANG_COMPILE!)
@@ -113,7 +114,7 @@ endif
 KERNEL_MAKE_FLAGS :=
 
 # Add back threads, ninja cuts this to $(nproc)/2
-KERNEL_MAKE_FLAGS += -j$(shell nproc --all)
+KERNEL_MAKE_FLAGS += -j$(shell prebuilts/tools-cherish/$(HOST_PREBUILT_TAG)/bin/nproc --all)
 
 ifeq ($(KERNEL_ARCH),arm)
   # Avoid "Unknown symbol _GLOBAL_OFFSET_TABLE_" errors
@@ -126,9 +127,9 @@ ifeq ($(KERNEL_ARCH),arm64)
 endif
 
 ifeq ($(HOST_OS),darwin)
-  KERNEL_MAKE_FLAGS += HOSTCFLAGS="-I$(BUILD_TOP)/external/elfutils/libelf -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib"
+  KERNEL_MAKE_FLAGS += HOSTCFLAGS="-I$(BUILD_TOP)/external/elfutils/libelf -I/usr/local/opt/openssl/include -fuse-ld=lld" HOSTLDFLAGS="-L/usr/local/opt/openssl/lib -fuse-ld=lld"
 else
-  KERNEL_MAKE_FLAGS += HOSTCFLAGS="-I/usr/include -I/usr/include/x86_64-linux-gnu -L/usr/lib/x86_64-linux-gnu -L/usr/lib64"
+  KERNEL_MAKE_FLAGS += CPATH="/usr/include:/usr/include/x86_64-linux-gnu" HOSTCFLAGS="-fuse-ld=lld" HOSTLDFLAGS="-L/usr/lib/x86_64-linux-gnu -L/usr/lib64 -fuse-ld=lld"
 endif
 
 ifneq ($(TARGET_KERNEL_ADDITIONAL_FLAGS),)
@@ -136,9 +137,9 @@ ifneq ($(TARGET_KERNEL_ADDITIONAL_FLAGS),)
 endif
 
 TOOLS_PATH_OVERRIDE := \
-    PATH=$(BUILD_TOP)/prebuilts/tools-custom/$(HOST_OS)-x86/bin:$$PATH \
-    LD_LIBRARY_PATH=$(BUILD_TOP)/prebuilts/tools-custom/$(HOST_OS)-x86/lib:$$LD_LIBRARY_PATH \
-    PERL5LIB=$(BUILD_TOP)/prebuilts/tools-custom/common/perl-base
+    PATH=$(BUILD_TOP)/prebuilts/tools-cherish/$(HOST_PREBUILT_TAG)/bin:$$PATH \
+    LD_LIBRARY_PATH=$(BUILD_TOP)/prebuilts/tools-cherish/$(HOST_PREBUILT_TAG)/lib:$$LD_LIBRARY_PATH \
+    PERL5LIB=$(BUILD_TOP)/prebuilts/tools-cherish/common/perl-base
 
 # Set DTBO image locations so the build system knows to build them
 ifeq ($(TARGET_NEEDS_DTBOIMAGE),true)
@@ -148,16 +149,19 @@ BOARD_PREBUILT_DTBOIMAGE ?= $(PRODUCT_OUT)/dtbo-pre.img
 endif
 
 # Set use the full path to the make command
-KERNEL_MAKE_CMD := $(BUILD_TOP)/prebuilts/build-tools/$(HOST_OS)-x86/bin/make
+KERNEL_MAKE_CMD := $(BUILD_TOP)/prebuilts/build-tools/$(HOST_PREBUILT_TAG)/bin/make
 
-# Set the full path to the gcc command
-ifeq ($(HOST_OS),darwin)
-KERNEL_HOST_TOOLCHAIN_ROOT := $(GCC_PREBUILTS)/host/i686-apple-darwin-4.2.1/bin/i686-apple-darwin11-
-else
-KERNEL_HOST_TOOLCHAIN_ROOT := $(GCC_PREBUILTS)/host/x86_64-linux-glibc2.17-4.8/bin/x86_64-linux-
+# Set the full path to the clang command
+KERNEL_MAKE_FLAGS += HOSTCC=$(CLANG_PREBUILTS)/bin/clang
+KERNEL_MAKE_FLAGS += HOSTCXX=$(CLANG_PREBUILTS)/bin/clang++
+
+# Since Linux 4.16, flex and bison are required
+ifeq ($(TARGET_NEEDS_PREBUILT_FLEX_BISON), true)
+KERNEL_MAKE_FLAGS += LEX=$(BUILD_TOP)/prebuilts/build-tools/$(HOST_PREBUILT_TAG)/bin/flex
+KERNEL_MAKE_FLAGS += YACC=$(BUILD_TOP)/prebuilts/build-tools/$(HOST_PREBUILT_TAG)/bin/bison
+KERNEL_MAKE_FLAGS += M4=$(BUILD_TOP)/prebuilts/build-tools/$(HOST_PREBUILT_TAG)/bin/m4
+TOOLS_PATH_OVERRIDE += BISON_PKGDATADIR=$(BUILD_TOP)/prebuilts/build-tools/common/bison
 endif
-KERNEL_MAKE_FLAGS += HOSTCC=$(KERNEL_HOST_TOOLCHAIN_ROOT)gcc
-KERNEL_MAKE_FLAGS += HOSTCXX=$(KERNEL_HOST_TOOLCHAIN_ROOT)g++
 
 # Set the out dir for the kernel's O= arg
 # This needs to be an absolute path, so only set this if the standard out dir isn't used

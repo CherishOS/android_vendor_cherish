@@ -3,6 +3,7 @@
 # Copyright (C) 2016 The CyanogenMod Project
 # Copyright (C) 2017 The LineageOS Project
 # Copyright (C) 2018 The PixelExperience Project
+# Copyright (C) 2020 The CherishOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,7 +29,7 @@ if [[ ! -d "${MY_DIR}" ]]; then MY_DIR="${PWD}"; fi
 
 CHERISH_ROOT="${MY_DIR}/../../.."
 
-HELPER="${CHERISH_ROOT}/vendor/lineage/build/tools/extract_utils.sh"
+HELPER="${CHERISH_ROOT}/vendor/cherish/build/tools/extract_utils.sh"
 if [ ! -f "${HELPER}" ]; then
     echo "Unable to find helper script at ${HELPER}"
     exit 1
