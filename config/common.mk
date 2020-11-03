@@ -225,6 +225,11 @@ endif
 #Terminal
 PRODUCT_PACKAGES += \
     Terminal
+    
+#OmniJaws
+PRODUCT_PACKAGES += \
+    OmniJaws \
+    WeatherIcons
 
 # Customization
 #include vendor/google-customization/config.mk
