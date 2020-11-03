@@ -17,25 +17,11 @@ PRODUCT_BRAND ?= CherishOS
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
-ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.com.google.clientidbase=android-google
-else
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.com.google.clientidbase=$(PRODUCT_GMS_CLIENTID_BASE)
-endif
-
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     dalvik.vm.debug.alloc=0 \
-    ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
-    ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html \
-    ro.error.receiver.system.apps=com.google.android.gms \
-    ro.setupwizard.enterprise_mode=1 \
     ro.com.android.dataroaming=false \
-    ro.atrace.core.services=com.google.android.gms,com.google.android.gms.ui,com.google.android.gms.persistent \
     ro.com.android.dateformat=MM-dd-yyyy \
     persist.sys.disable_rescue=true \
-    ro.setupwizard.rotation_locked=true
 
 ifeq ($(TARGET_BUILD_VARIANT),eng)
 # Disable ADB authentication
@@ -44,10 +30,6 @@ else
 # Enable ADB authentication
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += ro.adb.secure=1
 endif
-
-# Ambient Play
-#PRODUCT_PACKAGES += \
-#    AmbientPlayHistoryProvider
 
 # Face Unlock
 TARGET_FACE_UNLOCK_SUPPORTED := true
@@ -119,10 +101,6 @@ PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
 # leave less information available via JDWP.
 PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
 
-# Charger
-PRODUCT_PACKAGES += \
-    charger_res_images
-
 # Filesystems tools
 PRODUCT_PACKAGES += \
     fsck.exfat \
@@ -155,37 +133,6 @@ DEVICE_PACKAGE_OVERLAYS += vendor/cherish/overlay/common
 PRODUCT_DEXPREOPT_SPEED_APPS += \
     SystemUI \
     NexusLauncherRelease
-
-# PixelSetupWizard overlay
-#PRODUCT_PACKAGES += \
-#    PixelSetupWizardOverlay \
-#    PixelSetupWizardAodOverlay
-
-# Custom Overlays
-# Settings
-#PRODUCT_PACKAGES += \
-#    SystemPitchBlackOverlay \
-#    SystemUIPitchBlackOverlay \
-#    SystemDarkGrayOverlay \
-#    SystemUIDarkGrayOverlay \
-#    SystemStyleOverlay \
-#    SystemUIStyleOverlay \
-#    SystemNightOverlay \
-#    SystemUINightOverlay \
-#    SystemSolarizedDarkOverlay \
-#    SystemUISolarizedDarkOverlay \
-#    SystemMaterialOceanOverlay \
-#    SystemUIMaterialOceanOverlay \
-#    SystemBakedGreenOverlay \
-#    SystemUIBakedGreenOverlay \
-#    SystemChocoXOverlay \
-#    SystemUIChocoXOverlay \
-#    SystemDarkAubergineOverlay \
-#    SystemUIDarkAubergineOverlay
-
-# Long Screenshot
-#PRODUCT_PACKAGES += \
-#    StitchImage
 
 # Cutout control overlay
 #ifneq ($(filter true, $(TARGET_PROVIDES_OWN_NO_CUTOUT_OVERLAY)),)
@@ -236,8 +183,5 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     OmniJaws \
     WeatherIcons
-
-# Customization
-#include vendor/google-customization/config.mk
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
