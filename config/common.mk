@@ -178,7 +178,11 @@ endif
 #Terminal
 PRODUCT_PACKAGES += \
     Terminal
-    
+
+  # Required packages
+PRODUCT_PACKAGES += \
+    ThemePicker 
+	
 #OmniJaws
 PRODUCT_PACKAGES += \
     OmniJaws \
