@@ -220,6 +220,11 @@ endif
 # Face Unlock
 TARGET_FACE_UNLOCK_SUPPORTED := true
 ifneq ($(TARGET_DISABLE_ALTERNATIVE_FACE_UNLOCK), true)
+
+# Required packages
+PRODUCT_PACKAGES += \
+    ThemePicker 
+	
 PRODUCT_PACKAGES += \
     FaceUnlockService
 TARGET_FACE_UNLOCK_SUPPORTED := true
