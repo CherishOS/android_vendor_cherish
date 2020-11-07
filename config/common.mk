@@ -123,6 +123,10 @@ PRODUCT_COPY_FILES += \
 # Credential storage
 PRODUCT_PACKAGES += \
     android.software.credentials.prebuilt.xml
+
+# Disable RescueParty due to high risk of data loss
+PRODUCT_PRODUCT_PROPERTIES += \
+    persist.sys.disable_rescue=true
 	
 # Allow vendor prebuilt repos to exclude themselves from bp scanning
 -include $(sort $(wildcard vendor/*/*/exclude-bp.mk))
