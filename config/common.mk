@@ -232,7 +232,7 @@ else
 endif
 
 # Plugins
-#include packages/apps/PotatoPlugins/plugins.mk
+include packages/apps/PotatoPlugins/plugins.mk
 
 #Terminal
 PRODUCT_PACKAGES += \
