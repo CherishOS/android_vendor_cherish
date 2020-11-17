@@ -167,6 +167,9 @@ PRODUCT_PRODUCT_PROPERTIES += \
 # Include CherishOS Themes Styles
 include vendor/themes/themes.mk
 
+# Plugins
+include packages/apps/PotatoPlugins/plugins.mk
+
 # Pixel customization
 TARGET_SUPPORTS_GOOGLE_RECORDER ?= true
 TARGET_INCLUDE_STOCK_ARCORE ?= true
