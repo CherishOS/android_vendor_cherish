@@ -149,7 +149,16 @@ include vendor/themes/themes.mk
 include vendor/cherish/config/ota.mk
 
 # Inherit from apex config
+ifeq ($(TARGET_FLATTEN_APEX),false)
 $(call inherit-product, vendor/cherish/config/apex.mk)
+else
+# Hide "Google Play System Updates" if Apex disabled
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
+    vendor/cherish/overlay_apex_disabled
+
+DEVICE_PACKAGE_OVERLAYS += \
+    vendor/cherish/overlay_apex_disabled/common
+endif
 
 # Inherit from GMS product config
 ifeq ($(WITH_GAPPS),true)
@@ -183,7 +192,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     ThemePicker \
 	 CherishThemesStub
-	
+	 
 #OmniJaws
 PRODUCT_PACKAGES += \
     OmniJaws \
