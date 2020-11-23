@@ -199,6 +199,10 @@ else
 include vendor/cherish/config/basicapps.mk
 endif
 
+# SystemUI Plugins
+PRODUCT_PACKAGES += \
+    QuickAccessWallet
+
 $(call inherit-product-if-exists, vendor/google/modules/build/mainline_modules_r.mk)
 
 # Do not preoptimize prebuilts when building GApps
