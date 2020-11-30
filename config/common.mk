@@ -273,4 +273,10 @@ $(call inherit-product, vendor/cherish/config/ota.mk)
 # RRO Overlays
 $(call inherit-product, vendor/cherish/config/rro_overlays.mk)
 
+# FOD Animations
+ifeq ($(TARGET_WANTS_FOD_ANIMATIONS),true)
+PRODUCT_PACKAGES += \
+    FodAnimationResources
+endif
+
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
