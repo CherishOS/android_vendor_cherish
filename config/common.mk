@@ -115,9 +115,9 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/cherish/overlay
 DEVICE_PACKAGE_OVERLAYS += vendor/cherish/overlay/common
 
-# OmniStyle
-#PRODUCT_PACKAGES += \
-#    OmniStyle
+#OmniStyle
+PRODUCT_PACKAGES += \
+    OmniStyle
 
 # TouchGestures
 #PRODUCT_PACKAGES += \
