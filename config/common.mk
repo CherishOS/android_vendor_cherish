@@ -108,6 +108,10 @@ PRODUCT_PACKAGES += \
     OmniJaws \
     WeatherIcons
 
+#OmniStyle
+PRODUCT_PACKAGES += \
+    OmniStyle
+
 # Dex preopt
 PRODUCT_DEXPREOPT_SPEED_APPS += \
     SystemUI \
