@@ -21,5 +21,4 @@ CHERISH_TARGET_PACKAGE := $(PRODUCT_OUT)/$(CHERISH_VERSION).zip
 bacon: $(INTERNAL_OTA_PACKAGE_TARGET)
 	$(hide) mv $(INTERNAL_OTA_PACKAGE_TARGET) $(CHERISH_TARGET_PACKAGE)
 	$(hide) $(MD5SUM) $(CHERISH_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(CHERISH_TARGET_PACKAGE).md5sum
-	$(hide) ./vendor/cherish/tools/generate_json_build_info.sh $(CHERISH_TARGET_PACKAGE)
 	@echo "Package Complete: $(CHERISH_TARGET_PACKAGE)" >&2
