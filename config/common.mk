@@ -178,6 +178,9 @@ else
     PRODUCT_COPY_FILES += vendor/cherish/bootanimation/bootanimation_1080.zip:$(TARGET_COPY_OUT_PRODUCT)/media/bootanimation.zip
 endif
 
+# Inherit from rro_overlays config
+$(call inherit-product, vendor/cherish/config/rro_overlays.mk)
+
 # Plugins
 #include packages/apps/PotatoPlugins/plugins.mk
 
