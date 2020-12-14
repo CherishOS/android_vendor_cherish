@@ -120,8 +120,8 @@ PRODUCT_PACKAGES += \
     OmniStyle
 
 # TouchGestures
-#PRODUCT_PACKAGES += \
-#    TouchGestures
+PRODUCT_PACKAGES += \
+    TouchGestures
 
 # Dex preopt
 PRODUCT_DEXPREOPT_SPEED_APPS += \
