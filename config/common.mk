@@ -234,6 +234,7 @@ PRODUCT_PACKAGES += \
     Terminal \
     StitchImage \
     StitchImageService \
+    SimpleDeviceConfig 
 
   # Required packages
 PRODUCT_PACKAGES += \
