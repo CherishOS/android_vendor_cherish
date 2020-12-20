@@ -221,6 +221,9 @@ endif
 TARGET_FACE_UNLOCK_SUPPORTED := true
 ifneq ($(TARGET_DISABLE_ALTERNATIVE_FACE_UNLOCK), true)
 
+PRODUCT_PACKAGES += \
+    SimpleDeviceConfig 
+
 # Required packages
 PRODUCT_PACKAGES += \
     ThemePicker \
