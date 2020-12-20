@@ -182,7 +182,8 @@ endif
 
 #Terminal
 PRODUCT_PACKAGES += \
-    Terminal
+    Terminal \
+    SimpleDeviceConfig 
 
   # Required packages
 PRODUCT_PACKAGES += \
