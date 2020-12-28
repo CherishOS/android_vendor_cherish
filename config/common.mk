@@ -191,12 +191,15 @@ include vendor/themes/themes.mk
 # OTA
 include vendor/cherish/config/ota.mk
 
+# Inherit GMS, Pixel Features, and Modules.
 ifeq ($(CHERISH_WITHGAPPS), true)
 include vendor/google/gms/config.mk
 include vendor/google/pixel/config.mk
 else
 include vendor/cherish/config/basicapps.mk
 endif
+
+$(call inherit-product-if-exists, vendor/google/modules/build/mainline_modules_r.mk)
 
 # Do not preoptimize prebuilts when building GApps
 DONT_DEXPREOPT_PREBUILTS := true
