@@ -177,6 +177,9 @@ else
     PRODUCT_COPY_FILES += vendor/cherish/bootanimation/bootanimation_1080.zip:$(TARGET_COPY_OUT_PRODUCT)/media/bootanimation.zip
 endif
 
+# Pixel Style
+include vendor/pixelstyle/config.mk
+
 # Plugins
 include packages/apps/PotatoPlugins/plugins.mk
 
