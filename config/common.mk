@@ -125,9 +125,8 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
     NexusLauncherRelease
 
 # Cutout control overlay
-#ifneq ($(filter true, $(TARGET_PROVIDES_OWN_NO_CUTOUT_OVERLAY)),)
-#PRODUCT_PACKAGES += NoCutoutOverlay
-#endif
+PRODUCT_PACKAGES += \
+    NoCutoutOverlay
 
 # Branding
 include vendor/cherish/config/branding.mk
