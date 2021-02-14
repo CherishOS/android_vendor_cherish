@@ -2,7 +2,7 @@
 
 export Changelog=Changelog.txt
 
-DEVICE=$(echo $TARGET_PRODUCT | cut -d "_" -f2)
+DEVICE=$(echo $TARGET_PRODUCT | sed "s/cherish_//g")
 
 if [ -f $Changelog ];
 then
