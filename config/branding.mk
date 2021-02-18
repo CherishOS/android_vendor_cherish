@@ -23,11 +23,12 @@ CHERISH_VERSION := Cherish-OS-v$(CHERISHVERSION)-$(CHERISH_BUILD_DATE)-$(CHERISH
 else
 CHERISH_VERSION := Cherish-OS-v$(CHERISHVERSION)-$(CHERISH_BUILD_DATE)-$(CHERISH_BUILD)-$(CHERISH_BUILD_TYPE)-Vanilla
 endif
-CHERISH_VERSION_PROP := 11
+CHERISH_VERSION_PROP := $(PLATFORM_VERSION)
 
 PRODUCT_GENERIC_PROPERTIES += \
     ro.cherish.version=$(CHERISHVERSION) \
     ro.cherish.version.display=$(CHERISH_VERSION) \
     ro.cherish.build_date=$(CHERISH_BUILD_DATE) \
+    ro.cherish.version.prop=$(CHERISH_VERSION_PROP) \
     ro.cherish.build_date_utc=$(CHERISH_BUILD_DATE_UTC) \
     ro.cherish.build_type=$(CHERISH_BUILD_TYPE)
