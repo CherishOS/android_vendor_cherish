@@ -1,6 +1,6 @@
-function __print_custom_functions_help() {
+function __print_cherish_functions_help() {
 cat <<EOF
-Additional functions:
+Additional CherishOS functions:
 - cout:            Changes directory to out.
 - mmp:             Builds all of the modules in the current directory and pushes them to the device.
 - mmap:            Builds all of the modules in the current directory and its dependencies, then pushes the package to the device.
@@ -9,7 +9,7 @@ Additional functions:
 - pixelrebase:     Rebase a Gerrit change and push it again.
 - aospremote:      Add git remote for matching AOSP repository.
 - cafremote:       Add git remote for matching CodeAurora repository.
-- githubremote:    Add git remote for PixelExperience Github.
+- githubremote:    Add git remote for CherishOS Github.
 - mka:             Builds using SCHED_BATCH on all processors.
 - mkap:            Builds the module(s) using mka and pushes them to the device.
 - cmka:            Cleans and builds using mka.
@@ -82,7 +82,7 @@ function breakfast()
                 variant="userdebug"
             fi
 
-            lunch aosp_$target-$variant
+            lunch cherish_$target-$variant
         fi
     fi
     return $?
@@ -93,7 +93,7 @@ alias bib=breakfast
 function eat()
 {
     if [ "$OUT" ] ; then
-        ZIPPATH=`ls -tr "$OUT"/PixelExperience-*.zip | tail -1`
+        ZIPPATH=`ls -tr "$OUT"/Cherish-*.zip | tail -1`
         if [ ! -f $ZIPPATH ] ; then
             echo "Nothing to eat"
             return 1
@@ -101,13 +101,13 @@ function eat()
         echo "Waiting for device..."
         adb wait-for-device-recovery
         echo "Found device"
-        if (adb shell getprop org.pixelexperience.device | grep -q "$CUSTOM_BUILD"); then
+        if (adb shell getprop ro.cherish.device | grep -q "$CHERISH_BUILD"); then
             echo "Rebooting to sideload for install"
             adb reboot sideload-auto-reboot
             adb wait-for-sideload
             adb sideload $ZIPPATH
         else
-            echo "The connected device does not appear to be $CUSTOM_BUILD, run away!"
+            echo "The connected device does not appear to be $CHERISH_BUILD, run away!"
         fi
         return $?
     else
@@ -291,7 +291,7 @@ function githubremote()
 
     local PROJECT=$(echo $REMOTE | sed -e "s#platform/#android/#g; s#/#_#g")
 
-    git remote add github https://github.com/PixelExperience/$PROJECT
+    git remote add github https://github.com/CherishOS/$PROJECT
     echo "Remote 'github' created"
 }
 
@@ -322,14 +322,14 @@ function installboot()
     adb wait-for-device-recovery
     adb root
     adb wait-for-device-recovery
-    if (adb shell getprop org.pixelexperience.device | grep -q "$CUSTOM_BUILD");
+    if (adb shell getprop ro.cherish.device | grep -q "$CHERISH_BUILD");
     then
         adb push $OUT/boot.img /cache/
         adb shell dd if=/cache/boot.img of=$PARTITION
         adb shell rm -rf /cache/boot.img
         echo "Installation complete."
     else
-        echo "The connected device does not appear to be $CUSTOM_BUILD, run away!"
+        echo "The connected device does not appear to be $CHERISH_BUILD, run away!"
     fi
 }
 
@@ -360,14 +360,14 @@ function installrecovery()
     adb wait-for-device-recovery
     adb root
     adb wait-for-device-recovery
-    if (adb shell getprop org.pixelexperience.device | grep -q "$CUSTOM_BUILD");
+    if (adb shell getprop ro.cherish.device | grep -q "$CHERISH_BUILD");
     then
         adb push $OUT/recovery.img /cache/
         adb shell dd if=/cache/recovery.img of=$PARTITION
         adb shell rm -rf /cache/recovery.img
         echo "Installation complete."
     else
-        echo "The connected device does not appear to be $CUSTOM_BUILD, run away!"
+        echo "The connected device does not appear to be $CHERISH_BUILD, run away!"
     fi
 }
 
@@ -409,18 +409,14 @@ function pixelgerrit() {
                 cat <<EOF
 Usage:
     $FUNCNAME COMMAND [OPTIONS] [CHANGE-ID[/PATCH-SET]][{@|^|~|:}ARG] [-- ARGS]
-
 Commands:
     fetch   Just fetch the change as FETCH_HEAD
     help    Show this help, or for a specific command
     pull    Pull a change into current branch
     push    Push HEAD or a local branch to Gerrit
-
 Any other Git commands that support refname would work as:
     git fetch URL CHANGE && git COMMAND OPTIONS FETCH_HEAD{@|^|~|:}ARG -- ARGS
-
 See '$FUNCNAME help COMMAND' for more information on a specific command.
-
 Example:
     $FUNCNAME checkout -b topic 1234/5
 works as:
@@ -441,11 +437,9 @@ EOF
                 help) $FUNCNAME help ;;
                 fetch|pull) cat <<EOF
 usage: $FUNCNAME $1 [OPTIONS] CHANGE-ID[/PATCH-SET]
-
 works as:
     git $1 OPTIONS http://DOMAIN/p/PROJECT \\
       refs/changes/HASH/CHANGE-ID/{PATCH-SET|1}
-
 Example:
     $FUNCNAME $1 1234
 will $1 patch-set 1 of change 1234
@@ -453,11 +447,9 @@ EOF
                     ;;
                 push) cat <<EOF
 usage: $FUNCNAME push BRANCH
-
 works as:
     git push ssh://USER@DOMAIN:29418/PROJECT \\
       HEAD:refs/for/$remote_branch
-
 Example:
     $FUNCNAME push '$remote_branch'
 will push HEAD to branch '$remote_branch'.
@@ -468,7 +460,6 @@ EOF
                     $FUNCNAME __cmg_err_not_supported $1 && return
                     cat <<EOF
 usage: $FUNCNAME $1 [OPTIONS] CHANGE-ID[/PATCH-SET][{@|^|~|:}ARG] [-- ARGS]
-
 works as:
     git fetch http://DOMAIN/p/PROJECT \\
       refs/changes/HASH/CHANGE-ID/{PATCH-SET|1} \\
@@ -660,7 +651,7 @@ function pixelrebase() {
 }
 
 function mka() {
-    m -j "$@"
+    m -j$(nproc --all) "$@"
 }
 
 function cmka() {
@@ -731,7 +722,7 @@ function dopush()
         echo "Device Found."
     fi
 
-    if (adb shell getprop org.pixelexperience.device | grep -q "$CUSTOM_BUILD") || [ "$FORCE_PUSH" = "true" ];
+    if (adb shell getprop ro.cherish.device | grep -q "$CHERISH_BUILD") || [ "$FORCE_PUSH" = "true" ];
     then
     # retrieve IP and PORT info if we're using a TCP connection
     TCPIPPORT=$(adb devices \
@@ -850,7 +841,7 @@ EOF
     rm -f $OUT/.log
     return 0
     else
-        echo "The connected device does not appear to be $CUSTOM_BUILD, run away!"
+        echo "The connected device does not appear to be $CHERISH_BUILD, run away!"
     fi
 }
 
@@ -863,7 +854,7 @@ alias cmkap='dopush cmka'
 
 function repopick() {
     T=$(gettop)
-    $T/vendor/aosp/build/tools/repopick.py $@
+    $T/vendor/cherish/build/tools/repopick.py $@
 }
 
 function fixup_common_out_dir() {

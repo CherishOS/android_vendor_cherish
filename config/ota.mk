@@ -1,4 +1,4 @@
-ifneq ($(filter OFFICIAL CI,$(CUSTOM_BUILD_TYPE)),)
+ifeq ($(CHERISH_BUILD_TYPE), OFFICIAL)
 PRODUCT_PACKAGES += \
     Updates
 endif
