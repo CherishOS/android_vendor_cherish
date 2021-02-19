@@ -179,6 +179,9 @@ include vendor/themes/themes.mk
 # Plugins
 include packages/apps/PotatoPlugins/plugins.mk
 
+# Version
+include vendor/cherish/config/main_version.mk
+
 # Pixel customization
 TARGET_SUPPORTS_GOOGLE_RECORDER ?= true
 TARGET_INCLUDE_STOCK_ARCORE ?= true

@@ -1,1 +1,0 @@
-include $(TOPDIR)vendor/cherish/build/core/main_version.mk
