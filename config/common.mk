@@ -249,7 +249,7 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 # Audio
 $(call inherit-product, vendor/cherish/config/audio.mk)
 
-ifeq ($(CHERISH_NOGAPPS), true)
+ifeq ($(CHERISH_NONGAPPS), true)
 include vendor/cherish/config/basicapps.mk
 else
 # GApps
