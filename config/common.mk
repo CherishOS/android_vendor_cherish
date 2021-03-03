@@ -187,6 +187,10 @@ include packages/apps/PotatoPlugins/plugins.mk
 # Version
 include vendor/cherish/config/main_version.mk
 
+# IORap app launch prefetching using Perfetto traces and madvise
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.iorapd.enable=true
+
 # Pixel customization
 TARGET_SUPPORTS_GOOGLE_RECORDER ?= true
 TARGET_INCLUDE_STOCK_ARCORE ?= true
