@@ -1,5 +1,6 @@
 # Set all versions
 CHERISH_BUILD_TYPE ?= UNOFFICIAL
+CHERISH_MAINTAINER ?= Unknown
 
 CHERISH_DATE_YEAR := $(shell date -u +%Y)
 CHERISH_DATE_MONTH := $(shell date -u +%m)
@@ -29,6 +30,7 @@ PRODUCT_GENERIC_PROPERTIES += \
     ro.cherish.version=$(CHERISHVERSION) \
     ro.cherish.version.display=$(CHERISH_VERSION) \
     ro.cherish.build_date=$(CHERISH_BUILD_DATE) \
+    ro.cherish.maintainer=$(CHERISH_MAINTAINER) \
     ro.cherish.version.prop=$(CHERISH_VERSION_PROP) \
     ro.cherish.build_date_utc=$(CHERISH_BUILD_DATE_UTC) \
     ro.cherish.build_type=$(CHERISH_BUILD_TYPE)
