@@ -33,6 +33,12 @@ else
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += ro.adb.secure=1
 endif
 
+# Conditionally build adb root
+ifneq ($(TARGET_BUILD_VARIANT),user)
+PRODUCT_PACKAGES += \
+    adb_root
+endif
+
 # Ambient Play
 #PRODUCT_PACKAGES += \
 #    AmbientPlayHistoryProvider
