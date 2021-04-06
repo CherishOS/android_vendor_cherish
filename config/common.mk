@@ -225,10 +225,6 @@ PRODUCT_COPY_FILES += \
     vendor/cherish/prebuilt/common/bin/backuptool_postinstall.sh:system/bin/backuptool_postinstall.sh
 endif
 
-# Face Unlock
-TARGET_FACE_UNLOCK_SUPPORTED := true
-ifneq ($(TARGET_DISABLE_ALTERNATIVE_FACE_UNLOCK), true)
-
 # Packages
 PRODUCT_PACKAGES += \
     SimpleDeviceConfig \
@@ -238,13 +234,17 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     ThemePicker \
 	 CherishThemesStub
-	
+
+#Face Unlock
+TARGET_FACE_UNLOCK_SUPPORTED ?= true
+ifeq ($(TARGET_FACE_UNLOCK_SUPPORTED),true)
 PRODUCT_PACKAGES += \
     FaceUnlockService
-TARGET_FACE_UNLOCK_SUPPORTED := true
-endif
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.face.moto_unlock_service=$(TARGET_FACE_UNLOCK_SUPPORTED)
+    ro.face_unlock_service.enabled=$(TARGET_FACE_UNLOCK_SUPPORTED)
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.biometrics.face.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.hardware.biometrics.face.xml
+endif
 
 # Audio
 $(call inherit-product, vendor/cherish/config/audio.mk)
