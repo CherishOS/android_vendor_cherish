@@ -146,6 +146,18 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
 # SystemUI plugins
 PRODUCT_PACKAGES += \
     QuickAccessWallet
+	
+# Statusbar Icons
+PRODUCT_PACKAGES += \
+    StrokeSignalOverlay \
+    SneakySignalOverlay \
+    XperiaSignalOverlay
+
+# Wi-Fi Icons
+PRODUCT_PACKAGES += \
+    StrokeWiFiOverlay \
+    SneakyWiFiOverlay \
+    XperiaWiFiOverlay
 
 # Hide nav Overlays
 PRODUCT_PACKAGES += \
