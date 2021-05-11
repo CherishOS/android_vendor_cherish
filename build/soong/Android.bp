@@ -2,7 +2,7 @@
 
 bootstrap_go_package {
     name: "soong-cherish-generator",
-    pkgPath: "aosp/soong/generator",
+    pkgPath: "cherish/soong/generator",
     deps: [
         "blueprint",
         "blueprint-pathtools",
