@@ -232,7 +232,8 @@ endif
 # Packages
 PRODUCT_PACKAGES += \
     SimpleDeviceConfig \
-    Seedvault
+    Seedvault \
+    Custom-Fonts
 
 # Required packages
 PRODUCT_PACKAGES += \

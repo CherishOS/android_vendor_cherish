@@ -30,4 +30,8 @@ It allows additional grants on top of privapp-permissions-platform.xml
 	 <privapp-permissions package="com.asus.stitchimage.service">
         <permission name="android.permission.READ_EXTERNAL_STORAGE"/>
     </privapp-permissions>
+	
+	<privapp-permissions package="com.android.settings">
+        <permission name="android.permission.ACCESS_FONT_MANAGER"/>
+    </privapp-permissions>
 </permissions>

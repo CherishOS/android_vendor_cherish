@@ -62,4 +62,9 @@
 
     <!-- Flag indicating which package name can access DeviceConfig table -->
     <string name="config_deviceConfiguratorPackageName" translatable="false">org.protonaosp.deviceconfig</string>
+	
+	<!-- System font packages (overlay in vendor) -->
+    <string-array name="config_fontPackages" translatable="false">
+        <item>com.custom.fonts</item>
+    </string-array>
 </resources>
