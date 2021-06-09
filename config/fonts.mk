@@ -34,7 +34,9 @@ PRODUCT_PACKAGES += \
     ZillaSlab-MediumItalic.ttf \
     ZillaSlab-Medium.ttf \
     ZillaSlab-SemiBoldItalic.ttf \
-    ZillaSlab-SemiBold.ttf
+    ZillaSlab-SemiBold.ttf \
+    Manrope-VF.ttf \
+    RobotoFallback-VF.ttf
 
 # Karla family
 PRODUCT_PACKAGES += \
