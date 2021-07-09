@@ -16,7 +16,9 @@
      limitations under the License.
 -->
 <resources>
-    <string name="themes_stub_package" translatable="false">org.cherish.stub</string>
+    <string name="themes_stub_package" translatable="false">com.cherish.stub</string>
+    <string name="clocks_stub_package" translatable="false">com.cherish.stub</string>
+
     <!-- List of packages whose icons are used to preview the icon shape for a theme. These are
         typically GMS apps so they should be available in GMS devices. -->
     <array name="icon_shape_preview_packages">
@@ -31,6 +33,5 @@
         <item>com.android.messaging</item>
         <item>com.android.contacts</item>
         <item>com.android.dialer</item>
-        <item>com.android.email</item>
     </array>
 </resources>

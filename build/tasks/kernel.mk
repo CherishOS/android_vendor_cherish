@@ -1,6 +1,5 @@
 # Copyright (C) 2012 The CyanogenMod Project
-#           (C) 2017-2020 The LineageOS Project
-#           (C) 2018-2020 The PixelExperience Project
+#           (C) 2017-2020 The CherishOS
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,8 +32,6 @@
 #
 #   TARGET_KERNEL_CLANG_PATH           = Clang prebuilts path, optional
 #
-#   KERNEL_SUPPORTS_LLVM_TOOLS         = If set, switches ar, nm, objcopy, objdump to llvm tools instead of using GNU Binutils, optional
-#
 #   BOARD_KERNEL_IMAGE_NAME            = Built image name
 #                                          for ARM use: zImage
 #                                          for ARM64 use: Image.gz
@@ -66,6 +63,7 @@
 #                                          modules in vendor_overlay instead of vendor
 
 ifneq ($(TARGET_NO_KERNEL),true)
+ifneq ($(TARGET_NO_KERNEL_OVERRIDE),true)
 
 ## Externally influenced variables
 KERNEL_SRC := $(TARGET_KERNEL_SOURCE)
@@ -155,21 +153,8 @@ else
         $(warning **********************************************************)
         $(error "NO KERNEL CONFIG")
     else
-        ifneq ($(TARGET_FORCE_PREBUILT_KERNEL),)
-            $(warning **********************************************************)
-            $(warning * Kernel source found and configuration was defined      *)
-            $(warning * but prebuilt kernel is being enforced.                 *)
-            $(warning * While there may be a good reason for this,             *)
-            $(warning * THIS IS NOT ADVISED.                                   *)
-            $(warning * Please configure your device to build the kernel       *)
-            $(warning * from source by unsetting TARGET_FORCE_PREBUILT_KERNEL  *)
-            $(warning **********************************************************)
-            FULL_KERNEL_BUILD := false
-            KERNEL_BIN := $(TARGET_PREBUILT_KERNEL)
-        else
-            FULL_KERNEL_BUILD := true
-            KERNEL_BIN := $(TARGET_PREBUILT_INT_KERNEL)
-        endif
+        FULL_KERNEL_BUILD := true
+        KERNEL_BIN := $(TARGET_PREBUILT_INT_KERNEL)
     endif
 endif
 
@@ -197,6 +182,9 @@ $(INSTALLED_VENDORIMAGE_TARGET): $(TARGET_PREBUILT_INT_KERNEL)
 endif
 MODULES_INTERMEDIATES := $(KERNEL_BUILD_OUT_PREFIX)$(call intermediates-dir-for,PACKAGING,kernel_modules)
 
+KERNEL_VENDOR_RAMDISK_DEPMOD_STAGING_DIR := $(KERNEL_BUILD_OUT_PREFIX)$(call intermediates-dir-for,PACKAGING,depmod_vendor_ramdisk)
+$(INTERNAL_VENDOR_RAMDISK_TARGET): $(TARGET_PREBUILT_INT_KERNEL)
+
 # Add host bin out dir to path
 PATH_OVERRIDE := PATH=$(KERNEL_BUILD_OUT_PREFIX)$(HOST_OUT_EXECUTABLES):$$PATH
 ifeq ($(TARGET_KERNEL_CLANG_COMPILE),true)
@@ -205,23 +193,6 @@ ifeq ($(TARGET_KERNEL_CLANG_COMPILE),true)
     else
         # Use the default version of clang if TARGET_KERNEL_CLANG_VERSION hasn't been set by the device config
         KERNEL_CLANG_VERSION := $(LLVM_PREBUILTS_VERSION)
-    endif
-
-    # As 
-    ifeq ($(KERNEL_SUPPORTS_LLVM_TOOLS),true)
-        KERNEL_LD := LD=ld.lld
-        KERNEL_AR := AR=llvm-ar
-        KERNEL_OBJCOPY := OBJCOPY=llvm-objcopy
-        KERNEL_OBJDUMP := OBJDUMP=llvm-objdump
-        KERNEL_NM := NM=llvm-nm
-        KERNEL_STRIP := STRIP=llvm-strip
-    else
-        KERNEL_LD :=
-        KERNEL_AR :=
-        KERNEL_OBJCOPY :=
-        KERNEL_OBJDUMP :=
-        KERNEL_NM :=
-        KERNEL_STRIP :=
     endif
     TARGET_KERNEL_CLANG_PATH ?= $(BUILD_TOP)/prebuilts/clang/host/$(HOST_PREBUILT_TAG)/$(KERNEL_CLANG_VERSION)
     ifeq ($(KERNEL_ARCH),arm64)
@@ -255,7 +226,7 @@ KERNEL_ADDITIONAL_CONFIG_OUT := $(KERNEL_OUT)/.additional_config
 # $(1): output path (The value passed to O=)
 # $(2): target to build (eg. defconfig, modules, dtbo.img)
 define internal-make-kernel-target
-$(PATH_OVERRIDE) $(KERNEL_MAKE_CMD) $(KERNEL_MAKE_FLAGS) -C $(KERNEL_SRC) O=$(KERNEL_BUILD_OUT_PREFIX)$(1) ARCH=$(KERNEL_ARCH) $(KERNEL_CROSS_COMPILE) $(KERNEL_CLANG_TRIPLE) $(KERNEL_CC) $(KERNEL_LD) $(KERNEL_AR) $(KERNEL_NM) $(KERNEL_OBJCOPY) $(KERNEL_OBJDUMP) $(KERNEL_STRIP) $(2)
+$(PATH_OVERRIDE) $(KERNEL_MAKE_CMD) $(KERNEL_MAKE_FLAGS) -C $(KERNEL_SRC) O=$(KERNEL_BUILD_OUT_PREFIX)$(1) ARCH=$(KERNEL_ARCH) $(KERNEL_CROSS_COMPILE) $(KERNEL_CLANG_TRIPLE) $(KERNEL_CC) $(KERNEL_LD) $(2)
 endef
 
 # Make a kernel target
@@ -280,9 +251,9 @@ endef
 # $(2): output dir
 # $(3): mount point
 # $(4): staging dir
+# $(5): module load list
 # Depmod requires a well-formed kernel version so 0.0 is used as a placeholder.
 define build-image-kernel-modules-cherish
-    rm -rf $(2)/lib/modules
     mkdir -p $(2)/lib/modules
     cp $(1) $(2)/lib/modules/
     rm -rf $(4)
@@ -290,7 +261,12 @@ define build-image-kernel-modules-cherish
     cp $(1) $(4)/lib/modules/0.0/$(3)lib/modules
     $(DEPMOD) -b $(4) 0.0
     sed -e 's/\(.*modules.*\):/\/\1:/g' -e 's/ \([^ ]*modules[^ ]*\)/ \/\1/g' $(4)/lib/modules/0.0/modules.dep > $(2)/lib/modules/modules.dep
+    cp $(4)/lib/modules/0.0/modules.softdep $(2)/lib/modules
     cp $(4)/lib/modules/0.0/modules.alias $(2)/lib/modules
+    rm -f $(2)/lib/modules/modules.load
+    for MODULE in $(5); do \
+        basename $$MODULE >> $(2)/lib/modules/modules.load; \
+    done
 endef
 
 $(KERNEL_OUT):
@@ -333,7 +309,15 @@ $(TARGET_PREBUILT_INT_KERNEL): $(KERNEL_CONFIG) $(DEPMOD) $(DTC)
 				$(eval p := $(subst :,$(space),$(s))) \
 				; mv $$(find $$kernel_modules_dir -name $(word 1,$(p))) $$kernel_modules_dir/$(word 2,$(p))); \
 			modules=$$(find $$kernel_modules_dir -type f -name '*.ko'); \
-			($(call build-image-kernel-modules-cherish,$$modules,$(KERNEL_MODULES_OUT),$(KERNEL_MODULE_MOUNTPOINT)/,$(KERNEL_DEPMOD_STAGING_DIR))); \
+			($(call build-image-kernel-modules-cherish,$$modules,$(KERNEL_MODULES_OUT),$(KERNEL_MODULE_MOUNTPOINT)/,$(KERNEL_DEPMOD_STAGING_DIR),$(BOARD_VENDOR_KERNEL_MODULES_LOAD))); \
+			$(if $(BOOT_KERNEL_MODULES),\
+				vendor_boot_modules=$$(for m in $(BOOT_KERNEL_MODULES); do \
+					p=$$(find $$kernel_modules_dir -type f -name $$m); \
+					if [ -n "$$p" ]; then echo $$p; else echo "ERROR: $$m from BOOT_KERNEL_MODULES was not found" 1>&2 && exit 1; fi; \
+				done); \
+				[ $$? -ne 0 ] && exit 1; \
+				($(call build-image-kernel-modules-cherish,$$vendor_boot_modules,$(TARGET_VENDOR_RAMDISK_OUT),/,$(KERNEL_VENDOR_RAMDISK_DEPMOD_STAGING_DIR),$(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD))); \
+			) \
 		fi
 
 .PHONY: kerneltags
@@ -410,4 +394,5 @@ dtboimage: $(INSTALLED_DTBOIMAGE_TARGET)
 .PHONY: dtbimage
 dtbimage: $(INSTALLED_DTBIMAGE_TARGET)
 
+endif # TARGET_NO_KERNEL_OVERRIDE
 endif # TARGET_NO_KERNEL

@@ -2,14 +2,13 @@
 # TARGET_BOARD_PLATFORM specific featurization
 
 # Platform name variables - used in makefiles everywhere
-KONA ?= kona #SM8250
-LITO ?= lito #SM7250
-BENGAL ?= bengal #SM6115
-MSMNILE ?= msmnile #SM8150
-MSMSTEPPE ?= sm6150
-TRINKET ?= trinket #SM6125
-ATOLL ?= atoll #SM6250
-LAHAINA := lahaina #SM8350
+KONA := kona #SM8250
+LITO := lito #SM7250
+BENGAL := bengal #SM6115
+MSMNILE := msmnile #SM8150
+MSMSTEPPE := sm6150
+TRINKET := trinket #SM6125
+ATOLL := atoll #SM6250
 
 # A Family
 QCOM_BOARD_PLATFORMS += msm7x27a
@@ -53,7 +52,6 @@ QCOM_BOARD_PLATFORMS += $(TRINKET)
 QCOM_BOARD_PLATFORMS += $(MSMSTEPPE)
 QCOM_BOARD_PLATFORMS += $(MSMNILE)
 QCOM_BOARD_PLATFORMS += $(ATOLL)
-QCOM_BOARD_PLATFORMS += $(LAHAINA)
 
 # MSM7000 Family
 MSM7K_BOARD_PLATFORMS := msm7x30

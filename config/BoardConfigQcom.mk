@@ -1,12 +1,11 @@
 # Platform names
-KONA ?= kona #SM8250
-LITO ?= lito #SM7250
-BENGAL ?= bengal #SM6115
-MSMNILE ?= msmnile #SM8150
-MSMSTEPPE ?= sm6150
-TRINKET ?= trinket #SM6125
-ATOLL ?= atoll #SM6250
-LAHAINA := lahaina #SM8350
+KONA := kona #SM8250
+LITO := lito #SM7250
+BENGAL := bengal #SM6115
+MSMNILE := msmnile #SM8150
+MSMSTEPPE := sm6150
+TRINKET := trinket #SM6125
+ATOLL := atoll #SM6250
 
 B_FAMILY := msm8226 msm8610 msm8974
 B64_FAMILY := msm8992 msm8994
@@ -16,33 +15,14 @@ UM_4_4_FAMILY := msm8998 sdm660
 UM_4_9_FAMILY := sdm845 sdm710
 UM_4_14_FAMILY := $(MSMNILE) $(MSMSTEPPE) $(TRINKET) $(ATOLL)
 UM_4_19_FAMILY := $(KONA) $(LITO) $(BENGAL)
-UM_5_4_FAMILY := $(LAHAINA)
-UM_PLATFORMS := $(UM_3_18_FAMILY) $(UM_4_4_FAMILY) $(UM_4_9_FAMILY) $(UM_4_14_FAMILY) $(UM_4_19_FAMILY) $(UM_5_4_FAMILY)
-QSSI_SUPPORTED_PLATFORMS := $(UM_4_9_FAMILY) $(UM_4_14_FAMILY) $(UM_4_19_FAMILY) $(UM_5_4_FAMILY)
+UM_PLATFORMS := $(UM_3_18_FAMILY) $(UM_4_4_FAMILY) $(UM_4_9_FAMILY) $(UM_4_14_FAMILY) $(UM_4_19_FAMILY)
+QSSI_SUPPORTED_PLATFORMS := $(UM_4_9_FAMILY) $(UM_4_14_FAMILY) $(UM_4_19_FAMILY)
 
 ifeq ($(TARGET_USES_UM_4_19),true)
     QSSI_SUPPORTED_PLATFORMS += $(TARGET_BOARD_PLATFORM)
 endif
 
 BOARD_USES_ADRENO := true
-
-# Add qtidisplay to soong config namespaces
-SOONG_CONFIG_NAMESPACES += qtidisplay
-
-# Add supported variables to qtidisplay config
-SOONG_CONFIG_qtidisplay += \
-    drmpp \
-    headless \
-    llvmsa \
-    gralloc4 \
-    default
-
-# Set default values for qtidisplay config
-SOONG_CONFIG_qtidisplay_drmpp ?= false
-SOONG_CONFIG_qtidisplay_headless ?= false
-SOONG_CONFIG_qtidisplay_llvmsa ?= false
-SOONG_CONFIG_qtidisplay_gralloc4 ?= false
-SOONG_CONFIG_qtidisplay_default ?= true
 
 # UM platforms no longer need this set on O+
 ifneq ($(filter $(B_FAMILY) $(B64_FAMILY) $(BR_FAMILY),$(TARGET_BOARD_PLATFORM)),)
@@ -72,14 +52,8 @@ ifneq ($(filter $(UM_PLATFORMS),$(TARGET_BOARD_PLATFORM)),)
 endif
 
 # Enable DRM PP driver on UM platforms that support it
-ifneq ($(filter $(UM_4_9_FAMILY) $(UM_4_14_FAMILY) $(UM_4_19_FAMILY) $(UM_5_4_FAMILY),$(TARGET_BOARD_PLATFORM)),)
-    SOONG_CONFIG_qtidisplay_drmpp := true
+ifneq ($(filter $(UM_4_9_FAMILY) $(UM_4_14_FAMILY) $(UM_4_19_FAMILY),$(TARGET_BOARD_PLATFORM)),)
     TARGET_USES_DRM_PP := true
-endif
-
-# Enable Gralloc4 on UM platforms that support it
-ifneq ($(filter $(UM_5_4_FAMILY),$(TARGET_BOARD_PLATFORM)),)
-    SOONG_CONFIG_qtidisplay_gralloc4 := true
 endif
 
 # Mark GRALLOC_USAGE_HW_2D, GRALLOC_USAGE_EXTERNAL_DISP and GRALLOC_USAGE_PRIVATE_WFD as valid gralloc bits
@@ -89,12 +63,12 @@ TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS += | (1 << 13)
 TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS += | (1 << 21)
 
 # Mark GRALLOC_USAGE_PRIVATE_HEIF_VIDEO as valid gralloc bits on UM platforms that support it
-ifneq ($(filter $(UM_4_9_FAMILY) $(UM_4_14_FAMILY) $(UM_4_19_FAMILY) $(UM_5_4_FAMILY),$(TARGET_BOARD_PLATFORM)),)
+ifneq ($(filter $(UM_4_9_FAMILY) $(UM_4_14_FAMILY) $(UM_4_19_FAMILY),$(TARGET_BOARD_PLATFORM)),)
     TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS += | (1 << 27)
 endif
 
 # List of targets that use master side content protection
-MASTER_SIDE_CP_TARGET_LIST := msm8996 $(UM_4_4_FAMILY) $(UM_4_9_FAMILY) $(UM_4_14_FAMILY) $(UM_4_19_FAMILY) $(UM_5_4_FAMILY)
+MASTER_SIDE_CP_TARGET_LIST := msm8996 $(UM_4_4_FAMILY) $(UM_4_9_FAMILY) $(UM_4_14_FAMILY) $(UM_4_19_FAMILY)
 
 ifneq ($(filter $(B_FAMILY),$(TARGET_BOARD_PLATFORM)),)
     MSM_VIDC_TARGET_LIST := $(B_FAMILY)
@@ -120,17 +94,9 @@ else ifneq ($(filter $(UM_4_14_FAMILY),$(TARGET_BOARD_PLATFORM)),)
 else ifneq ($(filter $(UM_4_19_FAMILY),$(TARGET_BOARD_PLATFORM)),)
     MSM_VIDC_TARGET_LIST := $(UM_4_19_FAMILY)
     QCOM_HARDWARE_VARIANT := sm8250
-else ifneq ($(filter $(UM_5_4_FAMILY),$(TARGET_BOARD_PLATFORM)),)
-    MSM_VIDC_TARGET_LIST := $(UM_5_4_FAMILY)
-    QCOM_HARDWARE_VARIANT := sm8350
 else
     MSM_VIDC_TARGET_LIST := $(TARGET_BOARD_PLATFORM)
     QCOM_HARDWARE_VARIANT := $(TARGET_BOARD_PLATFORM)
-endif
-
-# Allow a device to manually override which HALs it wants to use
-ifneq ($(OVERRIDE_QCOM_HARDWARE_VARIANT),)
-QCOM_HARDWARE_VARIANT := $(OVERRIDE_QCOM_HARDWARE_VARIANT)
 endif
 
 # Allow a device to opt-out hardset of PRODUCT_SOONG_NAMESPACES
