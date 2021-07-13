@@ -101,7 +101,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     StatusBarLyricExt \
     StitchImage \
-    StitchImageService 
+    StitchImageService \
+    OPWeather
 
 #OmniJaws
 PRODUCT_PACKAGES += \
