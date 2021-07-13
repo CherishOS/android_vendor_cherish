@@ -136,11 +136,6 @@ endif
 # Versioning
 include vendor/cherish/config/main_version.mk
 
-# GMS
-ifeq ($(WITH_GMS),true)
-$(call inherit-product, vendor/gapps/config.mk)
-endif
-
 # Do not include art debug targets
 PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
 
@@ -254,8 +249,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.device_config.runtime_native_boot.iorap_readahead_enable=true \
     ro.iorapd.enable=true
 
+# GApps
+ifeq ($(WITH_GMS),true)
+$(call inherit-product, vendor/cherish/config/gapps.mk)
+else
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/cherish/overlay
 DEVICE_PACKAGE_OVERLAYS += vendor/cherish/overlay/common
-
+endif
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
 -include vendor/cherish/config/partner_gms.mk
