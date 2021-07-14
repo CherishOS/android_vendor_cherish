@@ -40,12 +40,6 @@
         Default to true as not all devices support contextual cards. -->
     <bool name="config_use_legacy_suggestion">false</bool>
 
-    <!-- Package name and fully-qualified class name for the wallpaper picker activity. -->
-    <string name="config_wallpaper_picker_package" translatable="false">com.android.wallpaper</string>
-    <string name="config_wallpaper_picker_class" translatable="false">com.android.customization.picker.CustomizationPickerActivity</string>
-    <!-- Fully-qualified class name for the styles & wallpaper picker activity. -->
-    <string name="config_styles_and_wallpaper_picker_class" translatable="false">com.android.customization.picker.CustomizationPickerActivity</string>
-
     <!-- Manufacturer backup settings to launch -->
     <string name="config_backup_settings_intent" translatable="false">settings://com.android.settings.backup.transport</string>
 
