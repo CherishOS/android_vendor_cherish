@@ -253,9 +253,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # GApps
 ifeq ($(WITH_GMS),true)
 $(call inherit-product, vendor/cherish/config/gapps.mk)
-else
+endif
+
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/cherish/overlay
 DEVICE_PACKAGE_OVERLAYS += vendor/cherish/overlay/common
-endif
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
 -include vendor/cherish/config/partner_gms.mk
