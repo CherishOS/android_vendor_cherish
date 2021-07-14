@@ -225,6 +225,11 @@ endif
 PRODUCT_DEXPREOPT_SPEED_APPS += \
     SystemUI 
 
+# Charger
+PRODUCT_PACKAGES += \
+    charger_res_images \
+    product_charger_res_images
+
 # Face Unlock
 TARGET_FACE_UNLOCK_SUPPORTED ?= true
 ifeq ($(TARGET_FACE_UNLOCK_SUPPORTED),true)
