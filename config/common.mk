@@ -255,6 +255,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.device_config.runtime_native_boot.iorap_readahead_enable=true \
     ro.iorapd.enable=true
 
+# OTA
+$(call inherit-product, vendor/cherish/config/ota.mk)
+
 # GApps
 ifeq ($(WITH_GMS),true)
 $(call inherit-product, vendor/cherish/config/gapps.mk)

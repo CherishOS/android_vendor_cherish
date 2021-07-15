@@ -14,10 +14,6 @@ endif
 # CherishOS Release
 ifeq ($(CHERISH_BUILD_TYPE), OFFICIAL)
 
-# Updater
-PRODUCT_PACKAGES += \
-    Updater
-
   OFFICIAL_DEVICES = $(shell cat vendor/cherish/cherish.devices)
   FOUND_DEVICE =  $(filter $(CHERISH_BUILD), $(OFFICIAL_DEVICES))
     ifeq ($(FOUND_DEVICE),$(CHERISH_BUILD))
