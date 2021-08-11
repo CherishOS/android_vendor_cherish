@@ -160,7 +160,8 @@ PRODUCT_PACKAGES += \
 # Packages
 PRODUCT_PACKAGES += \
     Seedvault \
-    Custom-Fonts
+    Custom-Fonts \
+    SoftAPManager
 
 # Extra tools in cherish
 PRODUCT_PACKAGES += \
