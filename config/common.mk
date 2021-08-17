@@ -161,7 +161,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Seedvault \
     Custom-Fonts \
-    SoftAPManager
+    SoftAPManager \
+	 GamingMode
 
 # Extra tools in cherish
 PRODUCT_PACKAGES += \
