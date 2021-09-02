@@ -75,12 +75,9 @@ PRODUCT_COPY_FILES += \
 # Log privapp-permissions whitelist
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.control_privapp_permissions=log
-
-# Include AOSP audio files
-include vendor/cherish/config/aosp_audio.mk
-
-# Include cherish audio files
-include vendor/cherish/config/cherish_audio.mk
+	
+# Inherit from audio config
+$(call inherit-product, vendor/cherish/config/audio.mk)
 
 # Include Lawnchair
 ifeq ($(USE_LAWNCHAIR),true)
