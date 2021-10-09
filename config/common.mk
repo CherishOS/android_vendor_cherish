@@ -27,6 +27,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.debug.wfd.enable=1 \
     persist.sys.wfd.virtual=0
 
+# Enable one-handed mode
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.support_one_handed_mode=true
+
 # Backup Tool
 PRODUCT_COPY_FILES += \
     vendor/cherish/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
