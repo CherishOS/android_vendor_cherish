@@ -256,6 +256,10 @@ PRODUCT_PACKAGES += \
     FodAnimationResources
 endif
 
+# Enable support of one-handed mode
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.support_one_handed_mode=true
+
 # IORap
 PRODUCT_PROPERTY_OVERRIDES += \
     iorapd.perfetto.enable=true \
