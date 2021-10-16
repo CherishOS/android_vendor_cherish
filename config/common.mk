@@ -86,35 +86,30 @@ include vendor/cherish/config/aosp_audio.mk
 # Include cherish audio files
 include vendor/cherish/config/cherish_audio.mk
 
-# Include Lawnchair
-ifeq ($(USE_LAWNCHAIR),true)
-include packages/apps/Lawnchair/lawnchair.mk
-endif
-
 # Include CherishOS Themes Styles
-include vendor/themes/themes.mk
+#include vendor/themes/themes.mk
 
 # Plugins
-include packages/apps/PotatoPlugins/plugins.mk
+#include packages/apps/PotatoPlugins/plugins.mk
 
 # TouchGestures
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     TouchGestures
 
 # Packages
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     StatusBarLyricExt \
     StitchImage \
     StitchImageService \
     OPWeather
 
 #OmniJaws
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     OmniJaws \
     WeatherIcons
 
 #OmniStyle
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     OmniStyle
 
 # Cutout control overlays
@@ -166,10 +161,7 @@ PRODUCT_PACKAGES += \
 
 # Packages
 PRODUCT_PACKAGES += \
-    Seedvault \
-    Custom-Fonts \
-    SoftAPManager \
-	 GamingMode
+    Seedvault 
 
 # Extra tools in cherish
 PRODUCT_PACKAGES += \
