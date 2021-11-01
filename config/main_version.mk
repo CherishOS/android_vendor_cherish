@@ -1,7 +1,6 @@
 # Versioning System
 CHERISH_BUILD_VARIANT ?= Vanilla
 CHERISH_BUILD_TYPE ?= UNOFFICIAL
-CHERISH_MAINTAINER ?= Unknown
 CHERISH_CODENAME := Testing
 
 ifeq ($(WITH_GMS), true)
@@ -45,7 +44,6 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.cherish.version=$(CHERISHVERSION) \
     ro.cherish.version.display=$(CHERISH_VERSION) \
     ro.cherish.build_date=$(CHERISH_BUILD_DATE) \
-    ro.cherish.maintainer=$(CHERISH_MAINTAINER) \
     ro.cherish.codename=$(CHERISH_CODENAME) \
     ro.cherish.version.prop=$(CHERISH_VERSION_PROP) \
     ro.cherish.build_date_utc=$(CHERISH_BUILD_DATE_UTC) \
