@@ -673,3 +673,7 @@ function fixup_common_out_dir() {
 # Disable ABI checking
 export SKIP_ABI_CHECKS=true
 export SELINUX_IGNORE_NEVERALLOWS=true
+
+# Override host metadata to make builds more reproducible and avoid leaking info
+export BUILD_USERNAME=nobody
+export BUILD_HOSTNAME=android-build
