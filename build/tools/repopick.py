@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2013-15 The CyanogenMod Project
 #           (C) 2017    The LineageOS Project
-#           (C) 2018    The PixelExperience Project
+#           (C) 2020-21 The CherishOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
