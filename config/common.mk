@@ -275,6 +275,9 @@ include vendor/cherish/config/basicapps.mk
 else
 # Gapps
 $(call inherit-product, vendor/gapps/config.mk)
+
+# Lawnicons
+$(call inherit-product, vendor/lawnicons/overlay.mk)
 endif
 
 # OTA
