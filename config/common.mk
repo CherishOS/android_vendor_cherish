@@ -147,6 +147,10 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
 PRODUCT_PACKAGES += \
     QuickAccessWallet
 
+# Hide nav Overlays
+PRODUCT_PACKAGES += \
+    NavigationBarModeGesturalOverlayFS 
+
 # Gboard configuration
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.com.google.ime.theme_id=5 \
