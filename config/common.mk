@@ -164,28 +164,6 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
 # SystemUI plugins
 PRODUCT_PACKAGES += \
     QuickAccessWallet
-	
-# Statusbar Icons
-PRODUCT_PACKAGES += \
-    StrokeSignalOverlay \
-    SneakySignalOverlay \
-    XperiaSignalOverlay \
-    ZigZagSignalOverlay \
-    WavySignalOverlay \
-    RoundSignalOverlay \
-    InsideSignalOverlay \
-    BarsSignalOverlay
-
-# Wi-Fi Icons
-PRODUCT_PACKAGES += \
-    StrokeWiFiOverlay \
-    SneakyWiFiOverlay \
-    XperiaWiFiOverlay \
-    ZigZagWiFiOverlay \
-    WavyWiFiOverlay \
-    RoundWiFiOverlay \
-    InsideWiFiOverlay \
-    BarsWiFiOverlay
 
 # Hide nav Overlays
 PRODUCT_PACKAGES += \
@@ -292,4 +270,6 @@ $(call inherit-product, vendor/cherish/config/ota.mk)
 # RRO Overlays
 $(call inherit-product, vendor/cherish/config/rro_overlays.mk)
 
+# Themes
+$(call inherit-product, vendor/cherish/config/themes.mk)
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
