@@ -2485,9 +2485,9 @@
     <apn apn="internet" carrier="Gmobile-wap-gprs" mcc="452" mnc="07" port="8080" proxy="10.16.70.199" type="default,supl"/>
     <apn apn="mms" carrier="Gmobile-gprs-mms" mcc="452" mmsc="http://mms" mmsport="8080" mmsproxy="10.16.70.199" mnc="07" type="mms"/>
     <apn apn="mms" authtype="2" carrier="Gmobile MMS" mcc="452" mmsc="http://mms" mmsport="8080" mmsproxy="10.16.70.199" mnc="07" password="mms" type="mms" user="mms"/>
-    <apn apn="e-internet" carrier="e-internet" mcc="452" mnc="08" type="default,supl"/>
-    <apn apn="e-wap" carrier="e-wap" mcc="452" mnc="08" port="8080" proxy="10.18.2.183" type="default,supl"/>
-    <apn apn="e-mms" carrier="e-mms" mcc="452" mmsc="http://10.18.2.172:38090" mmsport="8080" mmsproxy="10.18.2.183" mnc="08" type="mms"/>
+    <apn apn="e-internet" carrier="Itelecom_4G_1" mcc="452" mnc="08" type="default,supl"/>
+    <apn apn="e-wap" carrier="Itelecom_4G_2" mcc="452" mnc="08" port="8080" proxy="10.18.2.183" type="default,supl"/>
+    <apn apn="e-mms" carrier="Itelecom_MMS" mcc="452" mmsc="http://10.18.2.172:38090" mmsport="8080" mmsproxy="10.18.2.183" mnc="08" type="mms"/>
     <apn apn="CTExcel" carrier="CTExcel" mcc="454" mnc="00" mvno_match_data="8985231" mvno_type="iccid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,hipri,ia" user_editable="0"/>
     <apn apn="IMS" carrier="CTExcel (IMS)" mcc="454" mnc="00" mvno_match_data="8985231" mvno_type="iccid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="0"/>
     <apn apn="mobile" authtype="3" carrier="1O1O" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" type="default,supl,mms"/>
