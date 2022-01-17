@@ -273,6 +273,11 @@ $(call inherit-product, vendor/cherish/config/bootanimation.mk)
 # Fonts
 $(call inherit-product, vendor/cherish/config/fonts.mk)
 
+ifeq ($(EXTRA_UDFPS_ANIMATIONS),true)
+PRODUCT_PACKAGES += \
+    UdfpsResources
+endif
+
 # GApps
 $(call inherit-product, vendor/gapps/config.mk)
 
