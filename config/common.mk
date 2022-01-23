@@ -126,7 +126,8 @@ PRODUCT_PACKAGES += \
 
 # Config
 PRODUCT_PACKAGES += \
-    SimpleDeviceConfig
+    SimpleDeviceConfig \
+    RepainterServicePriv
 
 # Storage manager
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
