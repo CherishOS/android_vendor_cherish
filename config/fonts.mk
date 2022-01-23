@@ -63,7 +63,36 @@ PRODUCT_PACKAGES += \
     FontLinotteSourceOverlay \
     FontManropeOverlay \
     FontOnePlusSansOverlay \
-    FontOneplusSlateSourceOverlay
+    FontOneplusSlateSourceOverlay \
+    FontAclonicaSourceOverlay \
+    FontAmaranteSourceOverlay \
+    FontAntipastoProSourceOverlay \
+    FontBariolSourceOverlay \
+    FontCagliostroSourceOverlay \
+    FontCoconSourceOverlay \
+    FontComfortaaSourceOverlay \
+    FontComicSansSourceOverlay \
+    FontCoolstorySourceOverlay \
+    FontEvolveSansSourceOverlay \
+    FontExotwoSourceOverlay \
+    FontFifa2018SourceOverlay \
+    FontFucekSourceOverlay \
+    FontGrandHotelSourceOverlay \
+    FontLGSmartGothicSourceOverlay \
+    FontLemonMilkSourceOverlay \
+    FontNokiaPureSourceOverlay \
+    FontNunitoSourceOverlay \
+    FontOdudaSourceOverlay \
+    FontQuandoSourceOverlay \
+    FontRedressedSourceOverlay \
+    FontReemKufiSourceOverlay \
+    FontRosemarySourceOverlay \
+    FontSamsungOneSourceOverlay \
+    FontSimpleDaySourceOverlay \
+    FontSonySketchSourceOverlay \
+    FontStoropiaSourceOverlay \
+    FontSurferSourceOverlay \
+    FontUbuntuSourceOverlay
 
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,vendor/cherish/fonts/prebuilt,$(TARGET_COPY_OUT_PRODUCT)/fonts) \
