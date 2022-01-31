@@ -64,4 +64,10 @@
 	<!-- List of comma separated package names for which we the system will not show crash, ANR,
          etc. dialogs. -->
     <string name="config_appsNotReportingCrashes">com.google.android.tts</string>
+
+    <!-- Controls the navigation bar interaction mode:
+         0: 3 button mode (back, home, overview buttons)
+         1: 2 button mode (back, home buttons + swipe up for overview)
+         2: gestures only for back, home and overview -->
+    <integer name="config_navBarInteractionMode">2</integer>
 </resources>
