@@ -27,4 +27,6 @@
     <!-- Settings intelligence interaction log intent action -->
     <string name="config_settingsintelligence_package_name">com.google.android.settings.intelligence</string>
 
+    <!-- Whether memory from app_info_settings is available or not. -->
+    <bool name="config_show_app_info_settings_memory">true</bool>
 </resources>
