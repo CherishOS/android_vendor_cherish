@@ -260,10 +260,6 @@ endif
 # GApps
 $(call inherit-product, vendor/gapps/config.mk)
 
-# b/189477034: Bypass build time check on uses_libs until vendor fixes all their apps
-PRODUCT_BROKEN_VERIFY_USES_LIBRARIES := true
-RELAX_USES_LIBRARY_CHECK := true
-
 # OTA
 $(call inherit-product, vendor/cherish/config/ota.mk)
 
