@@ -224,10 +224,6 @@ TARGET_INCLUDE_STOCK_ARCORE ?= true
 TARGET_INCLUDE_LIVE_WALLPAPERS ?= true
 TARGET_SUPPORTS_QUICK_TAP ?= false
 
-# Pixel sysconfig from Pixel XL (Photos)
-PRODUCT_COPY_FILES += \
-    vendor/cherish/prebuilt/common/etc/sysconfig/pixel_2016_exclusive.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/pixel_2016_exclusive.xml
-
 # Face Unlock
 #TARGET_FACE_UNLOCK_SUPPORTED ?= true
 #ifeq ($(TARGET_FACE_UNLOCK_SUPPORTED),true)
