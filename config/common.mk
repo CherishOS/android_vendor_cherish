@@ -188,6 +188,12 @@ PRODUCT_PRODUCT_PROPERTIES += \
     setupwizard.feature.day_night_mode_enabled=true \
     setupwizard.feature.portal_notification=true
 
+TARGET_BUILD_GRAPHENEOS_CAMERA ?= false
+ifeq ($(strip $(TARGET_BUILD_GRAPHENEOS_CAMERA)),true)
+PRODUCT_PACKAGES += \
+    GrapheneCamera
+endif
+
 # StorageManager configuration
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.storage_manager.show_opt_in=false
