@@ -1,3 +1,6 @@
+# RecoveryAdd commentMore actions
+BOARD_USES_FULL_RECOVERY_IMAGE ?= true
+
 include vendor/cherish/config/BoardConfigKernel.mk
 
 ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
