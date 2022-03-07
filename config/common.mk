@@ -136,7 +136,8 @@ PRODUCT_PACKAGES += \
 # Config
 PRODUCT_PACKAGES += \
     SimpleDeviceConfig \
-    RepainterServicePriv
+    RepainterServicePriv \
+    SettingsIntelligenceGooglePrebuilt
 
 # Storage manager
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
@@ -178,6 +179,10 @@ PRODUCT_PACKAGES += \
 # Hide nav Overlays
 PRODUCT_PACKAGES += \
     NavigationBarModeGesturalOverlayFS 
+
+# Permissions
+PRODUCT_COPY_FILES += \
+    vendor/cherish/config/permissions/privapp-permissions-cherish-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-cherish-SettingsIntelligencePrebuilt.xml
 
 # Gboard configuration
 PRODUCT_PRODUCT_PROPERTIES += \
