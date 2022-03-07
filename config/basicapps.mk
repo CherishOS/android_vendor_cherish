@@ -5,4 +5,5 @@ PRODUCT_PACKAGES += \
     Contacts \
     Dialer \
     LatinIME \
-    SettingsIntelligenceGoogle
+    SettingsIntelligenceGoogle \
+    SoundPickerGoogleRelease
