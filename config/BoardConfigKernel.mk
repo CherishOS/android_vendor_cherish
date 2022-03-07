@@ -30,7 +30,7 @@
 #   TARGET_KERNEL_CROSS_COMPILE_PREFIX_ARM32 = Compiler prefix for building vDSO32
 #   						defaults to arm-linux-androidkernel-
 #
-#   TARGET_KERNEL_CLANG_COMPILE        = Compile kernel with clang, defaults to false
+#   TARGET_KERNEL_CLANG_COMPILE        = Compile kernel with clang, defaults to true
 #
 #   KERNEL_TOOLCHAIN_PREFIX            = Overrides TARGET_KERNEL_CROSS_COMPILE_PREFIX,
 #                                          Set this var in shell to override
@@ -119,7 +119,7 @@ ifneq ($(USE_CCACHE),)
     endif
 endif
 
-ifeq ($(TARGET_KERNEL_CLANG_COMPILE),true)
+ifneq ($(TARGET_KERNEL_CLANG_COMPILE),false)
     KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(KERNEL_TOOLCHAIN_PATH)"
 else
     KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(CCACHE_BIN) $(KERNEL_TOOLCHAIN_PATH)"
