@@ -5,4 +5,4 @@ PRODUCT_PACKAGES += \
     Contacts \
     Dialer \
     LatinIME \
-    ViaBrowser
+    SettingsIntelligenceGoogle
