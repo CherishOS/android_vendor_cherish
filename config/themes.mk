@@ -16,6 +16,7 @@
 
 # Statusbar Icons
 PRODUCT_PACKAGES += \
+    DoraSignalOverlay \
     StrokeSignalOverlay \
     SneakySignalOverlay \
     XperiaSignalOverlay \
@@ -48,6 +49,7 @@ PRODUCT_PACKAGES += \
 
 # Wi-Fi Icons
 PRODUCT_PACKAGES += \
+    DoraWiFiOverlay \
     StrokeWiFiOverlay \
     SneakyWiFiOverlay \
     XperiaWiFiOverlay \
