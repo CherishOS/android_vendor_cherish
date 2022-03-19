@@ -28,7 +28,7 @@ CHERISH_BUILD_DATE_UTC := $(shell date -d '$(CHERISH_DATE_YEAR)-$(CHERISH_DATE_M
 CHERISH_BUILD_DATE := $(CHERISH_DATE_YEAR)$(CHERISH_DATE_MONTH)$(CHERISH_DATE_DAY)-$(CHERISH_DATE_HOUR)$(CHERISH_DATE_MINUTE)
 
 CHERISH_PLATFORM_VERSION := 12.1
-
+CHERISH_PLATFORM_RELEASE_OR_CODENAME := 12L
 CHERISHVERSION := 3.5
 
 ifeq ($(CHERISH_VANILLA), true)
@@ -42,6 +42,7 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.cherish.version.display=$(CHERISH_VERSION) \
     ro.cherish.build_date=$(CHERISH_BUILD_DATE) \
     ro.cherish.codename=$(CHERISH_CODENAME) \
+    ro.cherish.platform_release_or_codename=$(CHERISH_PLATFORM_RELEASE_OR_CODENAME) \
     ro.cherish.version.prop=$(CHERISH_VERSION_PROP) \
     ro.cherish.build_date_utc=$(CHERISH_BUILD_DATE_UTC) \
     ro.cherish.build_type=$(CHERISH_BUILD_TYPE)
