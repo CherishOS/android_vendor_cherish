@@ -276,7 +276,6 @@ endif
 # Build
 ifeq ($(CHERISH_VANILLA), true)
 include vendor/cherish/config/basicapps.mk
-$(call inherit-product-if-exists, vendor/lawnchair/lawnchair.mk)
 else
 # Gapps
 $(call inherit-product, vendor/gapps/config.mk)
