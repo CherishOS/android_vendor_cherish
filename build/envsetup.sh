@@ -603,7 +603,7 @@ function cherishrebase() {
 }
 
 function mka() {
-    m
+    m "$@"
 }
 
 function cmka() {
