@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2013 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string-array name="config_locationProviderPackageNames" translatable="false">
+        <!-- The Google provider -->
+        <item>com.google.android.gms</item>
+        <!-- The standard AOSP fused location provider -->
+        <item>com.android.location.fused</item>
+    </string-array>
+
+    <bool name="config_cellBroadcastAppLinks">true</bool>
+
+    <!-- Flag indicating whether the assist disclosure can be disabled using
+         ASSIST_DISCLOSURE_ENABLED. -->
+    <bool name="config_allowDisablingAssistDisclosure">true</bool>
+
+    <!-- Disable stock OTA components if installed -->
+    <string-array name="config_globallyDisabledComponents" translatable="false">
+        <item>com.android.vending/com.google.android.finsky.systemupdate.SystemUpdateSettingsContentProvider</item>
+        <item>com.android.vending/com.google.android.finsky.systemupdateactivity.SettingsSecurityEntryPoint</item>
+        <item>com.android.vending/com.google.android.finsky.systemupdateactivity.SystemUpdateActivity</item>
+        <item>com.google.android.gms/com.google.android.gms.update.OtaSuggestionSummaryProvider</item>
+        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateActivity</item>
+        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateGcmTaskService</item>
+        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateService</item>
+    </string-array>
+
+    <!-- Disable stock OTA components if installed -->
+    <string-array name="config_disabledComponents" translatable="false">
+        <item>com.google.android.gsf/com.google.android.gsf.update.SystemUpdateActivity</item>
+        <item>com.google.android.gsf/com.google.android.gsf.update.SystemUpdateService$Receiver</item>
+        <item>com.google.android.gsf/com.google.android.gsf.update.SystemUpdateService$SecretCodeReceiver</item>
+        <item>com.google.android.gsf/com.google.android.gsf.update.SystemUpdateServiceReceiver</item>
+        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateActivity</item>
+        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateService$Receiver</item>
+        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateService$ActiveReceiver</item>
+        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateService$SecretCodeReceiver</item>
+        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateServiceReceiver</item>
+    </string-array>
+
+    <!-- Force enabling of some services that could have been previously disabled -->
+    <string-array name="config_forceEnabledComponents" translatable="false">
+        <item>com.google.android.gsf/com.google.android.gsf.update.SystemUpdateService</item>
+        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateService</item>
+    </string-array>
+
+    <!-- Set this to true to enable the platform's auto-power-save modes like doze and
+         app standby.  These are not enabled by default because they require a standard
+         cloud-to-device messaging service for apps to interact correctly with the modes
+         (such as to be able to deliver an instant message to the device even when it is
+         dozing).  This should be enabled if you have such services and expect apps to
+         correctly use them when installed on your device.  Otherwise, keep this disabled
+         so that applications can still use their own mechanisms. -->
+    <bool name="config_enableAutoPowerModes">true</bool>
+
+    <!-- set defaults for google services -->
+    <string name="config_appsAuthorizedForSharedAccounts">;com.android.vending;com.android.settings;</string>
+    <string name="config_persistentDataPackageName">com.google.android.gms</string>
+
+    <!-- The component name, flattened to a string, for the default autofill service
+         to  enabled for an user. This service must be trusted, as it can be activated
+         without explicit consent of the user. If no autofill service with the
+          specified name exists on the device, autofill will be disabled by default.
+    -->
+    <string name="config_defaultAutofillService" translatable="false">com.google.android.gms/.autofill.service.AutofillService</string>
+
+    <!-- default dnd acess packages -->
+    <string name="config_defaultDndAccessPackages">com.google.android.GoogleCamera</string>
+
+    <!-- non blockable notification packages -->
+    <string-array name="config_nonBlockableNotificationPackages">
+        <item>com.android.dialer</item>
+        <item>com.android.dialer</item>
+        <item>com.google.android.deskclock</item>
+    </string-array>
+
+    <!-- empheral resolver packages -->
+    <string-array name="config_ephemeralResolverPackage">
+        <item>com.google.android.gms</item>
+    </string-array>
+
+    <!-- Boolean indicating whether the HWC setColorTransform function can be performed efficiently
+         in hardware. -->
+    <bool name="config_setColorTransformAccelerated">true</bool>
+
+    <!--  Whether Multiuser UI should be shown -->
+    <bool name="config_enableMultiUserUI">true</bool>
+
+    <!--  Maximum number of supported users -->
+    <integer name="config_multiuserMaximumUsers">4</integer>
+
+    <!-- Whether WiFi display is supported by this device.
+         There are many prerequisites for this feature to work correctly.
+         Here are a few of them:
+         * The WiFi radio must support WiFi P2P.
+         * The WiFi radio must support concurrent connections to the WiFi display and
+           to an access point.
+         * The Audio Flinger audio_policy.conf file must specify a rule for the "r_submix"
+           remote submix module.  This module is used to record and stream system
+           audio output to the WiFi display encoder in the media server.
+         * The remote submix module "audio.r_submix.default" must be installed on the device.
+         * The device must be provisioned with HDCP keys (for protected content).
+    -->
+    <bool name="config_enableWifiDisplay">true</bool>
+
+    <!-- Pixel -->
+    <bool name="config_swipe_up_gesture_setting_available">true</bool>
+    <bool name="config_smart_battery_available">true</bool>
+    <bool name="config_buttonTextAllCaps">false</bool>
+    <bool name="config_unplugTurnsOnScreen">true</bool>
+    <bool name="config_sendPackageName">true</bool>
+    <dimen name="config_dialogCornerRadius">28dp</dimen>
+    <dimen name="config_buttonCornerRadius">8dp</dimen>
+    <dimen name="config_bottomDialogCornerRadius">32dp</dimen>
+    <dimen name="config_progressBarCornerRadius">1000.0dip</dimen>
+    <!-- Corner radius of search bars and cards -->
+    <dimen name="config_cardCornerRadius">24dp</dimen>
+
+    <!-- System-provided radius for the background view of app widgets. The resolved value of this resource may change at runtime. -->
+    <dimen name="system_app_widget_background_radius">28dp</dimen>
+    <!-- System-provided radius for inner views on app widgets. The resolved value of this resource may change at runtime. -->
+    <dimen name="system_app_widget_inner_radius">20dp</dimen>
+
+    <!-- Flag indicating whether round icons should be parsed from the application manifest. -->
+    <bool name="config_useRoundIcon">true</bool>
+
+    <!-- Specifies the path that is used by AdaptiveIconDrawable class to crop launcher icons. -->
+    <string name="config_icon_mask" translatable="false">"M50 0C77.6 0 100 22.4 100 50C100 77.6 77.6 100 50 100C22.4 100 0 77.6 0 50C0 22.4 22.4 0 50 0Z"</string>
+
+    <!-- If this is true, long press on power button will be available from the non-interactive state -->
+    <bool name="config_supportLongPressPowerWhenNonInteractive">true</bool>
+
+
+    <!-- Component name for default assistant on this device -->
+    <string name="config_defaultAssistantComponentName">com.google.android.googlequicksearchbox/com.google.android.voiceinteraction.GsaVoiceInteractionService</string>
+
+    <!-- The package name for the default wellbeing app.
+         This package must be trusted, as it has the permissions to control other applications
+         on the device.
+         Example: "com.android.wellbeing"
+     -->
+    <string name="config_defaultWellbeingPackage">com.google.android.apps.wellbeing</string>
+
+    <!-- Whether or not we should show the option to show battery percentage -->
+    <bool name="config_battery_percentage_setting_available">true</bool>
+
+    <!-- List of packages that can use the Conversation space for their category messages
+    notifications until they target R -->
+    <string-array name="config_notificationMsgPkgsAllowedAsConvos" translatable="false">
+        <item>com.facebook.orca</item>
+        <item>com.instagram.android</item>
+        <item>com.whatsapp</item>
+        <item>com.snapchat.android</item>
+        <item>jp.naver.line.android</item>
+        <item>com.kakao.talk</item>
+        <item>com.discord</item>
+        <item>org.thoughtcrime.securesms</item>
+        <item>com.groupme.android</item>
+        <item>org.telegram.messenger</item>
+        <item>com.twitter.android</item>
+        <item>com.viber.voip</item>
+        <item>com.linkedin.android</item>
+        <item>com.tencent.mm</item>
+        <item>nekox.messenger</item>
+        <item>org.telegram.plus</item>
+        <item>org.thunderdog.challegram</item>
+        <item>im.vector.app</item>
+        <item>cx.ring</item>
+        <item>org.briarproject.briar.android</item>
+    </string-array>
+
+    <!-- Flag indicating which package name can access DeviceConfig table -->
+    <string name="config_deviceConfiguratorPackageName" translatable="false">org.protonaosp.deviceconfig</string>
+
+    <!-- The package name for the system's content capture service.
+         This service must be trusted, as it can be activated without explicit consent of the user.
+         If no service with the specified name exists on the device, content capture will be
+         disabled.
+         Example: "com.android.contentcapture/.ContentcaptureService"
+    -->
+    <string name="config_defaultContentCaptureService" translatable="false">com.google.android.as/com.google.android.apps.miphone.aiai.app.AiAiContentCaptureService</string>
+
+    <!-- The package name for the system's augmented autofill service.
+         This service must be trusted, as it can be activated without explicit consent of the user.
+         If no service with the specified name exists on the device, augmented autofill wil be
+         disabled.
+         Example: "com.android.augmentedautofill/.AugmentedAutofillService"
+    -->
+    <string name="config_defaultAugmentedAutofillService" translatable="false">com.google.android.as/com.google.android.apps.miphone.aiai.app.AiAiAugmentedAutofillService</string>
+
+    <!-- The package name for the system's app prediction service.
+         This service must be trusted, as it can be activated without explicit consent of the user.
+         Example: "com.android.intelligence/.AppPredictionService"
+    -->
+    <string name="config_defaultAppPredictionService" translatable="false">com.google.android.as/com.google.android.apps.miphone.aiai.app.AiAiPredictionService</string>
+
+    <!-- The package name for the system's content suggestions service.
+         Provides suggestions for text and image selection regions in snapshots of apps and should
+         be able to classify the type of entities in those selections.
+
+         This service must be trusted, as it can be activated without explicit consent of the user.
+         If no service with the specified name exists on the device, content suggestions wil be
+         disabled.
+         Example: "com.android.contentsuggestions/.ContentSuggestionsService"
+    -->
+    <string name="config_defaultContentSuggestionsService" translatable="false">com.google.android.as/com.google.android.apps.miphone.aiai.app.AiAiContentSuggestionsService</string>
+
+    <!-- Face detection for screen auto rotation -->
+    <string name="config_defaultRotationResolverService" translatable="false">com.google.android.as/com.google.android.apps.miphone.aiai.app.AiAiRotationResolverService</string>
+
+    <!-- The component name for the system-wide captions service.
+         This service must be trusted, as it controls part of the UI of the volume bar.
+         Example: "com.android.captions/.SystemCaptionsService"
+    -->
+    <string name="config_defaultSystemCaptionsService" translatable="false">com.google.android.as/com.google.android.apps.miphone.aiai.captions.CaptionsService</string>
+
+    <!-- The component name for the system-wide captions manager service.
+         This service must be trusted, as the system binds to it and keeps it running.
+         Example: "com.android.captions/.SystemCaptionsManagerService"
+    -->
+    <string name="config_defaultSystemCaptionsManagerService" translatable="false">com.google.android.as/com.google.android.apps.miphone.aiai.captions.SystemCaptionsManagerService</string>
+
+    <!-- The package name for the OEM custom system textclassifier service.
+         This service must be trusted, as it can be activated without explicit consent of the user.
+         Example: "com.android.textclassifier"
+         If this is empty, the default textclassifier service (i.e. config_servicesExtensionPackage)
+         will be used.
+
+         See android.view.textclassifier.TextClassificationManager.
+    -->
+    <string name="config_defaultTextClassifierPackage" translatable="false">com.google.android.as</string>
+
+    <!-- Whether this device is supporting the microphone toggle -->
+    <bool name="config_supportsMicToggle">true</bool>
+
+    <!-- Whether this device is supporting the camera toggle -->
+    <bool name="config_supportsCamToggle">true</bool>
+
+    <!-- Control the behavior when the user long presses the power button.
+            0 - Nothing
+            1 - Global actions menu
+            2 - Power off (with confirmation)
+            3 - Power off (without confirmation)
+            4 - Go to voice assist
+            5 - Go to assistant (Settings.Secure.ASSISTANT)
+    -->
+    <integer name="config_longPressOnPowerBehavior">1</integer>
+
+    <!-- Control the behavior when the user presses the power and volume up buttons together.
+            0 - Nothing
+            1 - Mute toggle
+            2 - Global actions menu
+    -->
+    <integer name="config_keyChordPowerVolumeUp">1</integer>
+
+    <!-- Wallpaper cropper package. Used as the default cropper if the active launcher doesn't
+         handle wallpaper cropping.
+    -->
+    <string name="config_wallpaperCropperPackage" translatable="false">com.android.wallpaper</string>
+
+    <!-- Exempt AiAi from privacy indicators -->
+    <string name="config_systemAmbientAudioIntelligence">com.google.android.as</string>
+    <string name="config_systemAudioIntelligence">com.google.android.as</string>
+    <string name="config_systemNotificationIntelligence">com.google.android.as</string>
+    <string name="config_systemTextIntelligence">com.google.android.as</string>
+    <string name="config_systemUiIntelligence">com.google.android.as</string>
+    <string name="config_systemVisualIntelligence">com.google.android.as</string>
+
+    <!-- the number of the max cached processes in the system. -->
+    <integer name="config_customizedMaxCachedProcesses">48</integer>
+
+    <!-- Whether or not to add a "people" notifications section -->
+    <bool name="config_usePeopleFiltering">true</bool>
+
+        <!-- Suppress System UI ANRs -->
+    <string translatable="false" name="config_appsNotReportingCrashes">com.android.statementservice,com.android.systemui,com.google.android.tts,com.android.vending,app.lawnchair</string>
+
+    <!-- Attribution path for SignalDrawable as defined on a 24x24 canvas. -->
+    <string name="config_signalAttributionPath" translatable="false">
+        M22,16.41L20.59,15l-2.09,2.09L16.41,15L15,16.41l2.09,2.09L15,20.59L16.41,22l2.09-2.08L20.59,22L22,20.59l-2.08-2.09   L22,16.41z
+    </string>
+
+    <!-- config_signalCutout{Height,Width}Fraction define fraction of the 24x24 canvas that
+         should be cut out to display config_signalAttributionPath. -->
+    <item name="config_signalCutoutWidthFraction" format="float" type="dimen">11</item>
+    <item name="config_signalCutoutHeightFraction" format="float" type="dimen">11</item>
+
+        <!-- The amount to scale fullscreen snapshots for Overview and snapshot starting windows. -->
+    <item name="config_highResTaskSnapshotScale" format="float" type="dimen">0.8</item>
+    
+    <item name="config_wallpaperMaxScale" format="float" type="dimen">1.00</item>
+    
+    <!-- List containing the allowed install sources for accessibility service. -->
+    <string-array name="config_accessibility_allowed_install_source" translatable="false">
+        <item>com.android.vending</item>
+    </string-array >
+
+    <!-- A list of packages managing companion device(s) by the same manufacturers as the main
+         device. It will fall back to showing a prompt if the association has been called multiple
+         times in a short period.
+         Note that config_companionDeviceManagerPackage and config_companionDeviceCerts are
+         parallel arrays.
+     -->
+    <string-array name="config_companionDevicePackages" translatable="false">
+        <item>com.google.android.apps.wear.companion</item>
+        <item>com.google.android.apps.wear.companion</item>
+    </string-array>
+
+    <!-- A list of SHA256 Certificates managing companion device(s) by the same manufacturers as
+         the main device. It will fall back to showing a prompt if the association has been called
+         multiple times in a short period.
+         Note that config_companionDeviceCerts and config_companionDeviceManagerPackage are parallel
+         arrays.
+         Example: "1A:2B:3C:4D"
+     -->
+    <string-array name="config_companionDeviceCerts" translatable="false">
+        <item>92:3F:B8:D6:48:71:01:14:8D:8D:C0:F7:90:11:5D:BA:34:CF:0E:A3:AA:5D:3B:B0:74:D2:D9:73:58:8C:39:3A</item>
+        <item>48:ED:00:58:D1:B6:63:8E:39:A6:E4:C2:DF:1C:4D:5F:DF:59:3F:69:6B:F3:1B:09:A8:8F:93:14:1E:AF:60:0F</item>
+    </string-array>
+</resources>

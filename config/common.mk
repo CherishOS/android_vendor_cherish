@@ -276,9 +276,19 @@ endif
 # Build
 ifeq ($(CHERISH_VANILLA), true)
 include vendor/cherish/config/basicapps.mk
+
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
+    vendor/cherish/overlay-aosp
+
+PRODUCT_PACKAGE_OVERLAYS += \
+    vendor/cherish/overlay-aosp/common
+
 else
 # Gapps
 $(call inherit-product, vendor/gapps/config.mk)
+
+# RRO Overlays
+$(call inherit-product, vendor/cherish/config/rro_overlays.mk)
 
 # Lawnicons
 $(call inherit-product, vendor/lawnicons/overlay.mk)
@@ -286,9 +296,6 @@ endif
 
 # OTA
 $(call inherit-product, vendor/cherish/config/ota.mk)
-
-# RRO Overlays
-$(call inherit-product, vendor/cherish/config/rro_overlays.mk)
 
 # Themes
 $(call inherit-product, vendor/cherish/config/themes.mk)
