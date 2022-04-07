@@ -167,8 +167,7 @@ PRODUCT_PACKAGES += \
 
 # Dex preopt
 PRODUCT_DEXPREOPT_SPEED_APPS += \
-    SystemUI \
-    NexusLauncherRelease
+    SystemUI
 
 # SystemUI plugins
 PRODUCT_PACKAGES += \
@@ -276,12 +275,6 @@ endif
 # Build
 ifeq ($(CHERISH_VANILLA), true)
 include vendor/cherish/config/basicapps.mk
-
-PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
-    vendor/cherish/overlay-aosp
-
-PRODUCT_PACKAGE_OVERLAYS += \
-    vendor/cherish/overlay-aosp/common
 
 else
 # Gapps

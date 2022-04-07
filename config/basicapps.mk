@@ -6,4 +6,14 @@ PRODUCT_PACKAGES += \
     Dialer \
     LatinIME \
     SettingsIntelligenceGoogle \
-    SoundPickerGoogleRelease
+    SoundPickerGoogleRelease \
+    Launcher3QuickStep
+    
+PRODUCT_DEXPREOPT_SPEED_APPS += \
+    Launcher3QuickStep
+
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
+    vendor/cherish/overlay-aosp
+
+DEVICE_PACKAGE_OVERLAYS += \
+    vendor/cherish/overlay-aosp/common
