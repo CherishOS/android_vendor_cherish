@@ -27,7 +27,7 @@
     <string name="config_defaultSupervisionProfileOwnerComponent">com.google.android.gms/.kids.account.receiver.ProfileOwnerReceiver</string>
     <string name="config_defaultSystemCaptionsManagerService">com.google.android.as/com.google.android.apps.miphone.aiai.captions.SystemCaptionsManagerService</string>
     <string name="config_defaultTextClassifierPackage">com.google.android.as</string>
-    <string name="config_defaultTranslationService">com.google.android.as/com.google.android.apps.miphone.aiai.app.AiAiTranslationService</string>
+    <string name="config_defaultTranslationService" translatable="false"></string>
     <string name="config_defaultWallpaperEffectsGenerationService">com.google.android.as/com.google.android.apps.miphone.aiai.app.wallpapereffects.AiAiWallpaperEffectsGenerationService</string>
     <string name="config_defaultWellbeingPackage">com.google.android.apps.wellbeing</string>
     <string name="config_emergency_dialer_package">com.google.android.apps.safetyhub</string>
