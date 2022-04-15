@@ -283,9 +283,6 @@ $(call inherit-product, vendor/gapps/config.mk)
 # RRO Overlays
 $(call inherit-product, vendor/cherish/config/rro_overlays.mk)
 
-# Lawnicons
-$(call inherit-product, vendor/lawnicons/overlay.mk)
-
 # Themed icons
 $(call inherit-product, packages/overlays/ThemeIcons/config.mk)
 endif
