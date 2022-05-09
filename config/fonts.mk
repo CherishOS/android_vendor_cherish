@@ -85,6 +85,7 @@ PRODUCT_PACKAGES += \
     FontLemonMilkSourceOverlay \
     FontMiSansOverlay \
     FontNokiaPureSourceOverlay \
+    FontNothingDotOverlay \
     FontNunitoSourceOverlay \
     FontOdudaSourceOverlay \
     FontPoppinsSourceOverlay \
