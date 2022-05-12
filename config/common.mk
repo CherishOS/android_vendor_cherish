@@ -286,9 +286,6 @@ $(call inherit-product, vendor/gapps/config.mk)
 
 # RRO Overlays
 $(call inherit-product, vendor/cherish/config/rro_overlays.mk)
-
-# Themed icons
-$(call inherit-product, packages/overlays/ThemeIcons/config.mk)
 endif
 
 # OTA
@@ -296,5 +293,4 @@ $(call inherit-product, vendor/cherish/config/ota.mk)
 
 # Themes
 $(call inherit-product, vendor/cherish/config/themes.mk)
-
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
