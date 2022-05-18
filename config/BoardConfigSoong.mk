@@ -49,8 +49,7 @@ SOONG_CONFIG_cherishNvidiaVars += \
 SOONG_CONFIG_NAMESPACES += cherishQcomVars
 SOONG_CONFIG_cherishQcomVars += \
     supports_extended_compress_format \
-    uses_pre_uplink_features_netmgrd \
-    uses_qti_camera_device
+    uses_pre_uplink_features_netmgrd
 
 # Only create display_headers_namespace var if dealing with UM platforms to avoid breaking build for all other platforms
 ifneq ($(filter $(UM_PLATFORMS),$(TARGET_BOARD_PLATFORM)),)
@@ -72,7 +71,6 @@ SOONG_CONFIG_cherishQcomVars_legacy_hw_disk_encryption := $(TARGET_LEGACY_HW_DIS
 SOONG_CONFIG_cherishQcomVars_supports_extended_compress_format := $(AUDIO_FEATURE_ENABLED_EXTENDED_COMPRESS_FORMAT)
 SOONG_CONFIG_cherishGlobalVars_uses_egl_display_array := $(TARGET_USES_EGL_DISPLAY_ARRAY)
 SOONG_CONFIG_cherishQcomVars_uses_pre_uplink_features_netmgrd := $(TARGET_USES_PRE_UPLINK_FEATURES_NETMGRD)
-SOONG_CONFIG_cherishQcomVars_uses_qti_camera_device := $(TARGET_USES_QTI_CAMERA_DEVICE)
 
 # Set default values
 BOOTLOADER_MESSAGE_OFFSET ?= 0
