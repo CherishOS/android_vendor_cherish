@@ -93,6 +93,7 @@ PRODUCT_PACKAGES += \
     FontRobotoFlexOverlay \
     FontRosemarySourceOverlay \
     FontSamsungOneSourceOverlay \
+    FontSanFranciscoDisplayProSourceOverlay \
     FontSimpleDaySourceOverlay \
     FontSonySketchSourceOverlay \
     FontStoropiaSourceOverlay \
