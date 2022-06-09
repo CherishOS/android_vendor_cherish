@@ -1,9 +1,6 @@
-# Xtended core functionality
+# CherishOS core functionality
 on init
-    export TERMINFO /system/etc/terminfo
-
-on post-fs-data
-    mkdir /cache/recovery 0770 system cache
+    export TERMINFO /system_ext/etc/terminfo
 
 # bugreport is triggered by holding down volume down, volume up and power
 service bugreport /system/bin/dumpstate -d -p -z

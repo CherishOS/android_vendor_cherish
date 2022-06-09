@@ -90,8 +90,10 @@ PRODUCT_COPY_FILES += \
     vendor/cherish/config/permissions/cherish-sysconfig.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/cherish-sysconfig.xml
 
 # Copy all custom init rc files
-$(foreach f,$(wildcard vendor/cherish/prebuilt/common/etc/init/*.rc),\
-    $(eval PRODUCT_COPY_FILES += $(f):system/etc/init/$(notdir $f)))
+PRODUCT_COPY_FILES += \
+    vendor/cherish/prebuilt/common/etc/init/cherish-system.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/cherish-system.rc \
+    vendor/cherish/prebuilt/common/etc/init/cherish-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/cherish-updater.rc \
+    vendor/cherish/prebuilt/common/etc/init/cherish-ssh.rc:$(TARGET_COPY_OUT_PRODUCT)/etc/init/cherish-ssh.rc
 
 # Enable Android Beam on all targets
 PRODUCT_COPY_FILES += \
