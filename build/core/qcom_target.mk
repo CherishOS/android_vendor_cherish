@@ -27,4 +27,5 @@ else
 
 QC_OPEN_PATH := vendor/qcom/opensource
 
+include $(TOPDIR)vendor/cherish/build/core/vendor/qcom_boards.mk
 endif
