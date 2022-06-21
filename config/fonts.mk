@@ -68,6 +68,7 @@ PRODUCT_PACKAGES += \
     FontAmaranteSourceOverlay \
     FontAntipastoProSourceOverlay \
     FontBariolSourceOverlay \
+    FontBellotaSourceOverlay \
     FontCagliostroSourceOverlay \
     FontCoconSourceOverlay \
     FontComfortaaSourceOverlay \
@@ -80,12 +81,16 @@ PRODUCT_PACKAGES += \
     FontGrandHotelSourceOverlay \
     FontLGSmartGothicSourceOverlay \
     FontLemonMilkSourceOverlay \
+    FontMiSansOverlay \
     FontNokiaPureSourceOverlay \
     FontNunitoSourceOverlay \
     FontOdudaSourceOverlay \
+    FontPoppinsSourceOverlay \
     FontQuandoSourceOverlay \
+    FontRecursiveLinearOverlay \
     FontRedressedSourceOverlay \
     FontReemKufiSourceOverlay \
+    FontRobotoFlexOverlay \
     FontRosemarySourceOverlay \
     FontSamsungOneSourceOverlay \
     FontSimpleDaySourceOverlay \
