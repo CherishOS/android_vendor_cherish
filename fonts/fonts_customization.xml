@@ -860,4 +860,79 @@
     <alias name="goudy" to="nunito" />
     <alias name="fantasy" to="nunito" />
     <alias name="ITC Stone Serif" to="nunito" />
+    
+    <family customizationType="new-named-family" name="recursive">
+    <font weight="500" style="normal">Recursive-VF.ttf
+        <axis tag="wght" stylevalue="500"/>
+    </font>
+    <font weight="600" style="normal">Recursive-VF.ttf
+        <axis tag="wght" stylevalue="600"/>
+    </font>
+    <font weight="700" style="normal">Recursive-VF.ttf
+        <axis tag="wght" stylevalue="700"/>
+    </font>
+    <font weight="800" style="normal">Recursive-VF.ttf
+        <axis tag="wght" stylevalue="800"/>
+    </font>
+    </family>
+    <alias name="recursive-sans-casual-medium" to="recursive-sans-casual" weight="700" />
+
+    <family customizationType="new-named-family" name="misans">
+    <font weight="300" style="normal">MiLanProVF.ttf
+        <axis tag="wght" stylevalue="300"/>
+    </font>
+    <font weight="400" style="normal">MiLanProVF.ttf
+        <axis tag="wght" stylevalue="400"/>
+    </font>
+    <font weight="500" style="normal">MiLanProVF.ttf
+        <axis tag="wght" stylevalue="500"/>
+    </font>
+    <font weight="600" style="normal">MiLanProVF.ttf
+        <axis tag="wght" stylevalue="600"/>
+    </font>
+    </family>
+    <alias name="misans-medium" to="misans" weight="400" />
+
+    <family customizationType="new-named-family" name="robotoflex">
+        <font weight="400" style="normal">RobotoFlex.ttf</font>
+    </family>
+    <alias name="robotoflex-semi-bold" to="robotoflex" weight="600" />
+    <alias name="robotoflex-bold" to="robotoflex" weight="700" />
+    <alias name="times" to="robotoflex" />
+    <alias name="times new roman" to="robotoflex" />
+    <alias name="palatino" to="robotoflex" />
+    <alias name="georgia" to="robotoflex" />
+    <alias name="baskerville" to="robotoflex" />
+    <alias name="goudy" to="robotoflex" />
+    <alias name="fantasy" to="robotoflex" />
+    <alias name="ITC Stone Serif" to="robotoflex" />
+
+    <family customizationType="new-named-family" name="poppins">
+        <font weight="400" style="normal">Poppins-Regular.ttf</font>
+    </family>
+    <alias name="poppins-semi-bold" to="poppins" weight="600" />
+    <alias name="poppins-bold" to="poppins" weight="700" />
+    <alias name="times" to="poppins" />
+    <alias name="times new roman" to="poppins" />
+    <alias name="palatino" to="poppins" />
+    <alias name="georgia" to="poppins" />
+    <alias name="baskerville" to="poppins" />
+    <alias name="goudy" to="poppins" />
+    <alias name="fantasy" to="poppins" />
+    <alias name="ITC Stone Serif" to="poppins" />
+
+    <family customizationType="new-named-family" name="bellota">
+        <font weight="400" style="normal">Bellota.ttf</font>
+        <font weight="700" style="normal">Bellota-Bold.ttf</font>
+    </family>
+    <alias name="bellota-semi-bold" to="bellota" weight="600" />
+    <alias name="bellota-bold" to="bellota" weight="700" />
+    <alias name="times" to="bellota" />
+    <alias name="times new roman" to="bellota" />
+    <alias name="palatino" to="bellota" />
+    <alias name="georgia" to="bellota" />
+    <alias name="baskerville" to="bellota" />
+    <alias name="goudy" to="bellota" />
+    <alias name="fantasy" to="bellota" />
+    <alias name="ITC Stone Serif" to="bellota" />
 </fonts-modification>
