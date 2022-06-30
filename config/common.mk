@@ -248,6 +248,7 @@ TARGET_SUPPORTS_GOOGLE_RECORDER ?= true
 TARGET_INCLUDE_STOCK_ARCORE ?= false
 TARGET_INCLUDE_LIVE_WALLPAPERS ?= false
 TARGET_SUPPORTS_QUICK_TAP ?= false
+TARGET_USES_MINI_GAPPS ?= false
 
 # Face Unlock
 TARGET_FACE_UNLOCK_SUPPORTED ?= true
@@ -283,8 +284,13 @@ ifeq ($(CHERISH_VANILLA), true)
 include vendor/cherish/config/basicapps.mk
 
 else
+
 # Gapps
+ifeq ($(TARGET_USES_MINI_GAPPS),true)
+$(call inherit-product, vendor/gapps/config_mini.mk)
+else
 $(call inherit-product, vendor/gapps/config.mk)
+endif
 
 # RRO Overlays
 $(call inherit-product, vendor/cherish/config/rro_overlays.mk)
