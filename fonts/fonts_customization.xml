@@ -156,6 +156,16 @@
       <axis tag="wght" stylevalue="700"/>
     </font>
   </family>
+  
+  <!-- Product Sans VH -->
+    <family customizationType="new-named-family" name="productsansvh">
+        <font weight="400" style="normal">ProductSansRegular.otf</font>
+        <font weight="400" style="italic">ProductSansItalic.otf</font>
+        <font weight="700" style="normal">ProductSansBold.otf</font>
+        <font weight="700" style="italic">ProductSansBoldItalic.otf</font>
+    </family>
+    <alias name="productsansvh-regular" to="productsansvh" weight="400" />
+    <alias name="productsansvh-bold" to="productsansvh" weight="700" />
 
     <family customizationType="new-named-family" name="google-sans-inter">
       <font weight="400" style="normal">GInterVF-Roman.ttf
