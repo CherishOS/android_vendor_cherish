@@ -88,6 +88,7 @@ PRODUCT_PACKAGES += \
     FontNunitoSourceOverlay \
     FontOdudaSourceOverlay \
     FontPoppinsSourceOverlay \
+    FontProductSansVHOverlay \
     FontQuandoSourceOverlay \
     FontRecursiveLinearOverlay \
     FontRedressedSourceOverlay \
