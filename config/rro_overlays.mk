@@ -23,6 +23,7 @@ PRODUCT_PACKAGES += \
     PixelConfigOverlayCommon \
     TeleServiceOverlay \
     CaptivePortalLoginOverlay \
+    DMServiceOverlay \
     GoogleWebViewOverlay \
     TelecomOverlay \
     CellBroadcastServiceOverlay \
