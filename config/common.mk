@@ -63,9 +63,9 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += \
     ro.sf.blurs_are_expensive=1 \
     ro.surface_flinger.supports_background_blur=1
 
-# Disable blur on app-launch
-PRODUCT_SYSTEM_EXT_PROPERTIES += \
-    ro.launcher.blur.appLaunch=0
+# # Disable blur on app-launch
+# PRODUCT_SYSTEM_EXT_PROPERTIES += \
+#     ro.launcher.blur.appLaunch=0
 
 # Backup Tool
 PRODUCT_COPY_FILES += \
@@ -135,10 +135,10 @@ PRODUCT_PACKAGES += \
     mkfs.ntfs \
     mount.ntfs
 
-# Config
-PRODUCT_PACKAGES += \
-    SimpleDeviceConfig \
-    RepainterServicePriv
+# # Config
+# PRODUCT_PACKAGES += \
+#     SimpleDeviceConfig \
+#     RepainterServicePriv
 
 # Storage manager
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
@@ -155,9 +155,9 @@ PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
 PRODUCT_PACKAGE_OVERLAYS += \
     vendor/cherish/overlay/common
 
-# TouchGestures
-PRODUCT_PACKAGES += \
-    TouchGestures
+# # TouchGestures
+# PRODUCT_PACKAGES += \
+#     TouchGestures
 
 # One Handed mode
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -171,15 +171,15 @@ PRODUCT_PACKAGES += \
 PRODUCT_DEXPREOPT_SPEED_APPS += \
     SystemUI
 
-# SystemUI plugins
-PRODUCT_PACKAGES += \
-    QuickAccessWallet \
-    GameSpace \
-    OPWidget
+# # SystemUI plugins
+# PRODUCT_PACKAGES += \
+#     QuickAccessWallet \
+#     GameSpace \
+#     OPWidget
 
-# Hide nav Overlays
-PRODUCT_PACKAGES += \
-    NavigationBarModeGesturalOverlayFS 
+# # Hide nav Overlays
+# PRODUCT_PACKAGES += \
+#     NavigationBarModeGesturalOverlayFS 
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -203,12 +203,6 @@ PRODUCT_PRODUCT_PROPERTIES += \
     setupwizard.feature.show_support_link_in_deferred_setup=false \
     setupwizard.feature.day_night_mode_enabled=true \
     setupwizard.feature.portal_notification=true
-
-TARGET_BUILD_GRAPHENEOS_CAMERA ?= false
-ifeq ($(strip $(TARGET_BUILD_GRAPHENEOS_CAMERA)),true)
-PRODUCT_PACKAGES += \
-    GrapheneCamera
-endif
 
 # StorageManager configuration
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -247,16 +241,16 @@ TARGET_INCLUDE_LIVE_WALLPAPERS ?= false
 TARGET_SUPPORTS_QUICK_TAP ?= false
 TARGET_USES_MINI_GAPPS ?= false
 
-# Face Unlock
-TARGET_FACE_UNLOCK_SUPPORTED ?= true
-ifeq ($(TARGET_FACE_UNLOCK_SUPPORTED),true)
-PRODUCT_PACKAGES += \
-    FaceUnlockService
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.face_unlock_service.enabled=$(TARGET_FACE_UNLOCK_SUPPORTED)
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.biometrics.face.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.hardware.biometrics.face.xml
-endif
+# # Face Unlock
+# TARGET_FACE_UNLOCK_SUPPORTED ?= true
+# ifeq ($(TARGET_FACE_UNLOCK_SUPPORTED),true)
+# PRODUCT_PACKAGES += \
+#     FaceUnlockService
+# PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+#     ro.face_unlock_service.enabled=$(TARGET_FACE_UNLOCK_SUPPORTED)
+# PRODUCT_COPY_FILES += \
+#     frameworks/native/data/etc/android.hardware.biometrics.face.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.hardware.biometrics.face.xml
+# endif
 
 # Enable one-handed mode
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -271,10 +265,10 @@ $(call inherit-product, vendor/cherish/config/bootanimation.mk)
 # Fonts
 $(call inherit-product, vendor/cherish/config/fonts.mk)
 
-ifeq ($(EXTRA_UDFPS_ANIMATIONS),true)
-PRODUCT_PACKAGES += \
-    UdfpsResources
-endif
+# ifeq ($(EXTRA_UDFPS_ANIMATIONS),true)
+# PRODUCT_PACKAGES += \
+#     UdfpsResources
+# endif
 
 # Build
 ifeq ($(CHERISH_VANILLA), true)
@@ -294,8 +288,8 @@ $(call inherit-product, vendor/cherish/config/rro_overlays.mk)
 endif
 
 # OTA
-$(call inherit-product, vendor/cherish/config/ota.mk)
+# $(call inherit-product, vendor/cherish/config/ota.mk)
 
 # Themes
-$(call inherit-product, vendor/cherish/config/themes.mk)
+# $(call inherit-product, vendor/cherish/config/themes.mk)
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
