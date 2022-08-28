@@ -287,4 +287,8 @@ $(call inherit-product, vendor/cherish/config/ota.mk)
 
 # Themes
 $(call inherit-product, vendor/cherish/config/themes.mk)
+
+# Pixel Framework
+$(call inherit-product, vendor/pixel-framework/config.mk)
+
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
