@@ -288,7 +288,7 @@ $(call inherit-product, vendor/cherish/config/rro_overlays.mk)
 endif
 
 # OTA
-# $(call inherit-product, vendor/cherish/config/ota.mk)
+$(call inherit-product, vendor/cherish/config/ota.mk)
 
 # Themes
 $(call inherit-product, vendor/cherish/config/themes.mk)
