@@ -61,5 +61,5 @@ PRODUCT_PACKAGES += \
     BarsWiFiOverlay
 
 # Themes
-#PRODUCT_PACKAGES += \
-   #AndroidBlackThemeOverlay
+PRODUCT_PACKAGES += \
+    AndroidVividThemeOverlay
