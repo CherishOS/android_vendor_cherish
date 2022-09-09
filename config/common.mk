@@ -178,7 +178,7 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
 
 # # Hide nav Overlays
 PRODUCT_PACKAGES += \
-    NavigationBarModeGesturalOverlayFS 
+    ImmersiveNavigationOverlay 
 
 # Permissions
 PRODUCT_COPY_FILES += \
