@@ -264,10 +264,10 @@ $(call inherit-product, vendor/cherish/config/bootanimation.mk)
 # Fonts
 $(call inherit-product, vendor/cherish/config/fonts.mk)
 
-# ifeq ($(EXTRA_UDFPS_ANIMATIONS),true)
-# PRODUCT_PACKAGES += \
-#     UdfpsResources
-# endif
+ifeq ($(EXTRA_UDFPS_ANIMATIONS),true)
+PRODUCT_PACKAGES += \
+    UdfpsResources
+endif
 
 # Build
 ifeq ($(CHERISH_VANILLA), true)
