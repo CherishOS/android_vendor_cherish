@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2022 CorvusOS
+  ~ Copyright (C) 2021 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,15 +14,9 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<ripple android:color="?android:colorAccent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-      <inset android:inset="0dp">
-        <shape android:shape="rectangle">
-            <stroke android:width="@dimen/qs_tile_stroke" android:color="#ffffffff" />
-            <corners android:radius="@dimen/qs_corner_radius" />
-            <solid android:color="#00ffffff" />
-        </shape>
-      </inset>
-    </item>
-</ripple>
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="?android:attr/dialogCornerRadius" />
+    <solid android:color="@drawable/color_accent_alpha" />
+    <size android:width="48dp" android:height="48dp" />
+</shape>
