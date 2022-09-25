@@ -166,8 +166,10 @@ ifeq (,$(filter 5.10, $(TARGET_KERNEL_VERSION)))
     KERNEL_MAKE_FLAGS += HOSTCXX=$(TARGET_KERNEL_CLANG_PATH)/bin/clang++
     ifneq ($(TARGET_KERNEL_CLANG_COMPILE), false)
         ifneq ($(TARGET_KERNEL_LLVM_BINUTILS), false)
+            ifeq ($(KERNEL_TOOLCHAIN),)
             KERNEL_MAKE_FLAGS += LD=$(TARGET_KERNEL_CLANG_PATH)/bin/ld.lld
             KERNEL_MAKE_FLAGS += AR=$(TARGET_KERNEL_CLANG_PATH)/bin/llvm-ar
+            endif # KERNEL_TOOLCHAIN
         endif
     endif
 else
