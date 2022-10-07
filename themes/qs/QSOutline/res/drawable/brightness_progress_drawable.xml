@@ -21,7 +21,7 @@
         <shape android:tint="?android:attr/colorAccent" android:shape="rectangle" android:alpha="0.5">
             <size android:height="@dimen/custom_rounded_slider_height" />
             <corners android:radius="@dimen/rounded_slider_corner_radius" />
-            <solid android:color="#80626161" />
+            <solid android:color="@*android:color/transparent" />
         </shape>
     </item>
     <item android:id="@android:id/progress"
@@ -30,4 +30,12 @@
                 android:drawable="@drawable/brightness_progress_full_drawable"
             />
     </item>
+    <item
+        android:gravity="start|center"
+        android:drawable="@drawable/ic_brightness_low"
+        android:start="18.0dip" />
+    <item
+        android:gravity="end|center"
+        android:drawable="@drawable/ic_brightness_full"
+        android:end="18.0dip" />
 </layer-list>
