@@ -207,6 +207,7 @@ endif
 
 # SystemUI plugins
  PRODUCT_PACKAGES += \
+      BatteryStatsViewer \
       GameSpace \
       ParallelSpace
 
