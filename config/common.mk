@@ -185,6 +185,10 @@ endif
       GameSpace
 #     OPWidget
 
+#OmniJaws
+PRODUCT_PACKAGES += \
+    OmniJaws
+
 # # Hide nav Overlays
 PRODUCT_PACKAGES += \
     ImmersiveNavigationOverlay  
