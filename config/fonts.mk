@@ -59,6 +59,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     FontGInterOverlay \
     FontGoogleSansOverlay \
+    FontGoogleSansClockOverlay \
     FontHarmonySansOverlay \
     FontLinotteSourceOverlay \
     FontManropeOverlay \
