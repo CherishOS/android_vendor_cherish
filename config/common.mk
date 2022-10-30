@@ -182,8 +182,8 @@ endif
 
 # SystemUI plugins
  PRODUCT_PACKAGES += \
-      GameSpace
-#     OPWidget
+      GameSpace \
+      Aperture
 
 #OmniJaws
 PRODUCT_PACKAGES += \
