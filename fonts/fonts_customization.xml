@@ -872,20 +872,15 @@
     <alias name="ITC Stone Serif" to="nunito" />
     
     <family customizationType="new-named-family" name="recursive">
-    <font weight="500" style="normal">Recursive-VF.ttf
-        <axis tag="wght" stylevalue="500"/>
+    <font weight="300" style="normal">RecMonoCasual.ttf
+        <axis tag="wght" stylevalue="300"/>
     </font>
-    <font weight="600" style="normal">Recursive-VF.ttf
-        <axis tag="wght" stylevalue="600"/>
-    </font>
-    <font weight="700" style="normal">Recursive-VF.ttf
-        <axis tag="wght" stylevalue="700"/>
-    </font>
-    <font weight="800" style="normal">Recursive-VF.ttf
-        <axis tag="wght" stylevalue="800"/>
+    <font weight="400" style="normal">RecMonoCasual.ttf
+        <axis tag="wght" stylevalue="400"/>
     </font>
     </family>
-    <alias name="recursive-sans-casual-medium" to="recursive-sans-casual" weight="700" />
+    <alias name="recursive-mono-casual" to="recursive" weight="300" />
+    <alias name="recursive-mono-medium" to="recursive" weight="400" />
 
     <family customizationType="new-named-family" name="misans">
     <font weight="300" style="normal">MiLanProVF.ttf
