@@ -60,6 +60,7 @@ PRODUCT_PACKAGES += \
     FontGInterOverlay \
     FontGoogleSansOverlay \
     FontGoogleSansClockOverlay \
+    FontGeometosOverlay \
     FontHarmonySansOverlay \
     FontLinotteSourceOverlay \
     FontManropeOverlay \
@@ -67,6 +68,8 @@ PRODUCT_PACKAGES += \
     FontOneplusSlateSourceOverlay \
     FontAclonicaSourceOverlay \
     FontAmaranteSourceOverlay \
+    FontApiceOverlay \
+    FontAudimatOverlay \
     FontAntipastoProSourceOverlay \
     FontBariolSourceOverlay \
     FontBellotaSourceOverlay \

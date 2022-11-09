@@ -157,6 +157,24 @@
     </font>
   </family>
   
+  <!-- Apice Outline -->
+    <family customizationType="new-named-family" name="apiceoutline">
+        <font>ApiceOutLine.ttf</font>
+    </family>
+    <alias name="apiceoutline-regular" to="apiceoutline" weight="400" />
+
+    <!-- Audimat-->
+    <family customizationType="new-named-family" name="audimat">
+        <font>AudimatMonoRegular.ttf</font>
+    </family>
+    <alias name="audimat-regular" to="googlesansclock" weight="400" />
+
+    <!-- Geometos Soft Extra Bold-->
+    <family customizationType="new-named-family" name="geometossoftextrabold">
+        <font>GeometosSoftExtraBold.ttf</font>
+    </family>
+    <alias name="geometossoftextrabold-regular" to="geometossoftextrabold" weight="400" />
+  
   <!-- Google Sans Clock-->
     <family customizationType="new-named-family" name="googlesansclock">
         <font>GoogleSansClock-Regular.ttf</font>
