@@ -222,7 +222,7 @@ PATH_OVERRIDE := PATH=$(KERNEL_BUILD_OUT_PREFIX)$(HOST_OUT_EXECUTABLES):$$PATH
 ifneq ($(TARGET_KERNEL_CLANG_COMPILE),false)
     # As 
     ifeq ($(KERNEL_SUPPORTS_LLVM_TOOLS),true)
-        KERNEL_LD := LD=ld.lld
+        KERNEL_LD ?= LD=ld.lld
         KERNEL_AR := AR=llvm-ar
         KERNEL_OBJCOPY := OBJCOPY=llvm-objcopy
         KERNEL_OBJDUMP := OBJDUMP=llvm-objdump
