@@ -24,4 +24,6 @@
     <string name="config_headlineFontFamily" translatable="false">oduda</string>
     <!-- Name of the font family used for system surfaces where the font should use medium weight -->
     <string name="config_headlineFontFamilyMedium" translatable="false">oduda-bold</string>
+    <!-- Name of the font family to use in the default lockscreen clock -->
+    <string name="config_clockFontFamily" translatable="false">@string/config_bodyFontFamily</string>
 </resources>
