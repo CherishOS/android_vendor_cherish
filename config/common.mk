@@ -300,6 +300,6 @@ endif
 $(call inherit-product, vendor/cherish/config/ota.mk)
 
 # Themes
-$(call inherit-product, vendor/cherish/config/themes.mk)
+$(call inherit-product, vendor/themes/themes.mk)
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
