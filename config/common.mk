@@ -302,4 +302,11 @@ $(call inherit-product, vendor/cherish/config/ota.mk)
 # Themes
 $(call inherit-product, vendor/themes/themes.mk)
 
+# Enable ThinLTO Source wide Conditionally.
+ifeq ($(TARGET_BUILD_WITH_LTO),true)
+GLOBAL_THINLTO := true
+USE_THINLTO_CACHE := true
+SKIP_ABI_CHECKS := true
+endif
+
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
