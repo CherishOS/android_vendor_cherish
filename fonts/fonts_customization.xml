@@ -1156,4 +1156,10 @@
     <family customizationType="new-named-family" name="tourney-medium">
         <font weight="500" style="normal">Tourney-Medium.ttf</font>
     </family>
+    <family customizationType="new-named-family" name="odibee-sans">
+        <font weight="300" style="normal">OdibeeSans-Regular.ttf</font>
+    </family>
+    <family customizationType="new-named-family" name="vg5000">
+        <font weight="300" style="normal">VG5000-Regular.ttf</font>
+    </family>
 </fonts-modification>
