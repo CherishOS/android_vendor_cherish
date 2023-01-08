@@ -15,7 +15,7 @@
 //
 
 runtime_resource_overlay {
-    name: "ClockFontOdibeeSansOverlay",
-    theme: "ClockFontOdibeeSans",
+    name: "ClockFontArcadeInterlacedOverlay",
+    theme: "ClockFontArcadeInterlaced",
     product_specific: true,
 }
