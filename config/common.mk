@@ -321,4 +321,7 @@ USE_THINLTO_CACHE := true
 SKIP_ABI_CHECKS := true
 endif
 
+# Pixel Framework
+$(call inherit-product, vendor/pixel-framework/config.mk)
+
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
