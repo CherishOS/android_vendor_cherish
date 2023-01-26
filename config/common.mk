@@ -172,9 +172,13 @@ PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
 PRODUCT_PACKAGE_OVERLAYS += \
     vendor/cherish/overlay/common
 
-# # TouchGestures
-# PRODUCT_PACKAGES += \
-#     TouchGestures
+# TouchGestures
+TARGET_SUPPORTS_TOUCHGESTURES ?= false
+ifeq ($(TARGET_SUPPORTS_TOUCHGESTURES),true)
+PRODUCT_PACKAGES += \
+    TouchGestures \
+    TouchGesturesSettingsOverlay
+endif
 
 # One Handed mode
 PRODUCT_PRODUCT_PROPERTIES += \
