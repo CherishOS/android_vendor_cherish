@@ -110,18 +110,34 @@ PRODUCT_PACKAGES += \
 # Lockscreen clock fonts 
 PRODUCT_PACKAGES += \
     ClockFontAdventProOverlay \
-    ClockFontBigNoodleTiltingOverlay \
-    ClockFontCherrySwashOverlay \
-    ClockFontHeadlineOverlay \
-    ClockFontRoadRageOverlay \
-    ClockFontSnowstormOverlay \
-    ClockFontViburOverlay \
-    ClockFontAlienLeagueOverlay \
-    ClockFontBikoOverlay \
-    ClockFontGinoraSansOverlay \
-    ClockFontRivieraOverlay \
-    ClockFontSedgwickAveOverlay \
-    ClockFontUnionOverlay
+        ClockFontBigNoodleTiltingOverlay \
+        ClockFontCherrySwashOverlay \
+        ClockFontHeadlineOverlay \
+        ClockFontRoadRageOverlay \
+        ClockFontSnowstormOverlay \
+        ClockFontViburOverlay \
+        ClockFontAlienLeagueOverlay \
+        ClockFontOdibeeSansOverlay \
+        ClockFontBikoOverlay \
+        ClockFontGinoraSansOverlay \
+        ClockFontPermanentMarkerOverlay \
+        ClockFontRivieraOverlay \
+        ClockFontUnionOverlay \
+        ClockFontVG5000Overlay \
+        ClockFont3DIsometricBlackOverlay \
+        ClockFont3DIsometricBoldOverlay \
+        ClockFontBalticBoddenOverlay \
+        ClockFontBalticCoastOverlay \
+        ClockFontBalticDuneOverlay \
+        ClockFontBalticStormOverlay \
+        ClockFontCafe24DecoshadowOverlay \
+        ClockFontFortaOverlay \
+        ClockFontMuseoModernoOverlay \
+        ClockFontMXWasgardOverlay \
+        ClockFontNeptunCATOverlay \
+        ClockFontProdeltCoOverlay \
+        ClockFontRubikGlitchOverlay \
+        ClockFontTourneyMediumOverlay
 
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,vendor/cherish/fonts/prebuilt,$(TARGET_COPY_OUT_PRODUCT)/fonts) \
