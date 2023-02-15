@@ -278,6 +278,10 @@ endif
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.support_one_handed_mode=true
 
+# NexusLauncher resources
+PRODUCT_PACKAGES += \
+    NexusLauncherResOverlay
+
 # Audio
 $(call inherit-product, vendor/cherish/config/audio.mk)
 
