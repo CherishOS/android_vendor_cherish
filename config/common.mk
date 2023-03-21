@@ -302,8 +302,12 @@ include vendor/cherish/config/basicapps.mk
 
 else
 
-# GMS
-$(call inherit-product, vendor/gms/products/gms.mk)
+# Gapps
+ifeq ($(TARGET_USES_MINI_GAPPS),true)
+$(call inherit-product, vendor/gapps/config_mini.mk)
+else
+$(call inherit-product, vendor/gapps/config.mk)
+endif
 
 # RRO Overlays
 $(call inherit-product, vendor/cherish/config/rro_overlays.mk)
