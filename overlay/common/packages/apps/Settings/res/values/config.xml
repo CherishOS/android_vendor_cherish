@@ -21,6 +21,12 @@
     <!-- If the Storage Manager settings are enabled. -->
     <bool name="config_storage_manager_settings_enabled">true</bool>
 
+    <string name="config_styles_and_wallpaper_picker_action">android.intent.action.SET_WALLPAPER</string>
+    <string name="config_styles_and_wallpaper_picker_class">com.android.customization.picker.CustomizationPickerActivity</string>
+    <string name="config_wallpaper_picker_action">android.intent.action.MAIN</string>
+    <string name="config_wallpaper_picker_class">com.google.android.apps.wallpaper.picker.CategoryPickerActivity</string>
+    <string name="config_wallpaper_picker_package">com.google.android.apps.wallpaper</string>
+
     <!-- Settings intelligence package name -->
     <string name="config_settingsintelligence_log_action">com.google.android.settings.intelligence.contextualcards.CARD_INTERACTION_RECEIVER</string>
 
