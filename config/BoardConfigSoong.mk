@@ -36,6 +36,8 @@ SOONG_CONFIG_cherishGlobalVars += \
     needs_camera_boottime \
     target_alternative_futex_waiters \
     camera_needs_client_info_lib \
+    uses_oplus_camera \
+    uses_nothing_camera \
     target_init_vendor_lib \
     target_inputdispatcher_skip_event_key \
     target_ld_shim_libs \
@@ -62,6 +64,8 @@ endif
 # Soong bool variables
 SOONG_CONFIG_cherishGlobalVars_camera_needs_client_info := $(TARGET_CAMERA_NEEDS_CLIENT_INFO)
 SOONG_CONFIG_cherishGlobalVars_camera_needs_client_info_lib := $(TARGET_CAMERA_NEEDS_CLIENT_INFO_LIB)
+SOONG_CONFIG_cherishGlobalVars_uses_oplus_camera := $(TARGET_USES_OPLUS_CAMERA)
+SOONG_CONFIG_cherishGlobalVars_uses_nothing_camera := $(TARGET_USES_NOTHING_CAMERA)
 SOONG_CONFIG_cherishGlobalVars_disable_postrender_cleanup := $(TARGET_DISABLE_POSTRENDER_CLEANUP)
 SOONG_CONFIG_cherishGlobalVars_has_legacy_camera_hal1 := $(TARGET_HAS_LEGACY_CAMERA_HAL1)
 SOONG_CONFIG_cherishGlobalVars_has_memfd_backport := $(TARGET_HAS_MEMFD_BACKPORT)
