@@ -16,6 +16,6 @@
      limitations under the License.
 -->
 <resources>
-    <string name="themes_stub_package" translatable="false">org.aospextended.customization</string>
-    <string name="clocks_stub_package" translatable="false">org.aospextended.customization</string>
+    <string name="themes_stub_package" translatable="false">com.android.customization.themes</string>
+    <string name="clocks_stub_package" translatable="false"></string>
 </resources>
