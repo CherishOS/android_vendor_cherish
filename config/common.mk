@@ -152,9 +152,9 @@ PRODUCT_PACKAGES += \
     mount.ntfs
 
 # # Config
-# PRODUCT_PACKAGES += \
-#     SimpleDeviceConfig \
-#     RepainterServicePriv
+PRODUCT_PACKAGES += \
+     SimpleDeviceConfig \
+     RepainterServicePriv
 
 # Storage manager
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
