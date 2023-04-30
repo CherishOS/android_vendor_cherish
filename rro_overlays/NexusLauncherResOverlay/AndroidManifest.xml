@@ -16,6 +16,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.google.android.launcher.resources.overlay"
     android:versionCode="1"
+    android:allowBackup="false"
     android:versionName="1.0">
     <application android:hasCode="false" />
     <overlay

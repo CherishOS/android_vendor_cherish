@@ -16,7 +16,8 @@
  */
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.theme.font.googlesansclock">
+    package="com.android.theme.font.googlesansclock"
+    android:allowBackup="false">
 
     <overlay
         android:category="android.theme.customization.font"

@@ -15,7 +15,8 @@
      limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.theme.font.manrope">
+    package="com.android.theme.font.manrope"
+    android:allowBackup="false">
 
     <overlay
         android:category="android.theme.customization.font"

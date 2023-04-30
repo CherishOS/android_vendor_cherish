@@ -15,7 +15,8 @@
      limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.theme.font.harmonysans">
+    package="com.android.theme.font.harmonysans"
+    android:allowBackup="false">
 
     <overlay
         android:category="android.theme.customization.font"
