@@ -81,6 +81,7 @@ endif
 SOONG_CONFIG_cherishGlobalVars_aapt_version_code := $(shell date -u +%Y%m%d)
 SOONG_CONFIG_cherishGlobalVars_camera_needs_client_info := $(TARGET_CAMERA_NEEDS_CLIENT_INFO)
 SOONG_CONFIG_cherishGlobalVars_camera_needs_client_info_lib := $(TARGET_CAMERA_NEEDS_CLIENT_INFO_LIB)
+SOONG_CONFIG_cherishGlobalVars_camera_needs_client_info_lib_oplus := $(TARGET_CAMERA_NEEDS_CLIENT_INFO_LIB_OPLUS)
 SOONG_CONFIG_cherishGlobalVars_camera_override_format_from_reserved := $(TARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED)
 SOONG_CONFIG_cherishGlobalVars_uses_miui_camera := $(TARGET_USES_MIUI_CAMERA)
 SOONG_CONFIG_cherishGlobalVars_uses_oplus_camera := $(TARGET_USES_OPLUS_CAMERA)
