@@ -64,6 +64,16 @@ SOONG_CONFIG_qtidisplay_var1 ?= false
 SOONG_CONFIG_qtidisplay_var2 ?= false
 SOONG_CONFIG_qtidisplay_var3 ?= false
 
+# Add rmnetctl to soong config namespaces
+SOONG_CONFIG_NAMESPACES += rmnetctl
+
+# Add supported variables to rmnetctl config
+SOONG_CONFIG_rmnetctl += \
+    old_rmnet_data
+
+# Set default values for rmnetctl config
+SOONG_CONFIG_rmnetctl_old_rmnet_data ?= false
+
 # Tell HALs that we're compiling an AOSP build with an in-line kernel
 TARGET_COMPILE_WITH_MSM_KERNEL := true
 
@@ -109,6 +119,17 @@ TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS += | (1 << 21)
 # Mark GRALLOC_USAGE_PRIVATE_HEIF_VIDEO as valid gralloc bit on UM platforms that support it
 ifneq ($(filter $(UM_4_9_FAMILY) $(UM_4_14_FAMILY) $(UM_4_19_FAMILY) $(UM_5_4_FAMILY) $(UM_5_10_FAMILY) $(UM_5_15_FAMILY),$(TARGET_BOARD_PLATFORM)),)
     TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS += | (1 << 27)
+endif
+
+# Opt-in for old rmnet_data driver
+ifeq ($(filter $(UM_5_15_FAMILY),$(TARGET_BOARD_PLATFORM)),)
+    SOONG_CONFIG_rmnetctl_old_rmnet_data := true
+endif
+
+# Use full QTI gralloc struct for GKI 2.0 targets
+ifneq ($(filter $(UM_5_10_FAMILY) $(UM_5_15_FAMILY),$(TARGET_BOARD_PLATFORM)),)
+    TARGET_GRALLOC_HANDLE_HAS_CUSTOM_CONTENT_MD_RESERVED_SIZE ?= true
+    TARGET_GRALLOC_HANDLE_HAS_RESERVED_SIZE ?= true
 endif
 
 # List of targets that use master side content protection
