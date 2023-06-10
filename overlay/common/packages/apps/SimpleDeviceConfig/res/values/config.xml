@@ -29,6 +29,12 @@
         <!-- Allow users to disable location indicators in Developer Options -->
         <item>privacy/location_indicator_settings_enabled=true</item>
 
+        <!-- Enable protected by android banner -->
+        <item>privacy/safety_protection_enabled=true</item>
+
+        <!-- Globally enable the new photo picker -->
+        <item>storage_native_boot/take_over_get_content=true</item>
+
         <!-- Enable permission hub v2 -->
         <item>privacy/permissions_hub_enabled=true</item>
         <item>privacy/permissions_hub_2_enabled=true</item>
@@ -242,9 +248,6 @@
         <!-- Notifications -->
         <item>notification_assistant/generate_actions=true</item>
         <item>notification_assistant/generate_replies=true</item>
-
-        <!-- Globally enable the new photo picker -->
-        <item>storage_native_boot/take_over_get_content=true</item>
 
     </string-array>
 </resources>
