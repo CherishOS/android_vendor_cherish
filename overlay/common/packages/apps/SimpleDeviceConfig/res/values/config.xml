@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Copyright (C) 2020 The Proton AOSP Project
+
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
+
         http://www.apache.org/licenses/LICENSE-2.0
+
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,18 +25,21 @@
         <!-- Don't pin camera app to save memory -->
         <item>runtime_native_boot/pin_camera=false</item>
 
+        <!-- Enable the new and advanced Privacy Hub -->
+        <item>privacy/safety_center_is_enabled=true</item>
+
         <!-- Keep up to 7 days of permission usage history -->
         <item>privacy/discrete_history_cutoff_millis=604800000</item>
         <item>privacy/privacy_dashboard_7_day_toggle=true</item>
 
-        <!-- Allow users to disable location indicators in Developer Options -->
+        <!-- Use new privacy indicators for location -->
+        <item>privacy/location_indicators_enabled=true</item>
+
+        <!-- Whether to show location indicators -->
         <item>privacy/location_indicator_settings_enabled=true</item>
 
         <!-- Enable protected by android banner -->
         <item>privacy/safety_protection_enabled=true</item>
-
-        <!-- Globally enable the new photo picker -->
-        <item>storage_native_boot/take_over_get_content=true</item>
 
         <!-- Enable permission hub v2 -->
         <item>privacy/permissions_hub_enabled=true</item>
@@ -77,6 +83,7 @@
         <item>device_personalization_services/Captions__enable_clearcut_logging=true</item>
         <item>device_personalization_services/Captions__enable_language_detection=true</item>
         <item>device_personalization_services/Captions__enable_punctuations=true</item>
+
         <!-- Smartspace -->
         <item>device_personalization_services/Cell__enable_cell=true</item>
         <item>device_personalization_services/Cell__enable_smartspace_events=true</item>
@@ -150,17 +157,6 @@
         <item>device_personalization_services/Echo_smartspace__smartspace_enable_daily_forecast=true</item>
         <item>device_personalization_services/Echo_smartspace__smartspace_enable_timely_reminder=true</item>
 
-        <!-- Notification Assistant (DPS) -->
-        <item>device_personalization_services/NotificationAssistant__enable_service=true</item>
-        <item>device_personalization_services/NotificationAssistant__enable_upgrade_importance=true</item>
-        <item>device_personalization_services/NotificationAssistant__importance_model_download_url=https://www.gstatic.com/android/notifications/importance/v1/manifest.json</item>
-        <item>device_personalization_services/NotificationAssistant__importance_model_type=channel_stats</item>
-        <item>device_personalization_services/NotificationAssistant__importance_model_version=1</item>
-        <item>device_personalization_services/NotificationAssistant__max_importance_variance=0.5</item>
-
-        <!-- Pixel Launcher Overview -->
-        <item>device_personalization_services/Overview__enable_lens_r_overview_translate_action=true</item>
-
         <!-- Google Live Translate -->
         <item>device_personalization_services/Translate__blue_chip_translate_enabled=true</item>
         <item>device_personalization_services/Translate__copy_to_translate_enabled=true</item>
@@ -217,27 +213,6 @@
         <item>device_personalization_services/SmartRecPixelSearch__enable_spelling_correction=true</item>
         <item>device_personalization_services/SmartRecPixelSearch__spelling_checker_frequency_score_overrides_map={"8":-7}</item>
 
-        <!-- Pixel Launcher -->
-        <item>launcher/ENABLE_QUICK_LAUNCH_V2=true</item>
-        <item>launcher/GBOARD_UPDATE_ENTER_KEY=true</item>
-        <item>launcher/enable_one_search=true</item>
-        <item>launcher/enable_quick_launch_v2=true</item>
-        <item>launcher/ENABLE_LOCAL_RECOMMENDED_WIDGETS_FILTER=true</item>
-        <item>launcher/ENABLE_SMARTSPACE_ENHANCED=true</item>
-        <item>launcher/ENABLE_WIDGETS_PICKER_AIAI_SEARCH=true</item>
-
-        <!-- Pixel Launcher (Additional) -->
-        <item>launcher/ENABLE_LOCAL_COLOR_POPUPS=true</item>
-        <item>launcher/KEYGUARD_ANIMATION=true</item>
-        <item>launcher/ENABLE_REGION_SAMPLING=true</item>
-        <item>launcher/ENABLE_MINIMAL_DEVICE=true</item>
-        <item>launcher/ENABLE_LAUNCHER_ACTIVITY_THEME_CROSSFADE=true</item>
-        <item>launcher/ENABLE_DISMISS_PREDICTION_UNDO=true</item>
-        <item>launcher/ENABLE_KEYBOARD_TRANSITION_SYNC=true</item>
-        <item>launcher/ENABLE_WIDGET_PICKER_DEPTH=true</item>
-        <item>launcher/SHOW_DELIGHTFUL_PAGINATION_FOLDER=true</item>
-        <item>launcher/POPUP_MATERIAL_U=true</item>
-
         <!-- WallpaperEffects -->
         <item>device_personalization_services/WallpaperEffects__cinematic_models_mdd_manifest_config=Ct4IEtsICiF3YWxscGFwZXJlZmZlY3RzLWNpbmVtYXRpYy1tb2RlbHMSwgESdWh0dHBzOi8vZGwuZ29vZ2xlLmNvbS9tZGktc2VydmluZy9haWFpLXdhbGxwYXBlcmVmZmVjdHMtY2luZW1hdGljLW1vZGVscy83NDYvNTk2NDgzNDA1MzljOGU2OWRmZGZlYjkzNTk0OTIzYWJmZDBmMGQwNyCM4JQFKig1OTY0ODM0MDUzOWM4ZTY5ZGZkZmViOTM1OTQ5MjNhYmZkMGYwZDA3OhJkZXB0aF9tb2RlbC50ZmxpdGV4AKIBAKoBABLIARJ1aHR0cHM6Ly9kbC5nb29nbGUuY29tL21kaS1zZXJ2aW5nL2FpYWktd2FsbHBhcGVyZWZmZWN0cy1jaW5lbWF0aWMtbW9kZWxzLzc0Ni84NmE3MWYwYTIwYjFhMjhiNTY4MTMwZTliYTZjMTYzZTdhZjQzMTg5IKzsyQQqKDg2YTcxZjBhMjBiMWEyOGI1NjgxMzBlOWJhNmMxNjNlN2FmNDMxODk6GHBlcnNvbl9wb3NlX21vZGVsLnRmbGl0ZXgAogEAqgEAEs0BEnVodHRwczovL2RsLmdvb2dsZS5jb20vbWRpLXNlcnZpbmcvYWlhaS13YWxscGFwZXJlZmZlY3RzLWNpbmVtYXRpYy1tb2RlbHMvNzQ2L2I2NTQxNDFiOTUwNjY3OTVlYjBlNjNlZDRkNzFiZjQxZDQyYjFhNmMgyPPNAiooYjY1NDE0MWI5NTA2Njc5NWViMGU2M2VkNGQ3MWJmNDFkNDJiMWE2YzodcGVyc29uX3NlZ21lbnRlcl9tb2RlbC50ZmxpdGV4AKIBAKoBABLLARJ1aHR0cHM6Ly9kbC5nb29nbGUuY29tL21kaS1zZXJ2aW5nL2FpYWktd2FsbHBhcGVyZWZmZWN0cy1jaW5lbWF0aWMtbW9kZWxzLzc0Ni9lOTllZWJlMDQ2NDk4ZmU2N2MzMzdjZmZkMzkzODM4NTVkMjE0NjM5INCXrwIqKGU5OWVlYmUwNDY0OThmZTY3YzMzN2NmZmQzOTM4Mzg1NWQyMTQ2Mzk6G3JnYmRfaW5wYWludGVyX21vZGVsLnRmbGl0ZXgAogEAqgEAEsQBEnVodHRwczovL2RsLmdvb2dsZS5jb20vbWRpLXNlcnZpbmcvYWlhaS13YWxscGFwZXJlZmZlY3RzLWNpbmVtYXRpYy1tb2RlbHMvNzQ2L2ExNjQ4ZjQ2NDYyZDVmMTExOTVjNmEyYTBhN2M0MTMyZTEwNzJjMDIgsLo6KihhMTY0OGY0NjQ2MmQ1ZjExMTk1YzZhMmEwYTdjNDEzMmUxMDcyYzAyOhVzYWxpZW5jeV9tb2RlbC50ZmxpdGV4AKIBAKoBABgAUABYAGoECAEQAHAAogEAqAEAuAHqBdIBB2RlZmF1bHTaAQDiARsKBwgBEJ+xjRcKBwgCEKCxjRcKBwgDEKGxjRc</item>
         <item>device_personalization_services/WallpaperEffects__enable_cinematic_effect=true</item>
@@ -245,6 +220,9 @@
         <item>device_personalization_services/WallpaperEffects__enable_person_segment_tpu=false</item>
         <item>device_personalization_services/WallpaperEffects__return_texturedmesh_with_error_status=true</item>
         <item>device_personalization_services/WallpaperEffects__use_gpu=true</item>
+
+        <!-- Pixel Launcher -->
+        <item>launcher/ENABLE_SMARTSPACE_ENHANCED=true</item>
 
         <!-- System Ui -->
         <item>systemui/clipboard_overlay_show_actions=true</item>
@@ -257,6 +235,15 @@
         <!-- Notifications -->
         <item>notification_assistant/generate_actions=true</item>
         <item>notification_assistant/generate_replies=true</item>
+
+        <!-- Globally enable the new photo picker -->
+        <item>storage_native_boot/take_over_get_content=true</item>
+
+        <!-- Allow more cached apps in the background -->
+        <item>activity_manager/max_cached_processes=64</item>
+
+        <!-- ART heap compaction for cached apps -->
+        <item>activity_manager/use_compaction=true</item>
 
     </string-array>
 </resources>
