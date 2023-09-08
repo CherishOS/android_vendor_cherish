@@ -188,10 +188,16 @@ PRODUCT_PRODUCT_PROPERTIES += \
 PRODUCT_PACKAGES += \
     NavigationBarMode2ButtonOverlay
 
+# Launcher3
+PRODUCT_PACKAGES += \
+    ThemePicker \
+    WallpaperPicker2 \
+    Launcher3QuickStep
+
 # Dex preopt
 PRODUCT_DEXPREOPT_SPEED_APPS += \
     SystemUIGoogle \
-    NexusLauncherRelease
+    Launcher3QuickStep
 
 ifeq ($(TARGET_SUPPORTS_64_BIT_APPS), true)
 # Use 64-bit dex2oat for better dexopt time.
@@ -297,10 +303,6 @@ PRODUCT_PRODUCT_PROPERTIES += \
 # Enable one-handed mode
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.support_one_handed_mode=true
-
-# NexusLauncher resources
-PRODUCT_PACKAGES += \
-    NexusLauncherResOverlay
 
 # Audio
 $(call inherit-product, vendor/cherish/config/audio.mk)
