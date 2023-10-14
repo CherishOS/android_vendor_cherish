@@ -258,6 +258,10 @@ PRODUCT_PACKAGES += \
 	libtextclassifier_actions_suggestions_universal_model \
 	libtextclassifier_lang_id_model
 
+# Enable lockscreen live wallpaper
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    persist.wm.debug.lockscreen_live_wallpaper=true
+
 # Use gestures by default
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.boot.vendor.overlay.theme=com.android.internal.systemui.navbar.gestural
