@@ -347,6 +347,9 @@ USE_THINLTO_CACHE := true
 SKIP_ABI_CHECKS := true
 endif
 
+# Clocks
+$(call inherit-product, vendor/cherish/config/clocks.mk)
+
 # Pixel Framework
 $(call inherit-product-if-exists, vendor/pixel-framework/config.mk)
 
