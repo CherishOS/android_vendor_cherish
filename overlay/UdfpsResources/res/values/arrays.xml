@@ -105,6 +105,7 @@
    </string-array>
 
     <string-array translatable="false" name="udfps_animation_styles">
+        <item>none</item>
         <item>aurora</item>
         <item>bloom</item>
         <item>cyber</item>
@@ -144,6 +145,7 @@
     </string-array>
 
     <string-array translatable="false" name="udfps_animation_previews">
+        <item>none_anim_1</item>
         <item>aurora_anim_21</item>
         <item>bloom_anim_14</item>
         <item>cyber_anim_9</item>
@@ -183,6 +185,7 @@
     </string-array>
 
     <string-array translatable="false" name="udfps_animation_titles">
+        <item>None</item>
         <item>Aurora</item>
         <item>Bloom</item>
         <item>Cyber</item>
