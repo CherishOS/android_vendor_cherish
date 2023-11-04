@@ -64,6 +64,8 @@ SOONG_CONFIG_cherishNvidiaVars += \
 
 SOONG_CONFIG_NAMESPACES += cherishQcomVars
 SOONG_CONFIG_cherishQcomVars += \
+    qti_vibrator_effect_lib \
+    qti_vibrator_use_effect_stream \
     supports_extended_compress_format \
     uses_pre_uplink_features_netmgrd
 
@@ -95,6 +97,7 @@ SOONG_CONFIG_cherishGlobalVars_gralloc_handle_has_custom_content_md_reserved_siz
 SOONG_CONFIG_cherishGlobalVars_gralloc_handle_has_reserved_size := $(TARGET_GRALLOC_HANDLE_HAS_RESERVED_SIZE)
 SOONG_CONFIG_cherishGlobalVars_gralloc_handle_has_ubwcp_format := $(TARGET_GRALLOC_HANDLE_HAS_UBWCP_FORMAT)
 SOONG_CONFIG_cherishQcomVars_uses_pre_uplink_features_netmgrd := $(TARGET_USES_PRE_UPLINK_FEATURES_NETMGRD)
+SOONG_CONFIG_cherishQcomVars_qti_vibrator_use_effect_stream := $(TARGET_QTI_VIBRATOR_USE_EFFECT_STREAM)
 
 # Set default values
 BOOTLOADER_MESSAGE_OFFSET ?= 0
@@ -112,6 +115,7 @@ TARGET_INIT_VENDOR_LIB ?= vendor_init
 TARGET_INPUTDISPATCHER_SKIP_EVENT_KEY ?= 0
 TARGET_SPECIFIC_CAMERA_PARAMETER_LIBRARY ?= libcamera_parameters
 TARGET_SURFACEFLINGER_UDFPS_LIB ?= surfaceflinger_udfps_lib
+TARGET_QTI_VIBRATOR_EFFECT_LIB ?= libqtivibratoreffect
 
 # Soong value variables
 SOONG_CONFIG_cherishGlobalVars_additional_gralloc_10_usage_bits := $(TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS)
@@ -135,6 +139,7 @@ SOONG_CONFIG_cherishQcomVars_qcom_display_headers_namespace := vendor/qcom/opens
 else
 SOONG_CONFIG_cherishQcomVars_qcom_display_headers_namespace := $(QCOM_SOONG_NAMESPACE)/display
 endif
+SOONG_CONFIG_cherishQcomVars_qti_vibrator_effect_lib := $(TARGET_QTI_VIBRATOR_EFFECT_LIB)
 
 ifneq ($(TARGET_USES_NQ_NFC),true)
 PRODUCT_SOONG_NAMESPACES += hardware/nxp
