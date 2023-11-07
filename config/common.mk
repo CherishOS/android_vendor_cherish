@@ -209,10 +209,6 @@ endif
 PRODUCT_PACKAGES += \
     OmniJaws
 
-# # Hide nav Overlays
-PRODUCT_PACKAGES += \
-    ImmersiveNavigationOverlay  
-
 # Permissions
 PRODUCT_COPY_FILES += \
     vendor/cherish/config/permissions/privapp-permissions-cherish-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-cherish-SettingsIntelligencePrebuilt.xml
