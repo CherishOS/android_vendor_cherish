@@ -10,4 +10,6 @@
         android:isStatic="true"
         android:priority="10"
         android:targetPackage="com.android.settings" />
+    <application
+        android:allowBackup="false"/>
 </manifest>

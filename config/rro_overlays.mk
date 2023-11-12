@@ -16,34 +16,44 @@
 
 # RRO Overlays
 PRODUCT_PACKAGES += \
-    CustomPixelLauncherOverlay \
-    PixelDocumentsUIGoogleOverlay \
-    BuiltInPrintServiceOverlay \
-    GooglePermissionControllerOverlay \
-    PixelConfigOverlayCommon \
-    TeleServiceOverlay \
-    CaptivePortalLoginOverlay \
+    CherishConfigOverlay \
+    NetworkStackOverlay \
+    PixelLauncherIconsOverlay \
+    PixelSetupWizardOverlay
+
+# Google Overlays
+PRODUCT_PACKAGES += \
+    DMServiceOverlay \
+    FlipendoOverlay \
+    GoogleConfigOverlay \
+    GoogleDeviceLockControllerOverlay \
+    GoogleHealthConnectOverlay \
     GoogleWebViewOverlay \
-    TelecomOverlay \
-    CellBroadcastServiceOverlay \
-    SettingsGoogleOverlay \
-    SettingsGoogleOverlayPixel2022 \
-    TelephonyProviderOverlay \
-    ContactsProviderOverlay \
+    ManagedProvisioningPixelOverlay \
     PixelConfigOverlay2018 \
-    SettingsProviderOverlay \
-    TraceurOverlay \
     PixelConfigOverlay2019 \
     PixelConfigOverlay2019Midyear \
-    PixelConfigOverlay2021 \
-    PixelSetupWizardOverlay \
-    PixelFwResOverlay \
-    GoogleConfigOverlay \
-    SystemUIGoogleOverlay \
-    StorageManagerGoogleOverlay \
-    FlipendoOverlay \
-    AccessibilityMenuOverlay \
-    CellBroadcastReceiverOverlay \
+    PixelConfigOverlayCommon \
+    PixelDocumentsUIGoogleOverlay \
+    SettingsGoogleOverlayPixel2022 \
+    SystemUIGXOverlay
+
+ifeq ($(TARGET_IS_PIXEL), true)
+PRODUCT_PACKAGES += \
+    NowPlayingOverlay \
+    PixelBatteryHealthOverlay \
+    PixelDisableLEDOverlay \
+    PixelSetupWizardOverlay2019 \
+    PixelSetupWizardOverlay2021
+endif
+
+ifeq ($(TARGET_IS_PIXEL_7), true)
+PRODUCT_PACKAGES += \
     ClearCallingSettingsOverlay2022 \
-    GoogleHealthConnectOverlay \
-    MediaProviderOverlay
+    PixelConnectivityOverlay2022
+endif
+
+ifeq ($(TARGET_PIXEL_STAND_SUPPORTED), true)
+PRODUCT_PACKAGES += \
+    DreamlinerOverlay
+endif
