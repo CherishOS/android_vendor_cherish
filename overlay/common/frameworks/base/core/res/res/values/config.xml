@@ -19,31 +19,49 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Disable stock components if installed -->
     <string-array name="config_globallyDisabledComponents" translatable="false">
-        <item>com.android.vending/com.google.android.finsky.systemupdate.SystemUpdateSettingsContentProvider</item>
-        <item>com.android.vending/com.google.android.finsky.systemupdateactivity.SettingsSecurityEntryPoint</item>
-        <item>com.android.vending/com.google.android.finsky.systemupdateactivity.SystemUpdateActivity</item>
+        <item>
+            com.android.vending/com.google.android.finsky.systemupdate.SystemUpdateSettingsContentProvider</item>
+        <item>
+            com.android.vending/com.google.android.finsky.systemupdateactivity.SettingsSecurityEntryPoint</item>
+        <item>
+            com.android.vending/com.google.android.finsky.systemupdateactivity.SystemUpdateActivity</item>
         <item>com.google.android.gms/com.google.android.gms.update.phone.PopupDialog</item>
         <item>com.google.android.gms/com.google.android.gms.update.OtaSuggestionSummaryProvider</item>
         <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateActivity</item>
         <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateGcmTaskService</item>
         <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateService</item>
-        <item>com.google.android.as/com.google.intelligence.sense.ambientmusic.history.HistoryContentProvider</item>
-        <item>com.google.android.as/com.google.intelligence.sense.ambientmusic.history.HistoryActivity</item>
-        <item>com.google.android.as/com.google.intelligence.sense.ambientmusic.AmbientMusicSettingsActivity</item>
-        <item>com.google.android.as/com.google.intelligence.sense.ambientmusic.AmbientMusicNotificationsSettingsActivity</item>
-        <item>com.google.android.as/com.google.intelligence.sense.ambientmusic.AmbientMusicSetupWizardActivity</item>
-        <item>com.google.android.dialer/com.android.dialer.rtt.settings.impl.gateway.RttSettingsDeepLink</item>
-        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateService.ActiveReceiver</item>
+        <item>
+            com.google.android.as/com.google.intelligence.sense.ambientmusic.history.HistoryContentProvider</item>
+        <item>
+            com.google.android.as/com.google.intelligence.sense.ambientmusic.history.HistoryActivity</item>
+        <item>
+            com.google.android.as/com.google.intelligence.sense.ambientmusic.AmbientMusicSettingsActivity</item>
+        <item>
+            com.google.android.as/com.google.intelligence.sense.ambientmusic.AmbientMusicNotificationsSettingsActivity</item>
+        <item>
+            com.google.android.as/com.google.intelligence.sense.ambientmusic.AmbientMusicSetupWizardActivity</item>
+        <item>
+            com.google.android.dialer/com.android.dialer.rtt.settings.impl.gateway.RttSettingsDeepLink</item>
+        <item>
+            com.google.android.gms/com.google.android.gms.update.SystemUpdateService.ActiveReceiver</item>
         <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateService.Receiver</item>
-        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateService.SecretCodeReceiver</item>
-        <item>com.google.android.gms/com.google.android.gms.chimera.GmsIntentOperationService$GmsExternalReceiver</item>
+        <item>
+            com.google.android.gms/com.google.android.gms.update.SystemUpdateService.SecretCodeReceiver</item>
+        <item>
+            com.google.android.gms/com.google.android.gms.chimera.GmsIntentOperationService$GmsExternalReceiver</item>
     </string-array>
 
     <string-array name="config_locationExtraPackageNames" translatable="false">
+        <!-- Bluetooth -->
+        <item>com.android.bluetooth</item>
         <!-- TeleService -->
         <item>com.android.phone</item>
         <!-- CneApp -->
         <item>com.qualcomm.qti.cne</item>
+        <!-- ImsService -->
+        <item>com.shannon.imsservice</item>
+        <!-- MediaTek ImsService -->
+        <item>com.mediatek.ims</item>
     </string-array>
 
     <bool name="config_cellBroadcastAppLinks">true</bool>
@@ -71,91 +89,76 @@
          non-interactive state. -->
     <bool name="config_supportLongPressPowerWhenNonInteractive">true</bool>
 
-    <!-- Flag indicating which package name can access DeviceConfig table -->
-    <string name="config_deviceConfiguratorPackageName" translatable="false">org.protonaosp.deviceconfig</string>
-	
-	<!-- List of comma separated package names for which we the system will not show crash, ANR,
-         etc. dialogs. -->
-    <string name="config_appsNotReportingCrashes">com.google.android.tts</string>
+    <!-- Whether or not to enable the lock screen entry point for the QR code scanner. -->
+    <bool name="config_enableQrCodeScannerOnLockScreen">true</bool>
 
     <!-- Controls the navigation bar interaction mode:
          0: 3 button mode (back, home, overview buttons)
          1: 2 button mode (back, home buttons + swipe up for overview)
          2: gestures only for back, home and overview -->
     <integer name="config_navBarInteractionMode">2</integer>
-
     <!-- Control the behavior when the user long presses the power button.
-            0 - Nothing
-            1 - Global actions menu
-            2 - Power off (with confirmation)
-            3 - Power off (without confirmation)
-            4 - Go to voice assist
-            5 - Go to assistant (Settings.Secure.ASSISTANT)
-    -->
+                 0 - Nothing
+                 1 - Global actions menu
+                 2 - Power off (with confirmation)
+                 3 - Power off (without confirmation)
+                 4 - Go to voice assist
+                 5 - Go to assistant (Settings.Secure.ASSISTANT)
+         -->
     <integer name="config_longPressOnPowerBehavior">1</integer>
-
     <!-- Control the behavior when the user presses the power and volume up buttons together.
-            0 - Nothing
-            1 - Mute toggle
-            2 - Global actions menu
-    -->
+                 0 - Nothing
+                 1 - Mute toggle
+                 2 - Global actions menu
+         -->
     <integer name="config_keyChordPowerVolumeUp">1</integer>
-	
-	<!-- Name of the font family to use in the default lockscreen clock -->
-    <string name="config_clockFontFamily" translatable="false">@font/google_sans_clock</string>
-
-    <!-- The type of the light sensor to be used by the display framework for things like
-         auto-brightness. If unset, then it just gets the default sensor of type TYPE_LIGHT. -->
-    <string name="config_displayLightSensorType" translatable="false">android.sensor.light</string>
-
-    <!-- List of system apps that are allowed to be locked with app lock.
-        Use with extreme caution. -->
-    <string-array name="config_appLockAllowedSystemApps" translatable="false">
-        <item>com.android.calculator2</item>
-        <item>com.android.camera2</item>
-        <item>com.android.camera</item>
-        <item>com.android.chrome</item>
-        <item>com.android.contacts</item>
-        <item>com.android.deskclock</item>
-        <item>com.android.dialer</item>
-        <item>com.android.documentsui</item>
-        <item>com.android.gallery3d</item>
-        <item>com.android.messaging</item>
-        <item>com.android.settings</item>
-        <item>com.android.vending</item>
-        <item>com.caf.fmradio</item>
-        <item>com.crdroid.updater</item>
-        <item>com.google.android.GoogleCamera</item>
-        <item>com.google.android.apps.cameralite</item>
-        <item>com.google.android.apps.docs</item>
-        <item>com.google.android.apps.maps</item>
-        <item>com.google.android.apps.nbu.files</item>
-        <item>com.google.android.apps.photos</item>
-        <item>com.google.android.apps.photosgo</item>
-        <item>com.google.android.apps.recorder</item>
-        <item>com.google.android.calculator</item>
-        <item>com.google.android.calendar</item>
-        <item>com.google.android.contacts</item>
-        <item>com.google.android.gm</item>
-        <item>com.google.android.messaging</item>
-        <item>com.google.android.youtube</item>
-        <item>com.oneplus.camera</item>
-        <item>com.oneplus.gallery</item>
-        <item>com.oplus.camera</item>
-        <item>io.chaldeaprjkt.gamespace</item>
-        <item>org.lineageos.aperture</item>
-        <item>org.lineageos.eleven</item>
-        <item>org.lineageos.etar</item>
-        <item>org.lineageos.jelly</item>
-        <item>org.lineageos.recorder</item>
-    </string-array>
 
     <!-- Build properties from a GMS certified device against current platform SPL level -->
     <string-array name="config_certifiedBuildProperties" translatable="false">
-        <item>marlin</item>   <!-- Build.DEVICE -->
-        <item>marlin</item>   <!-- Build.PRODUCT -->
-        <item>Pixel XL</item> <!-- Build.MODEL -->
-        <item>google/marlin/marlin:7.1.2/NJH47F/4146041:user/release-keys</item> <!-- Build.FINGERPRINT -->
+        <item>ASUS_X00HD_4</item> <!-- Build.DEVICE -->
+        <item>WW_Phone</item>     <!-- Build.PRODUCT -->
+        <item>ASUS_X00HD</item>   <!-- Build.MODEL -->
+        <item>asus/WW_Phone/ASUS_X00HD_4:7.1.1/NMF26F/14.2016.1801.372-20180119:user/release-keys</item> <!-- Build.FINGERPRINT -->
+    </string-array>
+
+    <!-- Name of the font family to use in the default lockscreen clock -->
+    <string name="config_clockFontFamily" translatable="false">@font/google_sans_clock</string>
+
+    <!-- Define device configs on boot -->
+    <string-array name="global_device_configs_override">
+
+        <!-- Machine learning back gesture (requires TensorFlow model) -->
+        <item>systemui/use_back_gesture_ml_model=true</item>
+        <item>systemui/back_gesture_ml_model_name=backgesture</item>
+        <item>systemui/back_gesture_ml_model_threshold=0.8</item>
+
+        <!-- Don't pin camera app to save memory -->
+        <item>runtime_native_boot/pin_camera=false</item>
+
+        <!-- Keep up to 7 days of permission usage history -->
+        <item>privacy/discrete_history_cutoff_millis=604800000</item>
+        <item>privacy/privacy_dashboard_7_day_toggle=true</item>
+
+        <!-- Enable protected by android banner -->
+        <item>privacy/safety_protection_enabled=true</item>
+
+        <!-- Globally enable the new photo picker -->
+        <item>storage_native_boot/take_over_get_content=true</item>
+
+        <!-- Pixel Launcher -->
+        <item>launcher/ENABLE_SMARTSPACE_ENHANCED=true</item>
+
+        <!-- System Ui -->
+        <item>systemui/clipboard_overlay_show_actions=true</item>
+        <item>systemui/quick_access_wallet_enabled=true</item>
+        <item>systemui/enable_screenshot_corner_flow=true</item>
+        <item>systemui/enable_screenshot_notification_smart_actions=true</item>
+        <item>systemui/enable_screenshot_scrolling=true</item>
+        <item>systemui/volume_separate_notification=true</item>
+
+        <!-- Notifications -->
+        <item>notification_assistant/generate_actions=true</item>
+        <item>notification_assistant/generate_replies=true</item>
 
         <!--
             Device Personalization Services (AiAi)
@@ -166,20 +169,26 @@
         <item>device_personalization_services/Cell__enable_smartspace_events=true</item>
         <item>device_personalization_services/EchoSmartspace__check_notification_visibility=true</item>
         <item>device_personalization_services/EchoSmartspace__doorbell_when_for_update_time=true</item>
-        <item>device_personalization_services/EchoSmartspace__enable_add_contextual_feedback_button_on_long_press=false</item>
-        <item>device_personalization_services/EchoSmartspace__enable_add_internal_feedback_button=true</item>
+        <item>
+            device_personalization_services/EchoSmartspace__enable_add_contextual_feedback_button_on_long_press=false</item>
+        <item>
+            device_personalization_services/EchoSmartspace__enable_add_internal_feedback_button=true</item>
         <item>device_personalization_services/EchoSmartspace__enable_agsa_settings_read=true</item>
-        <item>device_personalization_services/EchoSmartspace__enable_cross_feature_rank_dedup_twiddler=true</item>
+        <item>
+            device_personalization_services/EchoSmartspace__enable_cross_feature_rank_dedup_twiddler=true</item>
         <item>device_personalization_services/EchoSmartspace__enable_dimensional_logging=true</item>
-        <item>device_personalization_services/EchoSmartspace__enable_encode_subcard_into_smartspace_target_id=true</item>
-        <item>device_personalization_services/EchoSmartspace__enable_flight_landing_smartspace_aiai=true</item>
+        <item>
+            device_personalization_services/EchoSmartspace__enable_encode_subcard_into_smartspace_target_id=true</item>
+        <item>
+            device_personalization_services/EchoSmartspace__enable_flight_landing_smartspace_aiai=true</item>
         <item>device_personalization_services/EchoSmartspace__enable_hotel_smartspace_aiai=true</item>
         <item>device_personalization_services/EchoSmartspace__enable_media_recs_for_driving=true</item>
         <item>device_personalization_services/EchoSmartspace__enable_predictor_expiration=true</item>
         <item>device_personalization_services/EchoSmartspace__enable_ring_channels_regex=true</item>
         <item>device_personalization_services/EchoSmartspace__enable_ring_using_ui_template=true</item>
         <item>device_personalization_services/EchoSmartspace__enable_travel_features_type_merge=true</item>
-        <item>device_personalization_services/EchoSmartspace__ring_channels_regex=4_ding_channel_notification\d+</item>
+        <item>
+            device_personalization_services/EchoSmartspace__ring_channels_regex=4_ding_channel_notification\d+</item>
         <item>device_personalization_services/EchoSmartspace__ring_lockscreen_delay_seconds=0</item>
         <item>device_personalization_services/EchoSmartspace__ring_on_aod_only=true</item>
         <item>device_personalization_services/EchoSmartspace__runtastic_check_pause_action=true</item>
@@ -189,20 +198,25 @@
         <item>device_personalization_services/EchoSmartspace__strava_check_stop_action=true</item>
         <item>device_personalization_services/Echo__smartspace_dedupe_fast_pair_notification=true</item>
         <item>device_personalization_services/Echo__smartspace_doorbell_aiai_loading_screen=false</item>
-        <item>device_personalization_services/Echo__smartspace_doorbell_allowlist_packages=com.nest.android, com.google.android.apps.chromecast.app</item>
+        <item>device_personalization_services/Echo__smartspace_doorbell_allowlist_packages=com.nest.android,
+            com.google.android.apps.chromecast.app</item>
         <item>device_personalization_services/Echo__smartspace_doorbell_loading_screen_state=4</item>
         <item>device_personalization_services/Echo__smartspace_enable_async_icon=true</item>
-        <item>device_personalization_services/Echo__smartspace_enable_battery_notification_parser=true</item>
+        <item>
+            device_personalization_services/Echo__smartspace_enable_battery_notification_parser=true</item>
         <item>device_personalization_services/Echo__smartspace_enable_bedtime_active_predictor=true</item>
-        <item>device_personalization_services/Echo__smartspace_enable_bedtime_reminder_predictor=true</item>
+        <item>
+            device_personalization_services/Echo__smartspace_enable_bedtime_reminder_predictor=true</item>
         <item>device_personalization_services/Echo__smartspace_enable_bluetooth_metadata_parser=true</item>
         <item>device_personalization_services/Echo__smartspace_enable_cross_device_timer=true</item>
-        <item>device_personalization_services/Echo__smartspace_enable_dark_launch_outlook_events=true</item>
+        <item>
+            device_personalization_services/Echo__smartspace_enable_dark_launch_outlook_events=true</item>
         <item>device_personalization_services/Echo__smartspace_enable_doorbell=true</item>
         <item>device_personalization_services/Echo__smartspace_enable_doorbell_context_wrapper=true</item>
         <item>device_personalization_services/Echo__smartspace_enable_doorbell_extras=true</item>
         <item>device_personalization_services/Echo__smartspace_enable_dwb_bedtime_predictor=true</item>
-        <item>device_personalization_services/Echo__smartspace_enable_earthquake_alert_predictor=true</item>
+        <item>
+            device_personalization_services/Echo__smartspace_enable_earthquake_alert_predictor=true</item>
         <item>device_personalization_services/Echo__smartspace_enable_echo_settings=true</item>
         <item>device_personalization_services/Echo__smartspace_enable_echo_unified_settings=true</item>
         <item>device_personalization_services/Echo__smartspace_enable_eta_doordash=true</item>
@@ -221,20 +235,28 @@
         <item>device_personalization_services/Echo__smartspace_enable_ridesharing_eta=true</item>
         <item>device_personalization_services/Echo__smartspace_enable_safety_check_predictor=true</item>
         <item>device_personalization_services/Echo__smartspace_enable_score_ranker=true</item>
-        <item>device_personalization_services/Echo__smartspace_enable_sensitive_notification_twiddler=true</item>
+        <item>
+            device_personalization_services/Echo__smartspace_enable_sensitive_notification_twiddler=true</item>
         <item>device_personalization_services/Echo__smartspace_enable_step_predictor=true</item>
         <item>device_personalization_services/Echo__smartspace_enable_subcard_logging=true</item>
         <item>device_personalization_services/Echo__smartspace_gaia_twiddler=true</item>
-        <item>device_personalization_services/Echo__smartspace_outlook_event_source_of_truth=TEXT_ONLY</item>
+        <item>
+            device_personalization_services/Echo__smartspace_outlook_event_source_of_truth=TEXT_ONLY</item>
         <item>device_personalization_services/Echo__smartspace_package_delivery_card_delay_seconds=0</item>
         <item>device_personalization_services/Echo__smartspace_show_cross_device_timer_label=true</item>
         <item>device_personalization_services/Echo__smartspace_use_flashlight_action_chip=true</item>
-        <item>device_personalization_services/Echo_smartspace__enable_flight_landing_smartspace_aiai=true</item>
+        <item>
+            device_personalization_services/Echo_smartspace__enable_flight_landing_smartspace_aiai=true</item>
         <item>device_personalization_services/Echo_smartspace__enable_hotel_smartspace_aiai=true</item>
         <item>device_personalization_services/Echo_smartspace__smartspace_enable_daily_forecast=true</item>
-        <item>device_personalization_services/Echo_smartspace__smartspace_enable_timely_reminder=true</item>
+        <item>
+            device_personalization_services/Echo_smartspace__smartspace_enable_timely_reminder=true</item>
 
         <!-- Pixel Launcher -->
         <item>launcher/ENABLE_SMARTSPACE_ENHANCED=true</item>
     </string-array>
+
+    <!-- The type of the light sensor to be used by the display framework for things like
+         auto-brightness. If unset, then it just gets the default sensor of type TYPE_LIGHT. -->
+    <string name="config_displayLightSensorType" translatable="false">android.sensor.light</string>
 </resources>
