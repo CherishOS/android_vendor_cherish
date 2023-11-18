@@ -153,6 +153,10 @@ include vendor/cherish/config/bootanimation.mk
      ro.surface_flinger.supports_background_blur=1 \
      ro.launcher.blur.appLaunch=0 \
      persist.sys.sf.disable_blurs=1
+	 
+# Cloned app exemption
+PRODUCT_COPY_FILES += \
+    vendor/cherish/prebuilt/common/etc/sysconfig/preinstalled-packages-platform-cherish-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/preinstalled-packages-platform-cherish-product.xml
 
 # Lineage packages
 ifeq ($(PRODUCT_IS_ATV),)
