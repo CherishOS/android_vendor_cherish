@@ -33,6 +33,27 @@
           screenshot has been saved to work profile. If blank, a default icon will be shown. -->
     <string name="config_sceenshotWorkProfileFilesApp" translatable="false">com.android.documentsui/.files.LauncherActivity</string>
 
+    <!-- SystemUI Plugins that can be loaded on user builds. -->
+    <string-array name="config_pluginAllowlist">
+     <item>com.android.systemui</item>
+     <item>com.android.systemui.plugin.globalactions.wallet</item>
+     <item>com.android.systemui.falcon</item>
+     <item>com.android.systemui.falcon.debug</item>
+     <item>com.android.systemui.falcon.one</item>
+     <item>com.android.systemui.falcon.two</item>
+     <item>com.android.systemui.falcon.three</item>
+     <item>com.android.systemui.falcon.four</item>
+     <item>com.android.systemui.falcon.five</item>
+     <item>com.android.systemui.falcon.six</item>
+     <item>com.android.systemui.falcon.seven</item>
+     <item>com.android.systemui.falcon.eight</item>
+     <item>com.android.systemui.falcon.nine</item>
+ </string-array>
+ <string-array name="config_pluginWhitelist">
+     <item>com.android.systemui</item>
+     <item>com.android.systemui.plugin.globalactions.wallet</item>
+ </string-array>
+
     <!-- Whether or not lockscreen shortcuts can be customized -->
     <bool name="custom_lockscreen_shortcuts_enabled">true</bool>
 
