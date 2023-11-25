@@ -10,6 +10,7 @@ PRODUCT_BRAND ?= Cherish OS
 # Pixel additions
 ifeq ($(WITH_GMS),true)
 $(call inherit-product, vendor/google/overlays/ThemeIcons/config.mk)
+$(call inherit-product, vendor/pixel-framework/config.mk)
 $(call inherit-product, vendor/pixel-style/config/common.mk)
 endif
 
