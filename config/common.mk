@@ -204,7 +204,9 @@ endif
  PRODUCT_PACKAGES += \
       GameSpace \
       Aperture \
-      ParallelSpace
+      ParallelSpace \
+      Launcher3QuickStep \
+      ThemePicker
 
 #OmniJaws
 PRODUCT_PACKAGES += \
