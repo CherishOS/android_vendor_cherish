@@ -200,10 +200,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.dex2oat64.enabled=true
 endif
 
+ifneq ($(PRODUCT_NO_CAMERA),true)
+PRODUCT_PACKAGES += \
+    Aperture
+endif
+
 # SystemUI plugins
  PRODUCT_PACKAGES += \
       GameSpace \
-      Aperture \
       ParallelSpace
 
 #OmniJaws
