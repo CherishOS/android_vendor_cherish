@@ -319,6 +319,9 @@ $(call inherit-product, vendor/cherish/config/bootanimation.mk)
 # Fonts
 $(call inherit-product, vendor/cherish/config/fonts.mk)
 
+# Certification
+$(call inherit-product-if-exists, vendor/certification/config.mk)
+
 ifeq ($(EXTRA_UDFPS_ANIMATIONS),true)
 PRODUCT_PACKAGES += \
     UdfpsResources
