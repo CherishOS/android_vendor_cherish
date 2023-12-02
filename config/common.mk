@@ -75,9 +75,16 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += \
     ro.sf.blurs_are_expensive=1 \
     ro.surface_flinger.supports_background_blur=1
 
-# # Disable blur on app-launch
-# PRODUCT_SYSTEM_EXT_PROPERTIES += \
-#     ro.launcher.blur.appLaunch=0
+# Blur
+TARGET_ENABLE_BLUR ?= false
+ifeq ($(TARGET_ENABLE_BLUR), true)
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    ro.sf.blurs_are_expensive=1 \
+    ro.surface_flinger.supports_background_blur=1
+else
+PRODUCT_SYSTEM_PROPERTIES += \
+    ro.launcher.blur.appLaunch=0
+endif
 
 # Backup Tool
 PRODUCT_COPY_FILES += \
