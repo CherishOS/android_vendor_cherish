@@ -28,31 +28,40 @@
          increase the rate of unintentional unlocks. -->
     <bool name="config_lockscreenAntiFalsingClassifierEnabled">false</bool>
 
-     <!-- ComponentName for the file browsing app that the system would expect to be used in work
+    <!-- ComponentName for the file browsing app that the system would expect to be used in work
           profile. The icon for this app will be shown to the user when informing them that a
           screenshot has been saved to work profile. If blank, a default icon will be shown. -->
-    <string name="config_sceenshotWorkProfileFilesApp" translatable="false">com.android.documentsui/.files.LauncherActivity</string>
+    <string name="config_sceenshotWorkProfileFilesApp" translatable="false">
+        com.android.documentsui/.files.LauncherActivity</string>
 
     <!-- SystemUI Plugins that can be loaded on user builds. -->
     <string-array name="config_pluginAllowlist">
-     <item>com.android.systemui</item>
-     <item>com.android.systemui.plugin.globalactions.wallet</item>
-     <item>com.android.systemui.falcon</item>
-     <item>com.android.systemui.falcon.debug</item>
-     <item>com.android.systemui.falcon.one</item>
-     <item>com.android.systemui.falcon.two</item>
-     <item>com.android.systemui.falcon.three</item>
-     <item>com.android.systemui.falcon.four</item>
-     <item>com.android.systemui.falcon.five</item>
-     <item>com.android.systemui.falcon.six</item>
-     <item>com.android.systemui.falcon.seven</item>
-     <item>com.android.systemui.falcon.eight</item>
-     <item>com.android.systemui.falcon.nine</item>
- </string-array>
- <string-array name="config_pluginWhitelist">
-     <item>com.android.systemui</item>
-     <item>com.android.systemui.plugin.globalactions.wallet</item>
- </string-array>
+        <item>com.android.systemui</item>
+        <item>com.android.systemui.plugin.globalactions.wallet</item>
+        <item>com.android.systemui.falcon</item>
+        <item>com.android.systemui.falcon.debug</item>
+        <item>com.android.systemui.falcon.one</item>
+        <item>com.android.systemui.falcon.two</item>
+        <item>com.android.systemui.falcon.three</item>
+        <item>com.android.systemui.falcon.four</item>
+        <item>com.android.systemui.falcon.five</item>
+        <item>com.android.systemui.falcon.six</item>
+        <item>com.android.systemui.falcon.seven</item>
+        <item>com.android.systemui.falcon.eight</item>
+        <item>com.android.systemui.falcon.nine</item>
+        <item>com.android.systemui.clocks.bignum</item>
+        <item>com.android.systemui.clocks.calligraphy</item>
+        <item>com.android.systemui.clocks.flex</item>
+        <item>com.android.systemui.clocks.growth</item>
+        <item>com.android.systemui.clocks.inflate</item>
+        <item>com.android.systemui.clocks.metro</item>
+        <item>com.android.systemui.clocks.numoverlap</item>
+        <item>com.android.systemui.clocks.weather</item>
+    </string-array>
+    <string-array name="config_pluginWhitelist">
+        <item>com.android.systemui</item>
+        <item>com.android.systemui.plugin.globalactions.wallet</item>
+    </string-array>
 
     <!-- Whether or not lockscreen shortcuts can be customized -->
     <bool name="custom_lockscreen_shortcuts_enabled">true</bool>
