@@ -63,7 +63,6 @@ PRODUCT_SYSTEM_PROPERTIES += ro.adb.secure=1
 PRODUCT_SYSTEM_PROPERTIES += persist.sys.strictmode.disable=true
 endif
 
-
 # Enable WiFi Display
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.wfd.nohdcp=1 \
@@ -270,9 +269,9 @@ PRODUCT_PACKAGES += \
 	libtextclassifier_actions_suggestions_universal_model \
 	libtextclassifier_lang_id_model
 
-# Enable lockscreen live wallpaper
+# Disable lockscreen live wallpaper for media metadata on lockscreen to work
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    persist.wm.debug.lockscreen_live_wallpaper=true
+    persist.wm.debug.lockscreen_live_wallpaper=false
 
 # Use gestures by default
 PRODUCT_PRODUCT_PROPERTIES += \
