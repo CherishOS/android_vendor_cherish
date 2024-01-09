@@ -27,7 +27,6 @@ PRODUCT_PACKAGES += \
     CaptivePortalLoginOverlay \
     CellBroadcastReceiverOverlay \
     CellBroadcastServiceOverlay \
-    ClearCallingSettingsOverlay2022 \
     ContactsProviderOverlay \
     DMServiceOverlay \
     FlipendoOverlay \
@@ -53,6 +52,7 @@ PRODUCT_PACKAGES += \
 
 ifeq ($(TARGET_IS_PIXEL), true)
 PRODUCT_PACKAGES += \
+    ClearCallingSettingsOverlay2022 \
     ManagedProvisioningPixelOverlay \
     NowPlayingOverlay \
     PixelBatteryHealthOverlay \
