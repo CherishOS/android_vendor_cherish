@@ -471,4 +471,7 @@
 
     <!-- Name of the font family to use in the default lockscreen clock -->
     <string name="config_clockFontFamily" translatable="false" />
+
+    <!-- Maximum velocity to initiate a fling, as measured in dips per second. -->
+     <dimen name="config_viewMaxFlingVelocity">12000dp</dimen>
 </resources>
