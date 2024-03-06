@@ -66,6 +66,7 @@ function breakfast()
 {
     target=$1
     local variant=$2
+    local aosp_target_release=$(cat ${ANDROID_BUILD_TOP}/vendor/cherish/vars/aosp_target_release 2>/dev/null)
 
     if [ $# -eq 0 ]; then
         # No arguments, so let's have the full menu
@@ -80,7 +81,7 @@ function breakfast()
                 variant="userdebug"
             fi
 
-            lunch cherish_$target-$variant
+            lunch cherish_$target-$aosp_target_release-$variant
         fi
     fi
     return $?
