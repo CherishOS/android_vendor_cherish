@@ -141,9 +141,8 @@ SYSTEM_OPTIMIZE_JAVA ?= true
 SYSTEMUI_OPTIMIZE_JAVA ?= true
 
 # Charger
-PRODUCT_PACKAGES += \
-    charger_res_images \
-    product_charger_res_images
+# Inherit from animations config
+$(call inherit-product, vendor/cherish/config/animations.mk)
 
 # Filesystems tools
 PRODUCT_PACKAGES += \
