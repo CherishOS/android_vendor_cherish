@@ -213,7 +213,8 @@ endif
 
 #OmniJaws
 PRODUCT_PACKAGES += \
-    OmniJaws
+    OmniJaws \
+    OmniStyle
 
 #UdfpsResources
 ifeq ($(EXTRA_UDFPS_ANIMATIONS),true)
