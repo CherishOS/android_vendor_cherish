@@ -219,7 +219,8 @@ PRODUCT_PACKAGES += \
 #UdfpsResources
 ifeq ($(EXTRA_UDFPS_ANIMATIONS),true)
 PRODUCT_PACKAGES += \
-    UdfpsResources
+    UdfpsResources \
+    UdfpsIcons
 endif
 
 
