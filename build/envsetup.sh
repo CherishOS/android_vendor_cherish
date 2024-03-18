@@ -651,7 +651,7 @@ alias mkap='dopush mka'
 alias cmkap='dopush cmka'
 function repopick() {
     T=$(gettop)
-    $T/vendor/cherish/build/tools/repopick.py $@
+    python3 $T/vendor/cherish/build/tools/repopick.py $@
 }
 function fixup_common_out_dir() {
     common_out_dir=$(get_build_var OUT_DIR)/target/common
