@@ -1,16 +1,16 @@
 function __print_cherish_functions_help() {
 cat <<EOF
-Additional CherishOS functions:
+Additional cherishOS functions:
 - cout:            Changes directory to out.
 - mmp:             Builds all of the modules in the current directory and pushes them to the device.
 - mmap:            Builds all of the modules in the current directory and its dependencies, then pushes the package to the device.
 - mmmp:            Builds all of the modules in the supplied directories and pushes them to the device.
-- cherishgerrit:   A Git wrapper that fetches/pushes patch from/to CherishOS Gerrit Review.
+- cherishgerrit:   A Git wrapper that fetches/pushes patch from/to cherishOS Gerrit Review.
 - cherishrebase:   Rebase a Gerrit change and push it again.
-- cherishremote:   Add git remote for CherishOS Gerrit Review.
+- cherishremote:   Add git remote for cherishOS Gerrit Review.
 - aospremote:      Add git remote for matching AOSP repository.
-- cafremote:       Add git remote for matching CodeAurora repository.
-- githubremote:    Add git remote for CherishOS Github.
+- cloremote:       Add git remote for matching CodeLinaro repository.
+- githubremote:    Add git remote for cherishOS Github.
 - mka:             Builds using SCHED_BATCH on all processors.
 - mkap:            Builds the module(s) using mka and pushes them to the device.
 - cmka:            Cleans and builds using mka.
@@ -18,6 +18,9 @@ Additional CherishOS functions:
 - repolastsync:    Prints date and time of last repo sync.
 - reposync:        Parallel repo sync using ionice and SCHED_BATCH.
 - repopick:        Utility to fetch changes from Gerrit.
+- sort-blobs-list: Sort proprietary-files.txt sections with LC_ALL=C.
+- installboot:     Installs a boot.img to the connected device.
+- installrecovery: Installs a recovery.img to the connected device.
 EOF
 }
 
@@ -66,7 +69,7 @@ function breakfast()
 {
     target=$1
     local variant=$2
-    local aosp_target_release=$(cat ${ANDROID_BUILD_TOP}/vendor/cherish/vars/aosp_target_release 2>/dev/null)
+    source ${ANDROID_BUILD_TOP}/vendor/cherish/vars/aosp_target_release
 
     if [ $# -eq 0 ]; then
         # No arguments, so let's have the full menu
@@ -76,7 +79,7 @@ function breakfast()
             # A buildtype was specified, assume a full device name
             lunch $target
         else
-            # This is probably just the Cherish model name
+            # This is probably just the cherish model name
             if [ -z "$variant" ]; then
                 variant="userdebug"
             fi
@@ -88,6 +91,32 @@ function breakfast()
 }
 
 alias bib=breakfast
+
+function eat()
+{
+    if [ "$OUT" ] ; then
+        ZIPPATH=`ls -tr "$OUT"/Cherish-*.zip | tail -1`
+        if [ ! -f $ZIPPATH ] ; then
+            echo "Nothing to eat"
+            return 1
+        fi
+        echo "Waiting for device..."
+        adb wait-for-device-recovery
+        echo "Found device"
+        if (adb shell getprop ro.cherish.device | grep -q "$CHERISH_BUILD"); then
+            echo "Rebooting to sideload for install"
+            adb reboot sideload-auto-reboot
+            adb wait-for-sideload
+            adb sideload $ZIPPATH
+        else
+            echo "The connected device does not appear to be $CHERISH_BUILD, run away!"
+        fi
+        return $?
+    else
+        echo "Nothing to eat"
+        return 1
+    fi
+}
 
 function omnom()
 {
@@ -221,7 +250,7 @@ function cherishremote()
     fi
     if [ -z "$REMOTE" ]
     then
-        REMOTE=$(git config --get remote.caf.projectname)
+        REMOTE=$(git config --get remote.clo.projectname)
         CHERISH="false"
     fi
 
@@ -233,12 +262,12 @@ function cherishremote()
         local PROJECT=$REMOTE
     fi
 
-    local CHERISH_USER=$(git config --get review.review.cherishos.com.username)
+    local CHERISH_USER=$(git config --get review.review.cherishos.org.username)
     if [ -z "$CHERISH_USER" ]
     then
-        git remote add cherish ssh://review.cherishos.com:29418/$PFX$PROJECT
+        git remote add cherish ssh://review.cherishos.org:29418/$PFX$PROJECT
     else
-        git remote add cherish ssh://$CHERISH_USER@review.cherishos.com:29418/$PFX$PROJECT
+        git remote add cherish ssh://$CHERISH_USER@review.cherishos.org:29418/$PFX$PROJECT
     fi
     echo "Remote 'cherish' created"
 }
@@ -251,18 +280,56 @@ function aospremote()
         return 1
     fi
     git remote rm aosp 2> /dev/null
-    local PROJECT=$(pwd -P | sed -e "s#$ANDROID_BUILD_TOP\/##; s#-caf.*##; s#\/default##")
-    # Google moved the repo location in Oreo
-    if [ $PROJECT = "build/make" ]
-    then
-        PROJECT="build"
+
+    if [ -f ".gitupstream" ]; then
+        local REMOTE=$(cat .gitupstream | cut -d ' ' -f 1)
+        git remote add aosp ${REMOTE}
+    else
+        local PROJECT=$(pwd -P | sed -e "s#$ANDROID_BUILD_TOP\/##; s#-caf.*##; s#\/default##")
+        # Google moved the repo location in Oreo
+        if [ $PROJECT = "build/make" ]
+        then
+            PROJECT="build"
+        fi
+        if (echo $PROJECT | grep -qv "^device")
+        then
+            local PFX="platform/"
+        fi
+        git remote add aosp https://android.googlesource.com/$PFX$PROJECT
     fi
-    if (echo $PROJECT | grep -qv "^device")
-    then
-        local PFX="platform/"
-    fi
-    git remote add aosp https://android.googlesource.com/$PFX$PROJECT
     echo "Remote 'aosp' created"
+}
+
+function cloremote()
+{
+    if ! git rev-parse --git-dir &> /dev/null
+    then
+        echo ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
+        return 1
+    fi
+    git remote rm clo 2> /dev/null
+
+    if [ -f ".gitupstream" ]; then
+        local REMOTE=$(cat .gitupstream | cut -d ' ' -f 1)
+        git remote add clo ${REMOTE}
+    else
+        local PROJECT=$(pwd -P | sed -e "s#$ANDROID_BUILD_TOP\/##; s#-caf.*##; s#\/default##")
+        # Google moved the repo location in Oreo
+        if [ $PROJECT = "build/make" ]
+        then
+            PROJECT="build"
+        fi
+        if [[ $PROJECT =~ "qcom/opensource" ]];
+        then
+            PROJECT=$(echo $PROJECT | sed -e "s#qcom\/opensource#qcom-opensource#")
+        fi
+        if (echo $PROJECT | grep -qv "^device")
+        then
+            local PFX="platform/"
+        fi
+        git remote add clo https://git.codelinaro.org/clo/la/$PFX$PROJECT
+    fi
+    echo "Remote 'clo' created"
 }
 
 function githubremote()
@@ -277,7 +344,7 @@ function githubremote()
 
     if [ -z "$REMOTE" ]
     then
-        REMOTE=$(git config --get remote.caf.projectname)
+        REMOTE=$(git config --get remote.clo.projectname)
     fi
 
     local PROJECT=$(echo $REMOTE | sed -e "s#platform/#android/#g; s#/#_#g")
@@ -286,30 +353,80 @@ function githubremote()
     echo "Remote 'github' created"
 }
 
-function cafremote()
+function installboot()
 {
-    if ! git rev-parse --git-dir &> /dev/null
+    if [ ! -e "$OUT/recovery/root/system/etc/recovery.fstab" ];
     then
-        echo ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
+        echo "No recovery.fstab found. Build recovery first."
         return 1
     fi
-    git remote rm caf 2> /dev/null
-    local PROJECT=$(pwd -P | sed -e "s#$ANDROID_BUILD_TOP\/##; s#-caf.*##; s#\/default##")
-     # Google moved the repo location in Oreo
-    if [ $PROJECT = "build/make" ]
+    if [ ! -e "$OUT/boot.img" ];
     then
-        PROJECT="build"
+        echo "No boot.img found. Run make bootimage first."
+        return 1
     fi
-    if [[ $PROJECT =~ "qcom/opensource" ]];
+    PARTITION=`grep "^\/boot" $OUT/recovery/root/system/etc/recovery.fstab | awk {'print $3'}`
+    if [ -z "$PARTITION" ];
     then
-        PROJECT=$(echo $PROJECT | sed -e "s#qcom\/opensource#qcom-opensource#")
+        # Try for RECOVERY_FSTAB_VERSION = 2
+        PARTITION=`grep "[[:space:]]\/boot[[:space:]]" $OUT/recovery/root/system/etc/recovery.fstab | awk {'print $1'}`
+        PARTITION_TYPE=`grep "[[:space:]]\/boot[[:space:]]" $OUT/recovery/root/system/etc/recovery.fstab | awk {'print $3'}`
+        if [ -z "$PARTITION" ];
+        then
+            echo "Unable to determine boot partition."
+            return 1
+        fi
     fi
-    if (echo $PROJECT | grep -qv "^device")
+    adb wait-for-device-recovery
+    adb root
+    adb wait-for-device-recovery
+    if (adb shell getprop ro.cherish.device | grep -q "$CHERISH_BUILD");
     then
-        local PFX="platform/"
+        adb push $OUT/boot.img /cache/
+        adb shell dd if=/cache/boot.img of=$PARTITION
+        adb shell rm -rf /cache/boot.img
+        echo "Installation complete."
+    else
+        echo "The connected device does not appear to be $CHERISH_BUILD, run away!"
     fi
-    git remote add caf https://source.codeaurora.org/quic/la/$PFX$PROJECT
-    echo "Remote 'caf' created"
+}
+
+function installrecovery()
+{
+    if [ ! -e "$OUT/recovery/root/system/etc/recovery.fstab" ];
+    then
+        echo "No recovery.fstab found. Build recovery first."
+        return 1
+    fi
+    if [ ! -e "$OUT/recovery.img" ];
+    then
+        echo "No recovery.img found. Run make recoveryimage first."
+        return 1
+    fi
+    PARTITION=`grep "^\/recovery" $OUT/recovery/root/system/etc/recovery.fstab | awk {'print $3'}`
+    if [ -z "$PARTITION" ];
+    then
+        # Try for RECOVERY_FSTAB_VERSION = 2
+        PARTITION=`grep "[[:space:]]\/recovery[[:space:]]" $OUT/recovery/root/system/etc/recovery.fstab | awk {'print $1'}`
+        PARTITION_TYPE=`grep "[[:space:]]\/recovery[[:space:]]" $OUT/recovery/root/system/etc/recovery.fstab | awk {'print $3'}`
+        if [ -z "$PARTITION" ];
+        then
+            echo "Unable to determine recovery partition."
+            return 1
+        fi
+    fi
+    adb wait-for-device-recovery
+    adb root
+    adb wait-for-device-recovery
+    if (adb shell getprop ro.cherish.device | grep -q "$CHERISH_BUILD");
+    then
+        adb push $OUT/recovery.img /cache/
+        adb shell dd if=/cache/recovery.img of=$PARTITION
+        adb shell rm -rf /cache/recovery.img
+        echo "Installation complete."
+    else
+        echo "The connected device does not appear to be $CHERISH_BUILD, run away!"
+    fi
 }
 
 function makerecipe() {
@@ -324,6 +441,7 @@ function makerecipe() {
     cd ..
 
     repo forall -c '
+
     if [ "$REPO_REMOTE" = "github" ]
     then
         pwd
@@ -343,7 +461,7 @@ function cherishgerrit() {
         $FUNCNAME help
         return 1
     fi
-    local user=`git config --get review.review.msmxteded.org.username`
+    local user=`git config --get review.review.cherishos.org.username`
     local review=`git config --get remote.github.review`
     local project=`git config --get remote.github.projectname`
     local command=$1
@@ -354,14 +472,18 @@ function cherishgerrit() {
                 cat <<EOF
 Usage:
     $FUNCNAME COMMAND [OPTIONS] [CHANGE-ID[/PATCH-SET]][{@|^|~|:}ARG] [-- ARGS]
+
 Commands:
     fetch   Just fetch the change as FETCH_HEAD
     help    Show this help, or for a specific command
     pull    Pull a change into current branch
     push    Push HEAD or a local branch to Gerrit for a specific branch
+
 Any other Git commands that support refname would work as:
     git fetch URL CHANGE && git COMMAND OPTIONS FETCH_HEAD{@|^|~|:}ARG -- ARGS
+
 See '$FUNCNAME help COMMAND' for more information on a specific command.
+
 Example:
     $FUNCNAME checkout -b topic 1234/5
 works as:
@@ -382,9 +504,11 @@ EOF
                 help) $FUNCNAME help ;;
                 fetch|pull) cat <<EOF
 usage: $FUNCNAME $1 [OPTIONS] CHANGE-ID[/PATCH-SET]
+
 works as:
     git $1 OPTIONS http://DOMAIN/p/PROJECT \\
       refs/changes/HASH/CHANGE-ID/{PATCH-SET|1}
+
 Example:
     $FUNCNAME $1 1234
 will $1 patch-set 1 of change 1234
@@ -392,9 +516,11 @@ EOF
                     ;;
                 push) cat <<EOF
 usage: $FUNCNAME push [OPTIONS] [LOCAL_BRANCH:]REMOTE_BRANCH
+
 works as:
     git push OPTIONS ssh://USER@DOMAIN:29418/PROJECT \\
       {LOCAL_BRANCH|HEAD}:refs/for/REMOTE_BRANCH
+
 Example:
     $FUNCNAME push fix6789:gingerbread
 will push local branch 'fix6789' to Gerrit for branch 'gingerbread'.
@@ -405,6 +531,7 @@ EOF
                     $FUNCNAME __cmg_err_not_supported $1 && return
                     cat <<EOF
 usage: $FUNCNAME $1 [OPTIONS] CHANGE-ID[/PATCH-SET][{@|^|~|:}ARG] [-- ARGS]
+
 works as:
     git fetch http://DOMAIN/p/PROJECT \\
       refs/changes/HASH/CHANGE-ID/{PATCH-SET|1} \\
@@ -591,7 +718,7 @@ function cherishrebase() {
     echo "Bringing it up to date..."
     repo sync .
     echo "Fetching change..."
-    git fetch "http://review.cherishos.com/p/$repo" "refs/changes/$refs" && git cherry-pick FETCH_HEAD
+    git fetch "http://review.cherishos.org/p/$repo" "refs/changes/$refs" && git cherry-pick FETCH_HEAD
     if [ "$?" != "0" ]; then
         echo "Error cherry-picking. Not uploading!"
         return
@@ -626,15 +753,18 @@ function cmka() {
         mka
     fi
 }
+
 function repolastsync() {
     RLSPATH="$ANDROID_BUILD_TOP/.repo/.repo_fetchtimes.json"
     RLSLOCAL=$(date -d "$(stat -c %z $RLSPATH)" +"%e %b %Y, %T %Z")
     RLSUTC=$(date -d "$(stat -c %z $RLSPATH)" -u +"%e %b %Y, %T %Z")
     echo "Last repo sync: $RLSLOCAL / $RLSUTC"
 }
+
 function reposync() {
     repo sync -j 4 "$@"
 }
+
 function repodiff() {
     if [ -z "$*" ]; then
         echo "Usage: repodiff <ref-from> [[ref-to] [--numstat]]"
@@ -643,16 +773,175 @@ function repodiff() {
     diffopts=$* repo forall -c \
       'echo "$REPO_PATH ($REPO_REMOTE)"; git diff ${diffopts} 2>/dev/null ;'
 }
+
+# Return success if adb is up and not in recovery
+function _adb_connected {
+    {
+        if [[ "$(adb get-state)" == device ]]
+        then
+            return 0
+        fi
+    } 2>/dev/null
+
+    return 1
+};
+
+# Credit for color strip sed: http://goo.gl/BoIcm
+function dopush()
+{
+    local func=$1
+    shift
+
+    adb start-server # Prevent unexpected starting server message from adb get-state in the next line
+    if ! _adb_connected; then
+        echo "No device is online. Waiting for one..."
+        echo "Please connect USB and/or enable USB debugging"
+        until _adb_connected; do
+            sleep 1
+        done
+        echo "Device Found."
+    fi
+
+    if (adb shell getprop ro.cherish.device | grep -q "$CHERISH_BUILD") || [ "$FORCE_PUSH" = "true" ];
+    then
+    # retrieve IP and PORT info if we're using a TCP connection
+    TCPIPPORT=$(adb devices \
+        | egrep '^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9]):[0-9]+[^0-9]+' \
+        | head -1 | awk '{print $1}')
+    adb root &> /dev/null
+    sleep 0.3
+    if [ -n "$TCPIPPORT" ]
+    then
+        # adb root just killed our connection
+        # so reconnect...
+        adb connect "$TCPIPPORT"
+    fi
+    adb wait-for-device &> /dev/null
+    adb remount &> /dev/null
+
+    mkdir -p $OUT
+    ($func $*|tee $OUT/.log;return ${PIPESTATUS[0]})
+    ret=$?;
+    if [ $ret -ne 0 ]; then
+        rm -f $OUT/.log;return $ret
+    fi
+
+    is_gnu_sed=`sed --version | head -1 | grep -c GNU`
+
+    # Install: <file>
+    if [ $is_gnu_sed -gt 0 ]; then
+        LOC="$(cat $OUT/.log | sed -r -e 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g' -e 's/^\[ {0,2}[0-9]{1,3}% [0-9]{1,6}\/[0-9]{1,6}\] +//' \
+            | grep '^Install: ' | cut -d ':' -f 2)"
+    else
+        LOC="$(cat $OUT/.log | sed -E "s/"$'\E'"\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]//g" -E "s/^\[ {0,2}[0-9]{1,3}% [0-9]{1,6}\/[0-9]{1,6}\] +//" \
+            | grep '^Install: ' | cut -d ':' -f 2)"
+    fi
+
+    # Copy: <file>
+    if [ $is_gnu_sed -gt 0 ]; then
+        LOC="$LOC $(cat $OUT/.log | sed -r -e 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g' -e 's/^\[ {0,2}[0-9]{1,3}% [0-9]{1,6}\/[0-9]{1,6}\] +//' \
+            | grep '^Copy: ' | cut -d ':' -f 2)"
+    else
+        LOC="$LOC $(cat $OUT/.log | sed -E "s/"$'\E'"\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]//g" -E 's/^\[ {0,2}[0-9]{1,3}% [0-9]{1,6}\/[0-9]{1,6}\] +//' \
+            | grep '^Copy: ' | cut -d ':' -f 2)"
+    fi
+
+    # If any files are going to /data, push an octal file permissions reader to device
+    if [ -n "$(echo $LOC | egrep '(^|\s)/data')" ]; then
+        CHKPERM="/data/local/tmp/chkfileperm.sh"
+(
+cat <<'EOF'
+#!/system/bin/sh
+FILE=$@
+if [ -e $FILE ]; then
+    ls -l $FILE | awk '{k=0;for(i=0;i<=8;i++)k+=((substr($1,i+2,1)~/[rwx]/)*2^(8-i));if(k)printf("%0o ",k);print}' | cut -d ' ' -f1
+fi
+EOF
+) > $OUT/.chkfileperm.sh
+        echo "Pushing file permissions checker to device"
+        adb push $OUT/.chkfileperm.sh $CHKPERM
+        adb shell chmod 755 $CHKPERM
+        rm -f $OUT/.chkfileperm.sh
+    fi
+
+    RELOUT=$(echo $OUT | sed "s#^${ANDROID_BUILD_TOP}/##")
+
+    stop_n_start=false
+    for TARGET in $(echo $LOC | tr " " "\n" | sed "s#.*${RELOUT}##" | sort | uniq); do
+        # Make sure file is in $OUT/{system,system_ext,data,odm,oem,product,product_services,vendor}
+        case $TARGET in
+            /system/*|/system_ext/*|/data/*|/odm/*|/oem/*|/product/*|/product_services/*|/vendor/*)
+                # Get out file from target (i.e. /system/bin/adb)
+                FILE=$OUT$TARGET
+            ;;
+            *) continue ;;
+        esac
+
+        case $TARGET in
+            /data/*)
+                # fs_config only sets permissions and se labels for files pushed to /system
+                if [ -n "$CHKPERM" ]; then
+                    OLDPERM=$(adb shell $CHKPERM $TARGET)
+                    OLDPERM=$(echo $OLDPERM | tr -d '\r' | tr -d '\n')
+                    OLDOWN=$(adb shell ls -al $TARGET | awk '{print $2}')
+                    OLDGRP=$(adb shell ls -al $TARGET | awk '{print $3}')
+                fi
+                echo "Pushing: $TARGET"
+                adb push $FILE $TARGET
+                if [ -n "$OLDPERM" ]; then
+                    echo "Setting file permissions: $OLDPERM, $OLDOWN":"$OLDGRP"
+                    adb shell chown "$OLDOWN":"$OLDGRP" $TARGET
+                    adb shell chmod "$OLDPERM" $TARGET
+                else
+                    echo "$TARGET did not exist previously, you should set file permissions manually"
+                fi
+                adb shell restorecon "$TARGET"
+            ;;
+            */SystemUI.apk|*/framework/*)
+                # Only need to stop services once
+                if ! $stop_n_start; then
+                    adb shell stop
+                    stop_n_start=true
+                fi
+                echo "Pushing: $TARGET"
+                adb push $FILE $TARGET
+            ;;
+            *)
+                echo "Pushing: $TARGET"
+                adb push $FILE $TARGET
+            ;;
+        esac
+    done
+    if [ -n "$CHKPERM" ]; then
+        adb shell rm $CHKPERM
+    fi
+    if $stop_n_start; then
+        adb shell start
+    fi
+    rm -f $OUT/.log
+    return 0
+    else
+        echo "The connected device does not appear to be $CHERISH_BUILD, run away!"
+    fi
+}
+
 alias mmp='dopush mm'
 alias mmmp='dopush mmm'
 alias mmap='dopush mma'
 alias mmmap='dopush mmma'
 alias mkap='dopush mka'
 alias cmkap='dopush cmka'
+
 function repopick() {
     T=$(gettop)
-    python3 $T/vendor/cherish/build/tools/repopick.py $@
+    $T/vendor/cherish/build/tools/repopick.py $@
 }
+
+function sort-blobs-list() {
+    T=$(gettop)
+    $T/tools/extract-utils/sort-blobs-list.py $@
+}
+
 function fixup_common_out_dir() {
     common_out_dir=$(get_build_var OUT_DIR)/target/common
     target_device=$(get_build_var TARGET_DEVICE)
@@ -671,5 +960,6 @@ function fixup_common_out_dir() {
         mkdir -p ${common_out_dir}
     fi
 }
+
 # Disable ABI checking
 export SKIP_ABI_CHECKS=true
