@@ -9,15 +9,31 @@ include vendor/cherish/config/aosp_audio.mk
 include vendor/cherish/config/lineage_audio.mk
 
 # Default notification/alarm sounds
+ifeq ($(WITH_GMS),true)
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.config.notification_sound=Eureka.ogg \
+    ro.config.alarm_alert=Fresh_start.ogg
+else
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.config.notification_sound=Argon.ogg \
     ro.config.alarm_alert=Hassium.ogg
+endif
 
 # Apps
 PRODUCT_PACKAGES += \
     AvatarPicker \
     Glimpse \
     LatinIME
+
+ifeq ($(WITH_GMS),false)
+PRODUCT_PACKAGES += \
+    Backgrounds \
+    Glimpse
+endif
+
+# Charger
+PRODUCT_PACKAGES += \
+    product_charger_res_images
 
 # Media
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \

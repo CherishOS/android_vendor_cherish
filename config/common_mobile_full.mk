@@ -5,17 +5,27 @@ PRODUCT_SIZE := full
 
 # Apps
 PRODUCT_PACKAGES += \
+    Profiles \
+    Seedvault
+
+ifeq ($(WITH_GMS),false)
+PRODUCT_PACKAGES += \
     Camelot \
-    Recorder
+    Etar \
+    Recorder \
+    Twelve
+endif
 
 ifneq ($(PRODUCT_NO_CAMERA),true)
 PRODUCT_PACKAGES += \
     Aperture
 endif
 
-ifeq ($(TARGET_INCLUDES_AUDIOFX),true)
+ifeq ($(WITH_GMS),false)
+ifneq ($(TARGET_EXCLUDES_AUDIOFX),true)
 PRODUCT_PACKAGES += \
     AudioFX
+endif
 endif
 
 # Extra cmdline tools

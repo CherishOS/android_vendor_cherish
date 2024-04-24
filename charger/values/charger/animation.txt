@@ -46,13 +46,3 @@ frame: 0 0 100
 frame: 0 0 100
 frame: 0 0 100 # 35
 frame: 0 0 100
-frame: 0 0 100
-frame: 0 0 100
-frame: 0 0 100
-frame: 0 0 100 # 40
-frame: 0 0 100
-frame: 0 0 100
-frame: 0 0 100
-frame: 0 0 100
-frame: 0 0 100 # 45
-frame: 0 0 100
