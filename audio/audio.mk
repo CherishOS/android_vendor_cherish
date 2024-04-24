@@ -81,9 +81,3 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/alarm_ringtones/plasma-mobile_unfamiliar.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/plasma-mobile_unfamiliar.ogg \
     $(LOCAL_PATH)/alarm_ringtones/plasma-mobile_wink.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/plasma-mobile_wink.ogg \
     $(LOCAL_PATH)/alarm_ringtones/plasma-mobile_wubstep.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/plasma-mobile_wubstep.ogg \
-
-# Use Material product sounds by default
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.config.ringtone=material_minimal.ogg \
-    ro.config.alarm_alert=material_gentle.ogg \
-    ro.config.notification_sound=material_simple_1.ogg \
