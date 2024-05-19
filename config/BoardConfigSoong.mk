@@ -62,6 +62,9 @@ ifneq ($(TARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED),)
     $(warning TARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED is deprecated, please migrate to soong_config_set,camera,override_format_from_reserved)
     $(call soong_config_set,camera,override_format_from_reserved,$(TARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED))
 endif
+ifneq ($(TARGET_USES_MIUI_CAMERA),)
+    $(call soong_config_set,camera,uses_miui_camera,$(TARGET_USES_MIUI_CAMERA))
+endif
 
 # Libui
 ifneq ($(TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS),)
