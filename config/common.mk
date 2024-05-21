@@ -78,6 +78,10 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.ota.allow_downgrade=true
 endif
 
+# BtHelper
+PRODUCT_PACKAGES += \
+    BtHelper
+
 # Broken config
 PRODUCT_BROKEN_VERIFY_USES_LIBRARIES := true
 
