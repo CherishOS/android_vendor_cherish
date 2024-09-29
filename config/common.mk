@@ -261,6 +261,11 @@ PRODUCT_PACKAGES += \
     DocumentsUIOverlay \
     PermissionControllerOverlay \
 
+# LMOFreeForm
+PRODUCT_PACKAGES += \
+    LMOFreeform \
+    LMOFreeformSidebar
+
 # Filesystems tools
 PRODUCT_PACKAGES += \
     fsck.ntfs \
