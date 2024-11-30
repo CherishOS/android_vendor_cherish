@@ -154,6 +154,13 @@ ifeq ($(TARGET_BUILD_DEVICE_AS_WEBCAM), true)
         ro.usb.uvc.enabled=true
 endif
 
+# Disable async MTE on a few processes
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    persist.arm64.memtag.app.com.android.se=off \
+    persist.arm64.memtag.app.com.google.android.bluetooth=off \
+    persist.arm64.memtag.app.com.android.nfc=off \
+    persist.arm64.memtag.process.system_server=off
+
 # Disable vendor restrictions
 PRODUCT_RESTRICT_VENDOR_FILES := false
 
