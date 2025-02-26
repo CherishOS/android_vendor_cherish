@@ -148,6 +148,11 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 # Speed profile services and wifi-service to reduce RAM and storage
 PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
 
+ART_BUILD_TARGET_NDEBUG := false
+ART_BUILD_TARGET_DEBUG := false
+ART_BUILD_HOST_NDEBUG := false
+ART_BUILD_HOST_DEBUG := false
+
 # Do not include art debug targets
 PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
 PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
@@ -165,6 +170,9 @@ $(call enforce-product-packages-exist-internal,$(wildcard device/*/$(CHERISH_BUI
 SYSTEM_OPTIMIZE_JAVA ?= true
 SYSTEMUI_OPTIMIZE_JAVA ?= true
 FULL_SYSTEM_OPTIMIZE_JAVA ?= true
+
+# Disable dex2oat debug
+USE_DEX2OAT_DEBUG := false
 
 # PIF values
 PRODUCT_PRODUCT_PROPERTIES += \
