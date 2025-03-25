@@ -41,6 +41,11 @@
         <item>com.android.systemui.clocks.numoverlap</item>
         <item>com.android.systemui.clocks.weather</item>
     </string-array>
+ 
+    <string-array name="config_pluginWhitelist">
+        <item>com.android.systemui</item>
+        <item>com.android.systemui.plugin.globalactions.wallet</item>
+    </string-array>
 
     <!-- Time (in ms) to delay the bouncer views from showing when passive auth may be used for
     device entry. -->
