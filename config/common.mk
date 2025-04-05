@@ -221,6 +221,10 @@ PRODUCT_SYSTEM_PROPERTIES += \
     ro.storage_manager.enabled=true
 endif
 
+BYPASS_CHARGE_SUPPORTED ?= false
+PRODUCT_SYSTEM_PROPERTIES += \
+    persist.sys.battery_bypass_supported=$(BYPASS_CHARGE_SUPPORTED)
+
 # These packages are excluded from user builds
 PRODUCT_PACKAGES_DEBUG += \
     procmem
