@@ -437,3 +437,7 @@ include vendor/cherish/config/version.mk
  endif
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
+
+BYPASS_CHARGE_SUPPORTED ?= false
+PRODUCT_SYSTEM_PROPERTIES += \
+    persist.sys.battery_bypass_supported=$(BYPASS_CHARGE_SUPPORTED)
