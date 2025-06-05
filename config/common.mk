@@ -34,6 +34,10 @@ PRODUCT_SYSTEM_PROPERTIES += \
     ro.surface_flinger.supports_background_blur=0
 endif
 
+# Certified Keybox
+PRODUCT_PACKAGES += \
+    CertifiedKeyboxOverlay
+
 # Pixel additions
 ifeq ($(WITH_GMS),true)
 $(call inherit-product, vendor/google/overlays/ThemeIcons/config.mk)

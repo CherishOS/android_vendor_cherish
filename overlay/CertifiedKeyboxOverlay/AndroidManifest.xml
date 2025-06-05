@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2025 Neoteric OS
+     SPDX-License-Identifier: Apache-2.0
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.neoteric.android.certifiedkeybox.overlay">
+
+    <application android:hasCode="false"/>
+
+    <overlay
+        android:isStatic="true"
+        android:priority="850"
+        android:targetPackage="android" />
+</manifest>
