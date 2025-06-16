@@ -1,19 +1,8 @@
-# Telephony
+# Inherit mobile full common cherish stuff
+$(call inherit-product, vendor/cherish/config/common_mobile_full.mk)
 
-IS_PHONE := true
+# Enable support of one-handed mode
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.support_one_handed_mode=true
 
-# World APN list
-PRODUCT_PACKAGES += \
-    apns-conf.xml
-
-# Telephony packages
-PRODUCT_PACKAGES += \
-    Stk
-
-# Tethering - allow without requiring a provisioning app
-# (for devices that check this)
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    net.tethering.noprovisioning=true
-
-# Inherit full common PixelExperience stuff
-$(call inherit-product, vendor/cherish/config/common_full.mk)
+$(call inherit-product, vendor/cherish/config/telephony.mk)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright 2016 The ??? Project
+     Copyright (C) 2019 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,18 +15,28 @@
      limitations under the License.
 -->
 <resources>
+    <!-- Whether to enable the app battery usage list page feature. -->
+    <bool name="config_app_battery_usage_list_enabled">true</bool>
+
     <!-- When true enable gesture setting. -->
     <bool name="config_gesture_settings_enabled">true</bool>
 
     <!-- If the Storage Manager settings are enabled. -->
     <bool name="config_storage_manager_settings_enabled">true</bool>
 
-    <!-- Settings intelligence package name -->
-    <string name="config_settingsintelligence_log_action">com.google.android.settings.intelligence.contextualcards.CARD_INTERACTION_RECEIVER</string>
+    <!-- Whether to show a preference item for mobile plan -->
+    <bool name="config_show_mobile_plan">false</bool>
 
-    <!-- Settings intelligence interaction log intent action -->
-    <string name="config_settingsintelligence_package_name">com.google.android.settings.intelligence</string>
+    <!-- Whether wallpaper attribution should be shown or not. -->
+    <bool name="config_show_wallpaper_attribution">false</bool>
 
-    <!-- Whether memory from app_info_settings is available or not. -->
-    <bool name="config_show_app_info_settings_memory">true</bool>
+    <!-- Package name and fully-qualified class name for the wallpaper picker activity. -->
+    <string name="config_wallpaper_picker_package" translatable="false">com.android.wallpaper</string>
+    <!-- Fully-qualified class name for the styles & wallpaper picker activity. -->
+    <string name="config_styles_and_wallpaper_picker_class" translatable="false">com.android.customization.picker.CustomizationPickerActivity</string>
+    <!-- Action name for the styles & wallpaper picker activity. -->
+    <string name="config_styles_and_wallpaper_picker_action" translatable="false">android.intent.action.SET_WALLPAPER</string>
+
+    <!-- Whether to display Cloned Apps page in Settings (Settings > Apps > Cloned Apps).-->
+    <bool name="config_cloned_apps_page_enabled">true</bool>
 </resources>

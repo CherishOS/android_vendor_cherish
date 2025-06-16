@@ -1,31 +1,188 @@
-# Main version
-$(call inherit-product, vendor/cherish/config/main_version.mk)
+# Allow vendor/extra to override any property by setting it first
+$(call inherit-product-if-exists, vendor/extra/product.mk)
 
 PRODUCT_BRAND ?= CherishOS
 
-PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    dalvik.vm.debug.alloc=0 \
+    keyguard.no_require_sim=true \
+    media.recorder.show_manufacturer_and_model=true \
+    net.tethering.noprovisioning=true \
+    persist.sys.disable_rescue=true \
+    ro.carrier=unknown \
+    ro.com.android.dataroaming=false \
+    ro.opa.eligible_device=true \
+    ro.setupwizard.enterprise_mode=1 \
+    ro.storage_manager.enabled=true \
+    ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
+    ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html \
 
-ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
-PRODUCT_SYSTEM_PROPERTIES += \
-    ro.com.google.clientidbase=android-google
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    is_expressive_design_enabled=true
 
 PRODUCT_PRODUCT_PROPERTIES += \
+    ro.sf.blurs_are_expensive=1 \
+    ro.surface_flinger.supports_background_blur=1
+
+ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.com.google.clientidbase=android-google
 
 else
-PRODUCT_SYSTEM_PROPERTIES += \
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.com.google.clientidbase=$(PRODUCT_GMS_CLIENTID_BASE)
-
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.com.google.clientidbase=$(PRODUCT_GMS_CLIENTID_BASE)
-
 endif
 
-# ART
-# Optimize everything for preopt
-PRODUCT_DEX_PREOPT_DEFAULT_COMPILER_FILTER := everything
-# Don't preopt prebuilts
-DONT_DEXPREOPT_PREBUILTS := true
+# AOSP recovery flashing
+ifeq ($(TARGET_USES_AOSP_RECOVERY),true)
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    persist.sys.recovery_update=true
+endif
+
+ifeq ($(TARGET_BUILD_VARIANT),eng)
+# Disable ADB authentication
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += ro.adb.secure=0
+else
+# Enable ADB authentication
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += ro.adb.secure=1
+
+# Disable extra StrictMode features on all non-engineering builds
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += persist.sys.strictmode.disable=true
+
+# Disable debug and verbose logging by default
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += log.tag=I
+endif
+
+# Disable default frame rate limit for games
+PRODUCT_PRODUCT_PROPERTIES += \
+    debug.graphics.game_default_frame_rate.disabled=true
+
+# Backup Tool
+PRODUCT_COPY_FILES += \
+    vendor/cherish/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
+    vendor/cherish/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
+
+ifneq ($(strip $(AB_OTA_PARTITIONS) $(AB_OTA_POSTINSTALL_CONFIG)),)
+PRODUCT_COPY_FILES += \
+    vendor/cherish/prebuilt/common/bin/backuptool_ab.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.sh \
+    vendor/cherish/prebuilt/common/bin/backuptool_ab.functions:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.functions \
+    vendor/cherish/prebuilt/common/bin/backuptool_postinstall.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_postinstall.sh
+endif
+
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.ota.allow_downgrade=true
+
+# Backup Services whitelist
+PRODUCT_COPY_FILES += \
+    vendor/cherish/config/permissions/backup.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/backup.xml
+
+# Pixel sysconfig from Pixel XL (Photos)
+PRODUCT_COPY_FILES += \
+    vendor/cherish/prebuilt/common/etc/sysconfig/pixel_2016_exclusive.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/pixel_2016_exclusive.xml \
+
+# Copy all cherish-specific init rc files
+$(foreach f,$(wildcard vendor/cherish/prebuilt/common/etc/init/*.rc),\
+	$(eval PRODUCT_COPY_FILES += $(f):$(TARGET_COPY_OUT_SYSTEM)/etc/init/$(notdir $f)))
+
+# Privapp permissions
+PRODUCT_COPY_FILES += \
+    vendor/cherish/config/permissions/privapp-permissions-custom.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-custom.xml
+
+# Enable SIP+VoIP on all targets
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.software.sip.voip.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.software.sip.voip.xml
+
+# Enable SIP+VoIP on all targets
+PRODUCT_COPY_FILES += \
+    vendor/cherish/prebuilt/google/etc/permissions/privapp-permissions-googleapps-turbo.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-googleapps-turbo.xml
+
+# Credential storage
+PRODUCT_PACKAGES += \
+    android.software.credentials.prebuilt.xml
+
+# Enable wireless Xbox 360 controller support
+PRODUCT_COPY_FILES += \
+    frameworks/base/data/keyboards/Vendor_045e_Product_028e.kl:$(TARGET_COPY_OUT_SYSTEM)/usr/keylayout/Vendor_045e_Product_0719.kl
+
+# Component overrides
+PRODUCT_PACKAGES += \
+    cherish-component-overrides.xml
+
+# DesktopMode
+PRODUCT_PACKAGES += \
+    DesktopMode
+
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.software.freeform_window_management.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/android.software.freeform_window_management.xml
+
+$(call inherit-product-if-exists, packages/services/VncFlinger/product.mk)
+
+# Face Unlock
+TARGET_FACE_UNLOCK_SUPPORTED ?= $(TARGET_SUPPORTS_64_BIT_APPS)
+
+ifeq ($(TARGET_FACE_UNLOCK_SUPPORTED),true)
+PRODUCT_PACKAGES += \
+    ParanoidSense
+
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    ro.face.sense_service=true
+
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.biometrics.face.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.hardware.biometrics.face.xml
+endif
+
+# Enforce privapp-permissions whitelist
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.control_privapp_permissions=log
+
+# Speed profile services and wifi-service to reduce RAM and storage
+PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
+
+# Do not include art debug targets
+PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
+PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
+PRODUCT_SYSTEM_SERVER_DEBUG_INFO := false
+WITH_DEXPREOPT_DEBUG_INFO := false
+
+# Disable vendor restrictions
+PRODUCT_RESTRICT_VENDOR_FILES := false
+
+# Require all requested packages to exist
+$(call enforce-product-packages-exist-internal,$(wildcard device/*/$(CHERISH_BUILD)/$(TARGET_PRODUCT).mk),product_manifest.xml)
+
+# Enable whole-program R8 Java optimizations for SystemUI and system_server,
+# but also allow explicit overriding for testing and development.
+SYSTEM_OPTIMIZE_JAVA ?= true
+SYSTEMUI_OPTIMIZE_JAVA ?= true
+FULL_SYSTEM_OPTIMIZE_JAVA ?= true
+
+# PIF values
+PRODUCT_PRODUCT_PROPERTIES += \
+    persist.sys.pihooks_MANUFACTURER?=Google \
+    persist.sys.pihooks_BRAND?=google \
+    persist.sys.pihooks_PRODUCT?=cheetah_beta \
+    persist.sys.pihooks_DEVICE?=cheetah \
+    persist.sys.pihooks_ID?=BP31.250502.008 \
+    persist.sys.pihooks_SECURITY_PATCH?=2025-05-05 \
+    persist.sys.pihooks_DEVICE_INITIAL_SDK_INT?=21
+
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    PihooksGmsFp="google/cheetah_beta/cheetah:16/BP31.250502.008/13497110:user/release-keys" \
+    PihooksGmsModel="Pixel 7 Pro"
+
+# Storage manager
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.storage_manager.enabled=true
+
+# These packages are excluded from user builds
+PRODUCT_PACKAGES_DEBUG += \
+    procmem
+
+# Dex/ART optimization
+PRODUCT_DEXPREOPT_SPEED_APPS += \
+    Settings \
+    Launcher3QuickStep \
+    SystemUI
 
 PRODUCT_PROPERTY_OVERRIDES += \
     pm.dexopt.boot=verify \
@@ -38,352 +195,73 @@ PRODUCT_PROPERTY_OVERRIDES += \
     pm.dexopt.ab-ota=quicken
 endif
 
-# BtHelper
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    dalvik.vm.systemuicompilerfilter=speed
+
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/cherish/overlay/no-rro
+PRODUCT_PACKAGE_OVERLAYS += \
+    vendor/cherish/overlay/common \
+    vendor/cherish/overlay/no-rro
+
 PRODUCT_PACKAGES += \
-    BtHelper
-
-PRODUCT_SYSTEM_PROPERTIES += \
-    dalvik.vm.debug.alloc=0 \
-    ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
-    ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html \
-    ro.error.receiver.system.apps=com.google.android.gms \
-    ro.com.android.dataroaming=false \
-    ro.atrace.core.services=com.google.android.gms,com.google.android.gms.ui,com.google.android.gms.persistent \
-    ro.com.android.dateformat=MM-dd-yyyy \
-    persist.sys.disable_rescue=true
-
-ifeq ($(PRODUCT_IS_ATV),true)
-ifeq ($(PRODUCT_ATV_CLIENTID_BASE),)
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.oem.key1=ATV00100020
-else
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.oem.key1=$(PRODUCT_ATV_CLIENTID_BASE)
-endif
-endif
-
-ifeq ($(TARGET_BUILD_VARIANT),eng)
-# Disable ADB authentication
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += ro.adb.secure=0
-else
-# Enable ADB authentication
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += ro.adb.secure=1
-
-# Disable extra StrictMode features on all non-engineering builds
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += persist.sys.strictmode.disable=true
-endif
-
-# Enable WiFi Display
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.wfd.nohdcp=1 \
-    persist.debug.wfd.enable=1 \
-    persist.sys.wfd.virtual=0
-
-# Blurs
-ifeq ($(TARGET_ENABLE_BLUR), true)
-PRODUCT_SYSTEM_EXT_PROPERTIES += \
-    ro.sf.blurs_are_expensive=1 \
-    ro.surface_flinger.supports_background_blur=1
-else
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.launcher.blur.appLaunch=0
-endif
-
-# Backup Tool
-PRODUCT_COPY_FILES += \
-    vendor/cherish/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
-    vendor/cherish/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions \
-    vendor/cherish/prebuilt/common/bin/50-cherish.sh:$(TARGET_COPY_OUT_SYSTEM)/addon.d/50-cherish.sh
-
-ifneq ($(strip $(AB_OTA_PARTITIONS) $(AB_OTA_POSTINSTALL_CONFIG)),)
-PRODUCT_COPY_FILES += \
-    vendor/cherish/prebuilt/common/bin/backuptool_ab.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.sh \
-    vendor/cherish/prebuilt/common/bin/backuptool_ab.functions:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_ab.functions \
-    vendor/cherish/prebuilt/common/bin/backuptool_postinstall.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/backuptool_postinstall.sh
-ifneq ($(TARGET_BUILD_VARIANT),user)
-PRODUCT_SYSTEM_PROPERTIES += \
-    ro.ota.allow_downgrade=true
-endif
-endif
-
-# Some permissions
-PRODUCT_COPY_FILES += \
-    vendor/cherish/config/permissions/backup.xml:system/etc/sysconfig/backup.xml \
-    vendor/cherish/config/permissions/cherish-sysconfig.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/cherish-sysconfig.xml
-
-# Copy all custom init rc files
-PRODUCT_COPY_FILES += \
-    vendor/cherish/prebuilt/common/etc/init/cherish-system.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/cherish-system.rc \
-    vendor/cherish/prebuilt/common/etc/init/cherish-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/cherish-updater.rc \
-    vendor/cherish/prebuilt/common/etc/init/cherish-ssh.rc:$(TARGET_COPY_OUT_PRODUCT)/etc/init/cherish-ssh.rc
-
-# Enable SIP+VoIP on all targets
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml
-
-# Enable wireless Xbox 360 controller support
-PRODUCT_COPY_FILES += \
-    frameworks/base/data/keyboards/Vendor_045e_Product_028e.kl:$(TARGET_COPY_OUT_PRODUCT)/usr/keylayout/Vendor_045e_Product_0719.kl
-
-# Enable Google LILY_EXPERIENCE feature
-PRODUCT_COPY_FILES += \
-    vendor/cherish/target/config/permissions/lily_experience.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/lily_experience.xml
-
-# Enforce privapp-permissions whitelist
-PRODUCT_SYSTEM_PROPERTIES += \
-    ro.control_privapp_permissions=log
-
-# Power whitelist
-PRODUCT_COPY_FILES += \
-    vendor/cherish/config/permissions/privapp-permissions-cherish-system_ext.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-cherish-system_ext.xml \
-
-# Do not include art debug targets
-PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
-
-# Strip the local variable table and the local variable type table to reduce
-# the size of the system image. This has no bearing on stack traces, but will
-# leave less information available via JDWP.
-PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
-
-# Enable whole-program R8 Java optimizations for SystemUI and system_server,
-# but also allow explicit overriding for testing and development.
-SYSTEM_OPTIMIZE_JAVA ?= true
-SYSTEMUI_OPTIMIZE_JAVA ?= true
-
-# Charger
-# Inherit from animations config
-$(call inherit-product, vendor/cherish/config/animations.mk)
+    NetworkStackOverlay \
+    DocumentsUIOverlay \
+    PermissionControllerOverlay \
 
 # Filesystems tools
 PRODUCT_PACKAGES += \
     fsck.ntfs \
-    mke2fs \
     mkfs.ntfs \
     mount.ntfs
 
-# # Config
-# PRODUCT_PACKAGES += \
-#      SimpleDeviceConfig \
-#      RepainterServicePriv
+PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
+    system/bin/fsck.ntfs \
+    system/bin/mkfs.ntfs \
+    system/bin/mount.ntfs \
+    system/%/libfuse-lite.so \
+    system/%/libntfs-3g.so
 
-# Storage manager
-PRODUCT_SYSTEM_PROPERTIES += \
-    ro.storage_manager.enabled=true
-
-# Media
-PRODUCT_SYSTEM_PROPERTIES += \
-    media.recorder.show_manufacturer_and_model=true
-
-# Overlays
-PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
-    vendor/cherish/overlay
-
-PRODUCT_PACKAGE_OVERLAYS += \
-    vendor/cherish/overlay/common
-
-# TouchGestures
-TARGET_SUPPORTS_TOUCHGESTURES ?= false
-ifeq ($(TARGET_SUPPORTS_TOUCHGESTURES),true)
-PRODUCT_PACKAGES += \
-    TouchGestures \
-    TouchGesturesSettingsOverlay
-endif
-
-# One Handed mode
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.support_one_handed_mode=true \
-
-# NavigationBarMode
-PRODUCT_PACKAGES += \
-    NavigationBarMode2ButtonOverlay
-
-# Dex preopt
-PRODUCT_DEXPREOPT_SPEED_APPS += \
-    SettingsGoogle \
-    SystemUIGoogle \
-    NexusLauncherRelease
-
-ifeq ($(TARGET_SUPPORTS_64_BIT_APPS), true)
-# Use 64-bit dex2oat for better dexopt time.
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.dex2oat64.enabled=true
-endif
-
-ifneq ($(PRODUCT_NO_CAMERA),true)
-PRODUCT_PACKAGES += \
-    Aperture
-endif
-
-# SystemUI plugins
- PRODUCT_PACKAGES += \
-      BatteryStatsViewer \
-      GameSpace \
-      ParallelSpace
-
-#OmniJaws
-PRODUCT_PACKAGES += \
-    OmniJaws \
-    OmniStyle
-
-#UdfpsResources
-ifeq ($(EXTRA_UDFPS_ANIMATIONS),true)
-PRODUCT_PACKAGES += \
-    UdfpsResources \
-    UdfpsIcons
-endif
-
-
-# # Hide nav Overlays
-PRODUCT_PACKAGES += \
-    NavigationBarNoHintOverlay  
-
-# Permissions
+# FRP
 PRODUCT_COPY_FILES += \
-    vendor/cherish/config/permissions/privapp-permissions-cherish-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-cherish-SettingsIntelligencePrebuilt.xml
+    vendor/cherish/prebuilt/common/bin/wipe-frp.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/wipe-frp
 
-# Gboard configuration
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.com.google.ime.theme_id=5 \
-    ro.com.google.ime.system_lm_dir=/product/usr/share/ime/google/d3_lms
+# RRO
+include vendor/cherish/config/rro_overlays.mk
 
-# SetupWizard configuration
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.setupwizard.enterprise_mode=1 \
-    ro.setupwizard.rotation_locked=true \
-    setupwizard.enable_assist_gesture_training=true \
-    setupwizard.theme=glif_v4_light \
-    setupwizard.feature.baseline_setupwizard_enabled=true \
-    setupwizard.feature.skip_button_use_mobile_data.carrier1839=true \
-    setupwizard.feature.show_pai_screen_in_main_flow.carrier1839=false \
-    setupwizard.feature.show_pixel_tos=false
-
-# StorageManager configuration
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.storage_manager.show_opt_in=false
-
-# OPA configuration
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.opa.eligible_device=true
-
-# Google legal
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
-    ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html
-
-# Google Play services configuration
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.error.receiver.system.apps=com.google.android.gms \
-    ro.atrace.core.services=com.google.android.gms,com.google.android.gms.ui,com.google.android.gms.persistent
-
-# TextClassifier
-PRODUCT_PACKAGES += \
-	libtextclassifier_annotator_en_model \
-	libtextclassifier_annotator_universal_model \
-	libtextclassifier_actions_suggestions_universal_model \
-	libtextclassifier_lang_id_model
-
-# Disable lockscreen live wallpaper for media metadata on lockscreen to work
+ifeq ($(TARGET_BUILD_VARIANT),userdebug)
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    persist.wm.debug.lockscreen_live_wallpaper=false
+    debug.sf.enable_transaction_tracing=false
+endif
 
-# Use gestures by default
+# SetupWizard
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.boot.vendor.overlay.theme=com.android.internal.systemui.navbar.gestural
+    setupwizard.theme=glif_v4 \
+    setupwizard.feature.day_night_mode_enabled=true
 
-# Protobuf - Workaround for prebuilt Qualcomm HAL
-PRODUCT_PACKAGES += \
-    libprotobuf-cpp-full-3.9.1-vendorcompat \
-    libprotobuf-cpp-lite-3.9.1-vendorcompat
-
-# Pixel customization
-TARGET_SUPPORTS_GOOGLE_RECORDER ?= true
-TARGET_INCLUDE_STOCK_ARCORE ?= false
-TARGET_INCLUDE_LIVE_WALLPAPERS ?= false
-TARGET_SUPPORTS_QUICK_TAP ?= false
-TARGET_USES_MINI_GAPPS ?= false
-
-# # Face Unlock
-ifeq ($(TARGET_SUPPORTS_64_BIT_APPS),true)
-TARGET_FACE_UNLOCK_SUPPORTED ?= true
-
-ifeq ($(TARGET_FACE_UNLOCK_SUPPORTED),true)
-PRODUCT_PACKAGES += \
-    ParanoidSense
-
-PRODUCT_SYSTEM_EXT_PROPERTIES += \
-    ro.face.sense_service=true
-
+# Cloned app exemption
 PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.biometrics.face.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.hardware.biometrics.face.xml
-endif
-endif
+    vendor/cherish/prebuilt/common/etc/sysconfig/preinstalled-packages-platform-cherish-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/preinstalled-packages-platform-cherish-product.xml
 
-# Disable touch video heatmap to reduce latency, motion jitter, and CPU usage
-# on supported devices with Deep Press input classifier HALs and models
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.input.video_enabled=false
+# Versioning
+include vendor/cherish/config/version.mk
 
-# Enable one-handed mode
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.support_one_handed_mode=true
-
-# NexusLauncher resources
-PRODUCT_PACKAGES += \
-    NexusLauncherResOverlay
-
-# Audio
-$(call inherit-product, vendor/cherish/config/audio.mk)
-
-# Bootanimation
-$(call inherit-product, vendor/cherish/config/bootanimation.mk)
+# BootAnimation
+include vendor/cherish/config/bootanimation.mk
 
 # Fonts
-$(call inherit-product, vendor/cherish/config/fonts.mk)
+$(call inherit-product, vendor/cherish/fonts/fonts.mk)
 
-# Certification
-$(call inherit-product-if-exists, vendor/certification/config.mk)
+# Inherit SystemUI Clocks if they exist
+$(call inherit-product-if-exists, vendor/SystemUIClocks/product.mk)
 
-ifeq ($(EXTRA_UDFPS_ANIMATIONS),true)
-PRODUCT_PACKAGES += \
-    UdfpsResources
-endif
-
-# Build
-ifeq ($(CHERISH_VANILLA), true)
-include vendor/cherish/config/basicapps.mk
-
-else
-
-# Inherit from GMS product config
-ifeq ($(TARGET_USES_MINI_GAPPS),true)
-$(call inherit-product, vendor/gms/gms_mini.mk)
-else ifeq ($(TARGET_USES_PICO_GAPPS),true)
-$(call inherit-product, vendor/gms/gms_pico.mk)
-else
-$(call inherit-product, vendor/gms/gms_full.mk)
-endif
-
-# RRO Overlays
-$(call inherit-product, vendor/cherish/config/rro_overlays.mk)
-endif
-
-# OTA
-$(call inherit-product, vendor/cherish/config/ota.mk)
+# Audio
+$(call inherit-product, vendor/cherish/audio/audio.mk)
 
 # Themes
-$(call inherit-product, vendor/themes/themes.mk)
+# $(call inherit-product-if-exists, vendor/themes/themes.mk)
 
-# Enable ThinLTO Source wide Conditionally.
-ifeq ($(TARGET_BUILD_WITH_LTO),true)
-GLOBAL_THINLTO := true
-USE_THINLTO_CACHE := true
-SKIP_ABI_CHECKS := true
-endif
+# Game Props
+TARGET_PRODUCT_PROP += vendor/cherish/config//gameprops/product.prop
 
-# Clocks
-$(call inherit-product, vendor/cherish/config/clocks.mk)
-
-# Pixel Framework
-$(call inherit-product-if-exists, vendor/pixel-framework/config.mk)
-
--include $(WORKSPACE)/build_env/image-auto-bits.mk
+# Include extra packages
+include vendor/cherish/config/packages.mk

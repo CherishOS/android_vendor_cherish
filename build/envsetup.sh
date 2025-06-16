@@ -1,4 +1,4 @@
-function __print_cherish_functions_help() {
+function __print_cherishos_functions_help() {
 cat <<EOF
 Additional cherishOS functions:
 - cout:            Changes directory to out.
@@ -9,7 +9,7 @@ Additional cherishOS functions:
 - cherishrebase:   Rebase a Gerrit change and push it again.
 - cherishremote:   Add git remote for cherishOS Gerrit Review.
 - aospremote:      Add git remote for matching AOSP repository.
-- cloremote:       Add git remote for matching CodeLinaro repository.
+- cafremote:       Add git remote for matching CodeAurora repository.
 - githubremote:    Add git remote for cherishOS Github.
 - mka:             Builds using SCHED_BATCH on all processors.
 - mkap:            Builds the module(s) using mka and pushes them to the device.
@@ -18,11 +18,13 @@ Additional cherishOS functions:
 - repolastsync:    Prints date and time of last repo sync.
 - reposync:        Parallel repo sync using ionice and SCHED_BATCH.
 - repopick:        Utility to fetch changes from Gerrit.
-- sort-blobs-list: Sort proprietary-files.txt sections with LC_ALL=C.
 - installboot:     Installs a boot.img to the connected device.
 - installrecovery: Installs a recovery.img to the connected device.
 EOF
 }
+
+CLANG_VERSION=$(build/soong/scripts/get_clang_version.py)
+export LLVM_AOSP_PREBUILTS_VERSION="${CLANG_VERSION}"
 
 function mk_timer()
 {
@@ -79,9 +81,9 @@ function breakfast()
             # A buildtype was specified, assume a full device name
             lunch $target
         else
-            # This is probably just the cherish model name
+            # This is probably just the cherishOS model name
             if [ -z "$variant" ]; then
-                variant="userdebug"
+                variant="user"
             fi
 
             lunch cherish_$target-$aosp_target_release-$variant
@@ -95,7 +97,7 @@ alias bib=breakfast
 function eat()
 {
     if [ "$OUT" ] ; then
-        ZIPPATH=`ls -tr "$OUT"/Cherish-*.zip | tail -1`
+        ZIPPATH=`ls -tr "$OUT"/cherish-*.zip | tail -1`
         if [ ! -f $ZIPPATH ] ; then
             echo "Nothing to eat"
             return 1
@@ -250,14 +252,14 @@ function cherishremote()
     fi
     if [ -z "$REMOTE" ]
     then
-        REMOTE=$(git config --get remote.clo.projectname)
+        REMOTE=$(git config --get remote.caf.projectname)
         CHERISH="false"
     fi
 
     if [ $CHERISH = "false" ]
     then
         local PROJECT=$(echo $REMOTE | sed -e "s#platform/#android/#g; s#/#_#g")
-        local PFX="CherishOS/"
+        local PFX="cherishOS/"
     else
         local PROJECT=$REMOTE
     fi
@@ -267,7 +269,7 @@ function cherishremote()
     then
         git remote add cherish ssh://review.cherishos.org:29418/$PFX$PROJECT
     else
-        git remote add cherish ssh://$CHERISH_USER@review.cherishos.org:29418/$PFX$PROJECT
+        git remote add Cherish ssh://$CHERISH_USER@review.cherishos.org:29418/$PFX$PROJECT
     fi
     echo "Remote 'cherish' created"
 }
@@ -280,56 +282,44 @@ function aospremote()
         return 1
     fi
     git remote rm aosp 2> /dev/null
-
-    if [ -f ".gitupstream" ]; then
-        local REMOTE=$(cat .gitupstream | cut -d ' ' -f 1)
-        git remote add aosp ${REMOTE}
-    else
-        local PROJECT=$(pwd -P | sed -e "s#$ANDROID_BUILD_TOP\/##; s#-caf.*##; s#\/default##")
-        # Google moved the repo location in Oreo
-        if [ $PROJECT = "build/make" ]
-        then
-            PROJECT="build"
-        fi
-        if (echo $PROJECT | grep -qv "^device")
-        then
-            local PFX="platform/"
-        fi
-        git remote add aosp https://android.googlesource.com/$PFX$PROJECT
+    local PROJECT=$(pwd -P | sed -e "s#$ANDROID_BUILD_TOP\/##; s#-caf.*##; s#\/default##")
+    # Google moved the repo location in Oreo
+    if [ $PROJECT = "build/make" ]
+    then
+        PROJECT="build"
     fi
+    if (echo $PROJECT | grep -qv "^device")
+    then
+        local PFX="platform/"
+    fi
+    git remote add aosp https://android.googlesource.com/$PFX$PROJECT
     echo "Remote 'aosp' created"
 }
 
-function cloremote()
+function cafremote()
 {
     if ! git rev-parse --git-dir &> /dev/null
     then
         echo ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
         return 1
     fi
-    git remote rm clo 2> /dev/null
-
-    if [ -f ".gitupstream" ]; then
-        local REMOTE=$(cat .gitupstream | cut -d ' ' -f 1)
-        git remote add clo ${REMOTE}
-    else
-        local PROJECT=$(pwd -P | sed -e "s#$ANDROID_BUILD_TOP\/##; s#-caf.*##; s#\/default##")
-        # Google moved the repo location in Oreo
-        if [ $PROJECT = "build/make" ]
-        then
-            PROJECT="build_repo"
-        fi
-        if [[ $PROJECT =~ "qcom/opensource" ]];
-        then
-            PROJECT=$(echo $PROJECT | sed -e "s#qcom\/opensource#qcom-opensource#")
-        fi
-        if (echo $PROJECT | grep -qv "^device")
-        then
-            local PFX="platform/"
-        fi
-        git remote add clo https://git.codelinaro.org/clo/la/$PFX$PROJECT
+    git remote rm caf 2> /dev/null
+    local PROJECT=$(pwd -P | sed -e "s#$ANDROID_BUILD_TOP\/##; s#-caf.*##; s#\/default##")
+     # Google moved the repo location in Oreo
+    if [ $PROJECT = "build/make" ]
+    then
+        PROJECT="build"
     fi
-    echo "Remote 'clo' created"
+    if [[ $PROJECT =~ "qcom/opensource" ]];
+    then
+        PROJECT=$(echo $PROJECT | sed -e "s#qcom\/opensource#qcom-opensource#")
+    fi
+    if (echo $PROJECT | grep -qv "^device")
+    then
+        local PFX="platform/"
+    fi
+    git remote add caf https://source.codeaurora.org/quic/la/$PFX$PROJECT
+    echo "Remote 'caf' created"
 }
 
 function githubremote()
@@ -344,12 +334,12 @@ function githubremote()
 
     if [ -z "$REMOTE" ]
     then
-        REMOTE=$(git config --get remote.clo.projectname)
+        REMOTE=$(git config --get remote.caf.projectname)
     fi
 
     local PROJECT=$(echo $REMOTE | sed -e "s#platform/#android/#g; s#/#_#g")
 
-    git remote add github https://github.com/CherishOS/$PROJECT
+    git remote add github https://github.com/cherishOS/$PROJECT
     echo "Remote 'github' created"
 }
 
@@ -696,7 +686,7 @@ function cherishrebase() {
     local dir="$(gettop)/$repo"
 
     if [ -z $repo ] || [ -z $refs ]; then
-        echo "CherishOS Gerrit Rebase Usage: "
+        echo "cherishOS Gerrit Rebase Usage: "
         echo "      cherishrebase <path to project> <patch IDs on Gerrit>"
         echo "      The patch IDs appear on the Gerrit commands that are offered."
         echo "      They consist on a series of numbers and slashes, after the text"
@@ -731,7 +721,7 @@ function cherishrebase() {
 }
 
 function mka() {
-    m "$@"
+    m -j "$@"
 }
 
 function cmka() {
@@ -851,7 +841,7 @@ function dopush()
         CHKPERM="/data/local/tmp/chkfileperm.sh"
 (
 cat <<'EOF'
-#!/system/bin/sh
+#!/system/xbin/sh
 FILE=$@
 if [ -e $FILE ]; then
     ls -l $FILE | awk '{k=0;for(i=0;i<=8;i++)k+=((substr($1,i+2,1)~/[rwx]/)*2^(8-i));if(k)printf("%0o ",k);print}' | cut -d ' ' -f1
@@ -897,7 +887,7 @@ EOF
                 fi
                 adb shell restorecon "$TARGET"
             ;;
-            */SystemUI.apk|*/framework/*)
+            /system/priv-app/SystemUI/SystemUI.apk|/system/framework/*)
                 # Only need to stop services once
                 if ! $stop_n_start; then
                     adb shell stop
@@ -937,11 +927,6 @@ function repopick() {
     $T/vendor/cherish/build/tools/repopick.py $@
 }
 
-function sort-blobs-list() {
-    T=$(gettop)
-    $T/tools/extract-utils/sort-blobs-list.py $@
-}
-
 function fixup_common_out_dir() {
     common_out_dir=$(get_build_var OUT_DIR)/target/common
     target_device=$(get_build_var TARGET_DEVICE)
@@ -961,5 +946,6 @@ function fixup_common_out_dir() {
     fi
 }
 
-# Disable ABI checking
-export SKIP_ABI_CHECKS=true
+# Override host metadata to make builds more reproducible and avoid leaking info
+export BUILD_USERNAME=android-build
+export BUILD_HOSTNAME=r-0123456789abcdef-acab

@@ -17,6 +17,13 @@
  */
 -->
 <resources>
+    <bool name="def_wifi_on">true</bool>
+    <bool name="def_backup_enabled">true</bool>
+    <string name="def_backup_transport" translatable="false">com.stevesoltys.seedvault.transport.ConfigurableBackupTransport</string>
+
+    <!-- This is disabled by default, but turned on in SetupWizard -->
+    <bool name="assisted_gps_enabled">false</bool>
+
     <!-- Initial value for the Settings.Secure.IMMERSIVE_MODE_CONFIRMATIONS setting,
          which is a comma separated list of packages that no longer need confirmation
          for immersive mode.

@@ -1,4 +1,4 @@
-// cherish soong configs
+// cherishOS soong configs
 
 bootstrap_go_package {
     name: "soong-cherish-generator",
@@ -13,20 +13,6 @@ bootstrap_go_package {
     srcs: [
         "generator/generator.go",
         "generator/variables.go",
-    ],
-    pluginFor: ["soong_build"],
-}
-
-bootstrap_go_package {
-    name: "soong-prebuilt-etc-dir",
-    pkgPath: "cherish/soong/prebuilt-etc-dir",
-    deps: [
-        "soong-android",
-        "soong-etc",
-        "soong-phony",
-    ],
-    srcs: [
-        "prebuilt_etc_dir.go",
     ],
     pluginFor: ["soong_build"],
 }
@@ -56,6 +42,22 @@ cherish_generator {
     ],
 }
 
+bootstrap_go_package {
+    name: "soong-cherish-mkdir",
+    pkgPath: "cherish/soong/mkdir",
+    deps: [
+        "blueprint",
+        "blueprint-pathtools",
+        "soong",
+        "soong-android",
+    ],
+    srcs: [
+        "mkdir/init.go",
+        "mkdir/mkdir.go",
+    ],
+    pluginFor: ["soong_build"],
+}
+
 cc_defaults {
     name: "generated_kernel_header_defaults",
     generated_headers: ["generated_kernel_includes"],
@@ -75,304 +77,6 @@ cc_library_headers {
 }
 
 // Target platform agnostic config modules
-
-soong_config_module_type {
-    name: "aapt_version_code",
-    module_type: "java_defaults",
-    config_namespace: "cherishGlobalVars",
-    value_variables: ["aapt_version_code"],
-    properties: ["aaptflags"],
-}
-
-aapt_version_code {
-    name: "aapt_version_code_defaults",
-    soong_config_variables: {
-        aapt_version_code: {
-            aaptflags: [
-                "--version-code",
-                "%s",
-            ],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "camera_needs_client_info",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: ["camera_needs_client_info"],
-    properties: ["cppflags"],
-}
-
-camera_needs_client_info {
-    name: "camera_needs_client_info_defaults",
-    soong_config_variables: {
-        camera_needs_client_info: {
-            cppflags: ["-DCAMERA_NEEDS_CLIENT_INFO"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "camera_override_format_from_reserved",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: ["camera_override_format_from_reserved"],
-    properties: ["cppflags"],
-}
-
-camera_override_format_from_reserved {
-    name: "camera_override_format_from_reserved_defaults",
-    soong_config_variables: {
-        camera_override_format_from_reserved: {
-            cppflags: ["-DTARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "disable_postrender_cleanup",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: ["disable_postrender_cleanup"],
-    properties: ["cppflags"],
-}
-
-disable_postrender_cleanup {
-    name: "disable_postrender_cleanup_defaults",
-    soong_config_variables: {
-        disable_postrender_cleanup: {
-            cppflags: ["-DDISABLE_POSTRENDER_CLEANUP"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "gralloc_10_usage_bits",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    value_variables: ["additional_gralloc_10_usage_bits"],
-    properties: ["cppflags"],
-}
-
-gralloc_10_usage_bits {
-    name: "gralloc_10_usage_bits_defaults",
-    soong_config_variables: {
-        additional_gralloc_10_usage_bits: {
-            cppflags: ["-DADDNL_GRALLOC_10_USAGE_BITS=%s"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "gralloc_handle_custom_content_md_reserved_size",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: ["gralloc_handle_has_custom_content_md_reserved_size"],
-    properties: ["export_cflags"],
-}
-
-gralloc_handle_custom_content_md_reserved_size {
-    name: "gralloc_handle_has_custom_content_md_reserved_size_defaults",
-    soong_config_variables: {
-        gralloc_handle_has_custom_content_md_reserved_size: {
-            export_cflags: ["-DGRALLOC_HANDLE_HAS_CUSTOM_CONTENT_MD_RESERVED_SIZE"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "target_alternative_futex_waiters",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: ["target_alternative_futex_waiters"],
-    properties: [
-        "cflags",
-        "cppflags",
-    ],
-}
-
-target_alternative_futex_waiters {
-    name: "target_alternative_futex_waiters_defaults",
-    soong_config_variables: {
-        target_alternative_futex_waiters: {
-            cflags: ["-DTARGET_ALTERNATIVE_FUTEX_WAITERS"],
-            cppflags: ["-DTARGET_ALTERNATIVE_FUTEX_WAITERS"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "gralloc_handle_reserved_size",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: ["gralloc_handle_has_reserved_size"],
-    properties: ["export_cflags"],
-}
-
-gralloc_handle_reserved_size {
-    name: "gralloc_handle_has_reserved_size_defaults",
-    soong_config_variables: {
-        gralloc_handle_has_reserved_size: {
-            export_cflags: ["-DGRALLOC_HANDLE_HAS_RESERVED_SIZE"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "gralloc_handle_ubwcp_format",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: ["gralloc_handle_has_ubwcp_format"],
-    properties: ["export_cflags"],
-}
-
-gralloc_handle_ubwcp_format {
-    name: "gralloc_handle_has_ubwcp_format_defaults",
-    soong_config_variables: {
-        gralloc_handle_has_ubwcp_format: {
-            export_cflags: ["-DGRALLOC_HANDLE_HAS_UBWCP_FORMAT"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "target_shim_libs",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    value_variables: ["target_ld_shim_libs"],
-    properties: ["cppflags"],
-}
-
-target_shim_libs {
-    name: "shim_libs_defaults",
-    soong_config_variables: {
-        target_ld_shim_libs: {
-            cppflags: ["-DLD_SHIM_LIBS=\"%s\""],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "vendor_init",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    value_variables: ["target_init_vendor_lib"],
-    properties: ["whole_static_libs"],
-}
-
-vendor_init {
-    name: "vendor_init_defaults",
-    soong_config_variables: {
-        target_init_vendor_lib: {
-            whole_static_libs: ["%s"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "power_libperfmgr",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    value_variables: ["target_power_libperfmgr_mode_extension_lib"],
-    properties: [
-        "whole_static_libs",
-    ],
-}
-
-power_libperfmgr {
-    name: "power_libperfmgr_defaults",
-    soong_config_variables: {
-        target_power_libperfmgr_mode_extension_lib: {
-            whole_static_libs: ["%s"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "surfaceflinger_udfps_lib",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    value_variables: ["target_surfaceflinger_udfps_lib"],
-    properties: [
-        "cppflags",
-        "whole_static_libs",
-    ],
-}
-
-surfaceflinger_udfps_lib {
-    name: "surfaceflinger_udfps_lib_defaults",
-    soong_config_variables: {
-        target_surfaceflinger_udfps_lib: {
-            cppflags: ["-DTARGET_PROVIDES_UDFPS_LIB"],
-            whole_static_libs: ["%s"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "trust_usb_control",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    value_variables: [
-        "target_trust_usb_control_path",
-        "target_trust_usb_control_enable",
-        "target_trust_usb_control_disable",
-    ],
-    properties: ["cppflags"],
-}
-
-trust_usb_control {
-    name: "trust_usb_control_defaults",
-    soong_config_variables: {
-        target_trust_usb_control_path: {
-            cppflags: ["-DUSB_CONTROL_PATH=\"%s\""],
-        },
-        target_trust_usb_control_enable: {
-            cppflags: ["-DUSB_CONTROL_ENABLE=\"%s\""],
-        },
-        target_trust_usb_control_disable: {
-            cppflags: ["-DUSB_CONTROL_DISABLE=\"%s\""],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "target_uses_prebuilt_dynamic_partitions",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: ["target_uses_prebuilt_dynamic_partitions"],
-    properties: ["cppflags"],
-}
-
-target_uses_prebuilt_dynamic_partitions {
-    name: "target_uses_prebuilt_dynamic_partitions_defaults",
-    soong_config_variables: {
-        target_uses_prebuilt_dynamic_partitions: {
-            cppflags: ["-DTARGET_USES_PREBUILT_DYNAMIC_PARTITIONS"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "needs_camera_boottime",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: ["needs_camera_boottime"],
-    properties: ["cppflags"],
-}
-
-needs_camera_boottime {
-    name: "needs_camera_boottime_defaults",
-    soong_config_variables: {
-        needs_camera_boottime: {
-            cppflags: ["-DTARGET_CAMERA_BOOTTIME_TIMESTAMP"],
-        },
-    },
-}
-
-// Target platform agnostic config modules
-
 soong_config_module_type {
     name: "camera_needs_client_info_lib",
     module_type: "cc_defaults",
@@ -390,23 +94,6 @@ camera_needs_client_info_lib {
         camera_needs_client_info_lib: {
             cppflags: ["-DCAMERA_NEEDS_CLIENT_INFO_LIB"],
             shared_libs: ["//hardware/oneplus:vendor.oneplus.hardware.camera@1.0"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "legacy_hw_disk_encryption",
-    module_type: "cc_defaults",
-    config_namespace: "cherishQcomVars",
-    bool_variables: ["legacy_hw_disk_encryption"],
-    properties: ["cppflags"],
-}
-
-legacy_hw_disk_encryption {
-    name: "legacy_hw_disk_encryption_defaults",
-    soong_config_variables: {
-        legacy_hw_disk_encryption: {
-            cppflags: ["-DLEGACY_HW_DISK_ENCRYPTION"],
         },
     },
 }
@@ -433,123 +120,90 @@ camera_needs_client_info_lib_oplus {
 }
 
 soong_config_module_type {
-    name: "no_cameraserver",
+    name: "target_alternative_futex_waiters",
     module_type: "cc_defaults",
     config_namespace: "cherishGlobalVars",
-    bool_variables: ["has_legacy_camera_hal1"],
+    bool_variables: ["target_alternative_futex_waiters"],
     properties: [
+        "cflags",
         "cppflags",
     ],
 }
 
-no_cameraserver {
-    name: "no_cameraserver_defaults",
+target_alternative_futex_waiters {
+    name: "target_alternative_futex_waiters_defaults",
     soong_config_variables: {
-        has_legacy_camera_hal1: {
-            cppflags: [
-                "-DNO_CAMERA_SERVER",
-                "-Wno-overloaded-virtual",
-            ],
+        target_alternative_futex_waiters: {
+            cflags: ["-DTARGET_ALTERNATIVE_FUTEX_WAITERS"],
+            cppflags: ["-DTARGET_ALTERNATIVE_FUTEX_WAITERS"],
         },
     },
 }
 
 soong_config_module_type {
-    name: "camera_in_mediaserver",
+    name: "target_shim_libs",
     module_type: "cc_defaults",
     config_namespace: "cherishGlobalVars",
-    bool_variables: ["has_legacy_camera_hal1"],
-    properties: [
-        "overrides",
-        "shared_libs",
-    ],
-}
-
-camera_in_mediaserver {
-    name: "camera_in_mediaserver_defaults",
-    defaults: ["no_cameraserver_defaults"],
-    soong_config_variables: {
-        has_legacy_camera_hal1: {
-            overrides: ["cameraserver"],
-            shared_libs: [
-                "android.hardware.camera.common@1.0",
-                "android.hardware.camera.device@3.4",
-                "android.hardware.camera.provider@2.6",
-                "libcameraservice",
-                "libgui",
-            ],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "has_memfd_backport",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: ["has_memfd_backport"],
+    value_variables: ["target_ld_shim_libs"],
     properties: ["cppflags"],
 }
 
-has_memfd_backport {
-    name: "has_memfd_backport_defaults",
+target_shim_libs {
+    name: "shim_libs_defaults",
     soong_config_variables: {
-        has_memfd_backport: {
-            cppflags: ["-DHAS_MEMFD_BACKPORT"],
+        target_ld_shim_libs: {
+            cppflags: ["-DLD_SHIM_LIBS=\"%s\""],
         },
     },
 }
 
 soong_config_module_type {
-    name: "camera_parameter_library",
+    name: "needs_netd_direct_connect_rule",
     module_type: "cc_defaults",
     config_namespace: "cherishGlobalVars",
-    value_variables: ["uses_camera_parameter_lib"],
-    properties: ["whole_static_libs"],
+    bool_variables: ["needs_netd_direct_connect_rule"],
+    properties: ["cppflags"],
 }
 
-camera_parameter_library {
-    name: "camera_parameter_library_defaults",
+needs_netd_direct_connect_rule {
+    name: "needs_netd_direct_connect_rule_defaults",
     soong_config_variables: {
-        uses_camera_parameter_lib: {
-            whole_static_libs: ["%s"],
+        needs_netd_direct_connect_rule: {
+            cppflags: ["-DNEEDS_NETD_DIRECT_CONNECT_RULE"],
         },
     },
 }
 
 soong_config_module_type {
-    name: "bootloader_message_offset",
+    name: "uses_legacy_fd_fbdev",
     module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    value_variables: ["bootloader_message_offset"],
-    properties: [
-        "cflags",
-        "export_cflags",
-    ],
+    config_namespace: "customGlobalVars",
+    bool_variables: ["uses_legacy_fd_fbdev"],
+    properties: ["cppflags"],
 }
 
-bootloader_message_offset {
-    name: "bootloader_message_offset_defaults",
+uses_legacy_fd_fbdev {
+    name: "uses_legacy_fd_fbdev_defaults",
     soong_config_variables: {
-        bootloader_message_offset: {
-            cflags: ["-DBOARD_RECOVERY_BLDRMSG_OFFSET=%s"],
-            export_cflags: ["-DBOARD_RECOVERY_BLDRMSG_OFFSET=%s"],
+        uses_legacy_fd_fbdev: {
+            cppflags: ["-DUSES_LEGACY_FD_FBDEV"],
         },
     },
 }
 
 soong_config_module_type {
-    name: "egl_display_array",
+    name: "target_camera_package_name",
     module_type: "cc_defaults",
     config_namespace: "cherishGlobalVars",
-    bool_variables: ["uses_egl_display_array"],
-    properties: ["cflags"],
+    value_variables: ["target_camera_package_name"],
+    properties: ["cppflags"],
 }
 
-egl_display_array {
-    name: "egl_display_array_defaults",
+target_camera_package_name {
+    name: "camera_package_name_defaults",
     soong_config_variables: {
-        uses_egl_display_array: {
-            cflags: ["-DEGL_DISPLAY_ARRAY"],
+        target_camera_package_name: {
+            cppflags: ["-DCAMERA_PACKAGE_NAME=\"%s\""],
         },
     },
 }
@@ -606,245 +260,19 @@ disable_bluetooth_le_set_host_feature {
     },
 }
 
-// QCOM specific config modules
 soong_config_module_type {
-    name: "librmnetctl_pre_uplink",
-    module_type: "cc_defaults",
-    config_namespace: "cherishQcomVars",
-    bool_variables: ["uses_pre_uplink_features_netmgrd"],
-    properties: ["cflags"],
-}
-
-librmnetctl_pre_uplink {
-    name: "librmnetctl_pre_uplink_defaults",
-    soong_config_variables: {
-        uses_pre_uplink_features_netmgrd: {
-            cflags: ["-DNO_UPLINK_FEATURES"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "extended_compress_format",
-    module_type: "cc_defaults",
-    config_namespace: "cherishQcomVars",
-    bool_variables: ["supports_extended_compress_format"],
-    properties: ["cflags"],
-}
-
-extended_compress_format {
-    name: "extended_compress_format_defaults",
-    soong_config_variables: {
-        supports_extended_compress_format: {
-            cflags: ["-DENABLE_EXTENDED_COMPRESS_FORMAT"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "surfaceflinger_qcom_extensions",
-    module_type: "cc_defaults",
-    config_namespace: "cherishQcomVars",
-    value_variables: ["qcom_display_headers_namespace"],
-    properties: [
-        "cppflags",
-        "header_libs",
-    ],
-}
-
-surfaceflinger_qcom_extensions {
-    name: "surfaceflinger_qcom_ext_defaults",
-    soong_config_variables: {
-        qcom_display_headers_namespace: {
-            cppflags: ["-DQCOM_UM_FAMILY"],
-            header_libs: ["//%s:display_intf_headers"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "inputdispatcher_skip_event_key",
+    name: "uses_oplus_touch",
     module_type: "cc_defaults",
     config_namespace: "cherishGlobalVars",
-    value_variables: ["target_inputdispatcher_skip_event_key"],
+    bool_variables: ["uses_oplus_touch"],
     properties: ["cppflags"],
 }
 
-inputdispatcher_skip_event_key {
-    name: "inputdispatcher_skip_event_key_defaults",
+uses_oplus_touch {
+    name: "uses_oplus_touch_defaults",
     soong_config_variables: {
-        target_inputdispatcher_skip_event_key: {
-            cppflags: ["-DINPUTDISPATCHER_SKIP_EVENT_KEY=%s"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "uses_oplus_camera",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: ["uses_oplus_camera"],
-    properties: ["cppflags"],
-}
-
-uses_oplus_camera {
-    name: "uses_oplus_camera_defaults",
-    soong_config_variables: {
-        uses_oplus_camera: {
-            cppflags: ["-DUSES_OPLUS_CAMERA"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "uses_nothing_camera",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: ["uses_nothing_camera"],
-    properties: ["cppflags"],
-}
-
-uses_nothing_camera {
-    name: "uses_nothing_camera_defaults",
-    soong_config_variables: {
-        uses_nothing_camera: {
-            cppflags: ["-DUSES_NOTHING_CAMERA"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "include_miui_camera",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: ["include_miui_camera"],
-    properties: ["cppflags"],
-}
-include_miui_camera {
-    name: "includes_miui_camera",
-    soong_config_variables: {
-        include_miui_camera: {
-            cppflags: ["-DINCLUDES_MIUI_CAMERA"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "uses_miui_camera",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: ["uses_miui_camera"],
-    properties: ["cppflags"],
-}
-
-uses_miui_camera {
-    name: "uses_miui_camera_defaults",
-    soong_config_variables: {
-        uses_miui_camera: {
-            cppflags: ["-DUSES_MIUI_CAMERA"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "uses_oppo_camera",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: ["uses_oppo_camera"],
-    properties: ["cppflags"],
-}
-
-uses_oppo_camera {
-    name: "uses_oppo_camera_defaults",
-    soong_config_variables: {
-        uses_oppo_camera: {
-            cppflags: ["-DUSES_OPPO_CAMERA"],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "target_camera_package_name",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    value_variables: ["target_camera_package_name"],
-    properties: ["cppflags"],
-}
-
-target_camera_package_name {
-    name: "camera_package_name_defaults",
-    soong_config_variables: {
-        target_camera_package_name: {
-            cppflags: ["-DCAMERA_PACKAGE_NAME=\"%s\""],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "health_charging_control",
-    module_type: "cc_defaults",
-    config_namespace: "cherishGlobalVars",
-    bool_variables: [
-        "target_health_charging_control_supports_toggle",
-        "target_health_charging_control_supports_bypass",
-        "target_health_charging_control_supports_deadline",
-    ],
-    value_variables: [
-        "target_health_charging_control_charging_path",
-        "target_health_charging_control_charging_enabled",
-        "target_health_charging_control_charging_disabled",
-        "target_health_charging_control_deadline_path",
-    ],
-    properties: ["cppflags"],
-}
-
-health_charging_control {
-    name: "health_charging_control_defaults",
-    soong_config_variables: {
-        target_health_charging_control_supports_toggle: {
-            cppflags: ["-DHEALTH_CHARGING_CONTROL_SUPPORTS_TOGGLE"],
-        },
-        target_health_charging_control_supports_bypass: {
-            cppflags: ["-DHEALTH_CHARGING_CONTROL_SUPPORTS_BYPASS"],
-        },
-        target_health_charging_control_supports_deadline: {
-            cppflags: ["-DHEALTH_CHARGING_CONTROL_SUPPORTS_DEADLINE"],
-        },
-        target_health_charging_control_charging_path: {
-            cppflags: ["-DHEALTH_CHARGING_CONTROL_CHARGING_PATH=\"%s\""],
-        },
-        target_health_charging_control_charging_enabled: {
-            cppflags: ["-DHEALTH_CHARGING_CONTROL_CHARGING_ENABLED=\"%s\""],
-        },
-        target_health_charging_control_charging_disabled: {
-            cppflags: ["-DHEALTH_CHARGING_CONTROL_CHARGING_DISABLED=\"%s\""],
-        },
-        target_health_charging_control_deadline_path: {
-            cppflags: ["-DHEALTH_CHARGING_CONTROL_DEADLINE_PATH=\"%s\""],
-        },
-    },
-}
-
-soong_config_module_type {
-    name: "qti_vibrator_hal",
-    module_type: "cc_defaults",
-    config_namespace: "cherishQcomVars",
-    bool_variables: ["qti_vibrator_use_effect_stream"],
-    value_variables: ["qti_vibrator_effect_lib"],
-    properties: [
-        "cppflags",
-        "shared_libs",
-    ],
-}
-
-qti_vibrator_hal {
-    name: "qti_vibrator_hal_defaults",
-    soong_config_variables: {
-        qti_vibrator_use_effect_stream: {
-            cppflags: ["-DUSE_EFFECT_STREAM"],
-        },
-        qti_vibrator_effect_lib: {
-            shared_libs: ["%s"],
+        uses_oplus_touch: {
+            cppflags: ["-DUSES_OPLUS_TOUCH"],
         },
     },
 }

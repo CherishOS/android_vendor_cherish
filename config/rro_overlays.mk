@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2020 Raphielscape LLC. and Haruka LLC.
+# Copyright (C) 2022 cherishOS
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,60 +14,6 @@
 # limitations under the License.
 #
 
-# RRO Overlays
+# cherishOS
 PRODUCT_PACKAGES += \
-    CherishConfigOverlay \
-    NetworkStackOverlay \
-
-# Google Overlays
-PRODUCT_PACKAGES += \
-    AccessibilityMenuOverlay \
-    BuiltInPrintServiceOverlay \
-    CaptivePortalLoginOverlay \
-    CellBroadcastReceiverOverlay \
-    CellBroadcastServiceOverlay \
-    ContactsProviderOverlay \
-    DMServiceOverlay \
-    FlipendoOverlay \
-    GoogleConfigOverlay \
-    GoogleDeviceLockControllerOverlay \
-    GoogleHealthConnectOverlay \
-    GoogleWebViewOverlay \
-    MediaProviderOverlay \
-    PixelConfigOverlay2018 \
-    PixelConfigOverlay2019 \
-    PixelConfigOverlay2019Midyear \
-    PixelConfigOverlayCommon \
-    PixelDocumentsUIGoogleOverlay \
-    PixelFwOverlay \
-    PixelLauncherCustomOverlay \
-    PixelSetupWizardOverlay \
-    SettingsGoogleOverlay \
-    SettingsProviderOverlay \
-    SystemUIGoogleOverlay \
-    TeleServiceOverlay \
-    TelecomOverlay \
-    TelephonyProviderOverlay \
-    WildlifeSettingsVpnOverlay2022 \
-    WildlifeSysuiVpnOverlay2022
-
-ifeq ($(TARGET_IS_PIXEL), true)
-PRODUCT_PACKAGES += \
-    ClearCallingSettingsOverlay2022 \
-    ManagedProvisioningPixelOverlay \
-    PixelBatteryHealthOverlay \
-    PixelConfigCustomOverlay \
-    PixelDisableLEDOverlay \
-    PixelSetupWizardOverlay2019 \
-    PixelSetupWizardOverlay2021
-endif
-
-ifeq ($(TARGET_IS_PIXEL_7), true)
-PRODUCT_PACKAGES += \
-    PixelConnectivityOverlay2022
-endif
-
-ifeq ($(TARGET_PIXEL_STAND_SUPPORTED), true)
-PRODUCT_PACKAGES += \
-    DreamlinerOverlay
-endif
+    ImmersiveNavigationOverlay \

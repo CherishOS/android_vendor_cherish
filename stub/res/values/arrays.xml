@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="themes" />
+
+    <!-- Color section -->
+    <array name="color_bundles" translatable="false">
+        <item>default</item>
+        <item>almared</item>
+        <item>pipkinpink</item>
+        <item>quetzalgold</item>
+        <item>movemint</item>
+        <item>holillusion</item>
+        <item>maniamber</item>
+        <item>meltedbrainred</item>
+        <item>dimigopink</item>
+        <item>spookedpurple</item>
+        <item>pacleggerswarmth</item>
+        <item>nexoduscold</item>
+        <item>quetzal1</item>
+        <item>quetzal2</item>
+        <item>quetzal3</item>
+        <item>quetzal4</item>
+    </array>
+</resources>

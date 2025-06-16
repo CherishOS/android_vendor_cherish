@@ -1,12 +1,7 @@
-$(call inherit-product, $(SRC_TARGET_DIR)/product/window_extensions.mk)
+# Inherit mobile full common cherish stuff
+$(call inherit-product, vendor/cherish/config/common_mobile_full.mk)
 
-# Inherit common CherishOS stuff
-$(call inherit-product, vendor/cherish/config/common_full.mk)
+# Inherit tablet common cherish stuff
+$(call inherit-product, vendor/cherish/config/tablet.mk)
 
-# Required packages
-PRODUCT_PACKAGES += \
-    LatinIME
-
-# Settings
-PRODUCT_PRODUCT_PROPERTIES += \
-    persist.settings.large_screen_opt.enabled=true
+$(call inherit-product, vendor/cherish/config/wifionly.mk)
