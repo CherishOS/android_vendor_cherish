@@ -24,6 +24,16 @@ PRODUCT_PRODUCT_PROPERTIES += \
     ro.sf.blurs_are_expensive=1 \
     ro.surface_flinger.supports_background_blur=1
 
+# Pixel additions
+ifeq ($(WITH_GMS),true)
+$(call inherit-product, vendor/google/overlays/ThemeIcons/config.mk)
+#$(call inherit-product, vendor/pixel-framework/config.mk)
+$(call inherit-product, vendor/pixel-style/config/common.mk)
+
+# Don't dexpreopt prebuilts. (For GMS).
+DONT_DEXPREOPT_PREBUILTS := true
+endif
+
 ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.com.google.clientidbase=android-google
@@ -170,9 +180,11 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
     PihooksGmsFp="google/cheetah_beta/cheetah:16/BP31.250502.008/13497110:user/release-keys" \
     PihooksGmsModel="Pixel 7 Pro"
 
+ifeq ($(WITH_GMS),false)
 # Storage manager
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+PRODUCT_SYSTEM_PROPERTIES += \
     ro.storage_manager.enabled=true
+endif
 
 # These packages are excluded from user builds
 PRODUCT_PACKAGES_DEBUG += \
@@ -234,9 +246,11 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 endif
 
 # SetupWizard
+ifeq ($(WITH_GMS),false)
 PRODUCT_PRODUCT_PROPERTIES += \
     setupwizard.theme=glif_v4 \
     setupwizard.feature.day_night_mode_enabled=true
+endif
 
 # Cloned app exemption
 PRODUCT_COPY_FILES += \
