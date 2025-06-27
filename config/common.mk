@@ -262,17 +262,12 @@ include vendor/cherish/config/version.mk
 # BootAnimation
 include vendor/cherish/config/bootanimation.mk
 
-# Fonts
-$(call inherit-product, vendor/cherish/fonts/fonts.mk)
-
-# Inherit SystemUI Clocks if they exist
-$(call inherit-product-if-exists, vendor/SystemUIClocks/product.mk)
 
 # Audio
 $(call inherit-product, vendor/cherish/audio/audio.mk)
 
 # Themes
-# $(call inherit-product-if-exists, vendor/themes/themes.mk)
+$(call inherit-product-if-exists, vendor/themes/themes.mk)
 
 # Game Props
 TARGET_PRODUCT_PROP += vendor/cherish/config//gameprops/product.prop
