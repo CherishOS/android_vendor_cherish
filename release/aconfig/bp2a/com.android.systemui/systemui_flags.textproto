@@ -35,13 +35,6 @@ flag_value {
 
 flag_value {
   package: "com.android.systemui"
-  name: "notification_row_transparency"
-  state: ENABLED
-  permission: READ_ONLY
-}
-
-flag_value {
-  package: "com.android.systemui"
   name: "notification_background_tint_optimization"
   state: ENABLED
   permission: READ_ONLY
@@ -57,6 +50,55 @@ flag_value {
 flag_value {
   package: "com.android.systemui"
   name: "notifications_redesign_guts"
+  state: ENABLED
+  permission: READ_ONLY
+}
+
+flag_value {
+  package: "com.android.systemui"
+  name: "disable_blurred_shade_visible"
+  state: ENABLED
+  permission: READ_ONLY
+}
+
+flag_value {
+  package: "com.android.systemui"
+  name: "magnetic_notification_swipes"
+  state: ENABLED
+  permission: READ_ONLY
+}
+
+flag_value {
+  package: "com.android.systemui"
+  name: "notification_footer_background_tint_optimization"
+  state: ENABLED
+  permission: READ_ONLY
+}
+
+flag_value {
+  package: "com.android.systemui"
+  name: "physical_notification_movement"
+  state: ENABLED
+  permission: READ_ONLY
+}
+
+flag_value {
+  package: "com.android.systemui"
+  name: "status_bar_popup_chips"
+  state: ENABLED
+  permission: READ_ONLY
+}
+
+flag_value {
+  package: "com.android.systemui"
+  name: "status_bar_chips_return_animations"
+  state: ENABLED
+  permission: READ_ONLY
+}
+
+flag_value {
+  package: "com.android.systemui"
+  name: "shade_header_font_update"
   state: ENABLED
   permission: READ_ONLY
 }
