@@ -7,7 +7,8 @@ PRODUCT_PACKAGES += \
     LogViewer \
     GmsCompat \
     NetworkLocation \
-    AppCompatConfig
+    AppCompatConfig \
+    GameSpace
 
 ifneq ($(PRODUCT_NO_CAMERA),true)
 PRODUCT_PACKAGES += \
