@@ -16,6 +16,6 @@ aconfig_values {
   name: "aconfig-values-bp2a-com.android.server.notification-all",
   package: "com.android.server.notification",
   srcs: [
-    "*_flag_values.textproto",
+    "*.textproto",
   ]
 }

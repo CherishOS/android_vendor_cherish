@@ -16,6 +16,6 @@ aconfig_values {
   name: "aconfig-values-bp2a-android.hardware.biometrics-all",
   package: "android.hardware.biometrics",
   srcs: [
-    "*_flag_values.textproto",
+    "*.textproto",
   ]
 }

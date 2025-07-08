@@ -16,6 +16,6 @@ aconfig_values {
   name: "aconfig-values-bp2a-com.android.window.flags-all",
   package: "com.android.window.flags",
   srcs: [
-    "*_flag_values.textproto",
+    "*.textproto",
   ]
 }
