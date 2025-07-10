@@ -3,6 +3,7 @@ PRODUCT_PACKAGES += \
     Covers \
     ThemePicker \
     AvatarPicker \
+    FaceUnlock \
     ThemesStub \
     LogViewer \
     GmsCompat \
