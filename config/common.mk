@@ -274,6 +274,12 @@ include vendor/cherish/config/version.mk
 # BootAnimation
 include vendor/cherish/config/bootanimation.mk
 
+# Private keys
+ifeq ($(CHERISH_BUILD_TYPE),OFFICIAL)
+include vendor/cherish-priv/keys/keys.mk
+else
+-include vendor/cherish-priv/keys/keys.mk
+endif
 
 # Audio
 $(call inherit-product, vendor/cherish/audio/audio.mk)
