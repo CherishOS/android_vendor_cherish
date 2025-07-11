@@ -50,6 +50,13 @@ SOONG_CONFIG_cherishGlobalVars_disable_bluetooth_le_read_buffer_size_v2 := $(TAR
 SOONG_CONFIG_cherishGlobalVars_disable_bluetooth_le_set_host_feature := $(TARGET_DISABLE_BLUETOOTH_LE_SET_HOST_FEATURE)
 SOONG_CONFIG_cherishGlobalVars_target_camera_package_name := $(TARGET_CAMERA_PACKAGE_NAME)
 
+SOONG_CONFIG_NAMESPACES += cherishGlobalVars
+SOONG_CONFIG_cherishGlobalVars += \
+    spoof_first_api_level_32
+
+# Soong bool variables
+SOONG_CONFIG_cherishGlobalVars_spoof_first_api_level_32 := $(SPOOF_FIRST_API_LEVEL_32)
+
 # Camera
 ifneq ($(TARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED),)
     $(warning TARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED is deprecated, please migrate to soong_config_set,camera,override_format_from_reserved)
