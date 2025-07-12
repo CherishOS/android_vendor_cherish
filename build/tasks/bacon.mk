@@ -14,16 +14,39 @@
 # limitations under the License.
 
 # -----------------------------------------------------------------
-# Lineage OTA update package
+# CHERISH OTA update package
 
-LINEAGE_TARGET_PACKAGE := $(PRODUCT_OUT)/lineage-$(LINEAGE_VERSION).zip
+CHERISH_TARGET_PACKAGE := $(PRODUCT_OUT)/CherishOS-v$(CHERISH_VERSION).zip
 
 SHA256 := prebuilts/build-tools/path/$(HOST_PREBUILT_TAG)/sha256sum
 
-$(LINEAGE_TARGET_PACKAGE): $(INTERNAL_OTA_PACKAGE_TARGET)
-	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(LINEAGE_TARGET_PACKAGE)
-	$(hide) $(SHA256) $(LINEAGE_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(LINEAGE_TARGET_PACKAGE).sha256sum
-	@echo "Package Complete: $(LINEAGE_TARGET_PACKAGE)" >&2
+CL_PRP="\033[35m"
+CL_RED="\033[31m"
+CL_GRN="\033[32m"
+BLUE="\033[34m"
+GREEN="\033[32m"
+RED="\033[31m"
+ENDCOLOR="\033[0m"
+
+$(CHERISH_TARGET_PACKAGE): $(INTERNAL_OTA_PACKAGE_TARGET)
+	$(hide) mv -f $(INTERNAL_OTA_PACKAGE_TARGET) $(CHERISH_TARGET_PACKAGE)
+	$(hide) $(SHA256) $(CHERISH_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(CHERISH_TARGET_PACKAGE).sha256sum
+	$(hide) ./vendor/cherish/build/tools/createjson.py $(TARGET_DEVICE) $(PRODUCT_OUT) CherishOS-v$(CHERISH_VERSION).zip $(TARGET_BUILD_VARIANT)
+	echo -e ${CL_BLD}${CL_RED}"===============================-Package complete-==============================="${CL_RED};
+	echo -e ${GREEN}"======================================================"${ENDCOLOR};
+	echo -e ${BLUE}"     _____ _               _     _      ____   _____    "${ENDCOLOR};
+	echo -e ${BLUE} "   / ____| |             (_)   | |    / __ \ / ____|   "${ENDCOLOR};
+	echo -e ${BLUE} "  | |    | |__   ___ _ __ _ ___| |__ | |  | | (___     "${ENDCOLOR};
+	echo -e ${GREEN}"   | |    | '_ \ / _ \ '__| / __| '_ \| |  | |\___ \    "${ENDCOLOR};
+	echo -e ${BLUE} "  | |____| | | |  __/ |  | \__ \ | | | |__| |____) |   "${ENDCOLOR};
+	echo -e ${RED} "   \_____|_| |_|\___|_|  |_|___/_| |_|\____/|_____/    "${ENDCOLOR};
+	echo -e ${BLUE}"                                                       "${ENDCOLOR};
+	echo -e ${RED} "                 #CherishTheLove                       "${ENDCOLOR};
+	echo -e ${GREEN}"======================================================"${ENDCOLOR};
+	echo -e ${CL_BLD}${CL_GRN}"Zip: "${CL_RED} $(CHERISH_TARGET_PACKAGE)${CL_RST}
+	echo -e ${CL_BLD}${CL_GRN}"SHA256: "${CL_RED}" `cat $(CHERISH_TARGET_PACKAGE).sha256sum | awk '{print $$1}' `"${CL_RST}
+	echo -e ${CL_BLD}${CL_GRN}"Size:"${CL_RED}" `du -sh $(CHERISH_TARGET_PACKAGE) | awk '{print $$1}' `"${CL_RST}
+	$(hide) rm -rf $(call intermediates-dir-for,PACKAGING,target_files)
 
 .PHONY: bacon
-bacon: $(LINEAGE_TARGET_PACKAGE) $(DEFAULT_GOAL)
+bacon: $(CHERISH_TARGET_PACKAGE) $(DEFAULT_GOAL)
