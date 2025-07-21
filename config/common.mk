@@ -109,6 +109,9 @@ PRODUCT_COPY_FILES += \
 # Credential storage
 PRODUCT_PACKAGES += \
     android.software.credentials.prebuilt.xml
+	
+# Allow vendor prebuilt repos to exclude themselves from bp scanning
+-include $(sort $(wildcard vendor/*/*/exclude-bp.mk))
 
 # Enable wireless Xbox 360 controller support
 PRODUCT_COPY_FILES += \
