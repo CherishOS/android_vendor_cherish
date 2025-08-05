@@ -104,7 +104,7 @@
     <bool name="config_useRoundIcon">true</bool>
 
     <!-- Whether or not we should show the option to show battery percentage -->
-    <bool name="config_battery_percentage_setting_available">false</bool>
+    <bool name="config_battery_percentage_setting_available">true</bool>
 
     <!-- Flag indicating whether we should enable the adaptive sleep.-->
     <bool name="config_adaptive_sleep_available">true</bool>
