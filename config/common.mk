@@ -167,7 +167,7 @@ WITH_DEXPREOPT_DEBUG_INFO := false
 PRODUCT_RESTRICT_VENDOR_FILES := false
 
 # Require all requested packages to exist
-$(call enforce-product-packages-exist-internal,$(wildcard device/*/$(CHERISH_BUILD)/$(TARGET_PRODUCT).mk),product_manifest.xml)
+$(call enforce-product-packages-exist-internal,$(lastword $(_include_stack)),product_manifest.xml rild Calendar android.hidl.memory@1.0-impl.vendor vndk_apex_snapshot_package)
 
 # Enable whole-program R8 Java optimizations for SystemUI and system_server,
 # but also allow explicit overriding for testing and development.
