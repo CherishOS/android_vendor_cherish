@@ -9,7 +9,8 @@ PRODUCT_PACKAGES += \
     GmsCompat \
     NetworkLocation \
     AppCompatConfig \
-    GameSpace
+    GameSpace \
+    OmniStyle
 
 ifneq ($(PRODUCT_NO_CAMERA),true)
 PRODUCT_PACKAGES += \
