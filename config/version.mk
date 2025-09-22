@@ -13,7 +13,7 @@
 # limitations under the License.
 
 ANDROID_VERSION := 16
-CHERISH_VERSION := 6.1
+CHERISH_VERSION := 6.2
 
 CHERISH_BUILD_TYPE ?= UNOFFICIAL
 CHERISH_DATE_YEAR := $(shell date -u +%Y)
