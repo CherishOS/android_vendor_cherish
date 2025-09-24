@@ -212,6 +212,7 @@ PRODUCT_PRODUCT_PROPERTIES += \
     persist.sys.pihooks_SDK_INT?=32
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
+    BuildFingerprint=google/husky_beta/husky:16/BP41.250822.010/14082742:user/release-keys \
     PihooksGmsFp="google/husky_beta/husky:16/BP41.250822.010/14082742:user/release-keys" \
     PihooksGmsModel="Pixel 8 Pro"
 
