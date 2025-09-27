@@ -1,14 +1,9 @@
 # cherishOS packages
 PRODUCT_PACKAGES += \
-    Covers \
     ThemePicker \
     AvatarPicker \
     FaceUnlock \
     ThemesStub \
-    LogViewer \
-    GmsCompat \
-    NetworkLocation \
-    AppCompatConfig \
     GameSpace \
     OmniStyle
 

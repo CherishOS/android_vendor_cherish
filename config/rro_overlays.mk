@@ -15,5 +15,5 @@
 #
 
 # cherishOS
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     ImmersiveNavigationOverlay \

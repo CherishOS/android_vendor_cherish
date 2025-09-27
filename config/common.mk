@@ -123,7 +123,7 @@ PRODUCT_PRODUCT_PROPERTIES += \
     is_expressive_design_enabled=true
 
 # DesktopMode
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     DesktopMode
 
 PRODUCT_COPY_FILES += \
@@ -136,7 +136,7 @@ TARGET_FACE_UNLOCK_SUPPORTED ?= $(TARGET_SUPPORTS_64_BIT_APPS)
 
 ifeq ($(TARGET_FACE_UNLOCK_SUPPORTED),true)
 PRODUCT_PACKAGES += \
-    ParanoidSense
+    FaceUnlock
 
 PRODUCT_SYSTEM_EXT_PROPERTIES += \
     ro.face.sense_service=true
