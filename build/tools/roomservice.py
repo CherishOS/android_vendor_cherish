@@ -30,7 +30,7 @@ import urllib.parse
 import urllib.request
 
 custom_local_manifest = ".repo/local_manifests/cherish.xml"
-custom_default_revision = "14"
+custom_default_revision = "sixteen"
 custom_dependencies = "cherish.dependencies"
 org_manifest = "cherishOS-Devices"  # leave empty if org is provided in manifest
 org_display = "cherishOS-Devices"  # needed for displaying
