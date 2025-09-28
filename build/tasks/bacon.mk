@@ -31,6 +31,7 @@ ENDCOLOR="\033[0m"
 $(CHERISH_TARGET_PACKAGE): $(INTERNAL_OTA_PACKAGE_TARGET)
 	$(hide) mv -f $(INTERNAL_OTA_PACKAGE_TARGET) $(CHERISH_TARGET_PACKAGE)
 	$(hide) $(SHA256) $(CHERISH_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(CHERISH_TARGET_PACKAGE).sha256sum
+	$(hide) ./vendor/cherish/build/tools/createjson.py $(TARGET_DEVICE) $(PRODUCT_OUT) CherishOS-v$(CHERISH_VERSION).zip $(TARGET_BUILD_VARIANT)
 	echo -e ${CL_BLD}${CL_RED}"===============================-Package complete-==============================="${CL_RED};
 	echo -e ${GREEN}"======================================================"${ENDCOLOR};
 	echo -e ${BLUE}"     _____ _               _     _      ____   _____    "${ENDCOLOR};
