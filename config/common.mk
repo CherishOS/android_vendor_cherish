@@ -20,9 +20,19 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     is_expressive_design_enabled=true
 
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.sf.blurs_are_expensive=1 \
+# Enable blur
+TARGET_ENABLE_BLUR ?= true
+ifeq ($(TARGET_ENABLE_BLUR),true)
+PRODUCT_SYSTEM_PROPERTIES += \
+    ro.custom.blur.enable=true \
+    persist.sysui.disableBlur=false \
     ro.surface_flinger.supports_background_blur=1
+else
+PRODUCT_SYSTEM_PROPERTIES += \
+    ro.custom.blur.enable=false \
+    persist.sysui.disableBlur=true \
+    ro.surface_flinger.supports_background_blur=0
+endif
 
 # Pixel additions
 ifeq ($(WITH_GMS),true)
