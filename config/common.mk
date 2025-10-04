@@ -17,9 +17,6 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
     ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html \
 
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    is_expressive_design_enabled=true
-
 # Enable blur
 TARGET_ENABLE_BLUR ?= true
 ifeq ($(TARGET_ENABLE_BLUR),true)
