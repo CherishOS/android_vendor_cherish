@@ -26,3 +26,7 @@ PRODUCT_PACKAGES += \
     fsck.exfat \
     mke2fs \
     mkfs.exfat
+
+# Updater
+PRODUCT_PACKAGES += \
+    Updater
