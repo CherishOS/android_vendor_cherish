@@ -309,6 +309,15 @@ PRODUCT_PACKAGES += \
 # Overlays
 include packages/overlays/Themes/themes.mk
 
+# PERF_ANIM_OVERRIDE
+PRODUCT_PRODUCT_PROPERTIES += \
+    persist.sys.activity_anim_perf_override=$(PERF_ANIM_OVERRIDE)
+
+ifeq ($(PERF_ANIM_OVERRIDE),true)
+PRODUCT_PRODUCT_PROPERTIES += \
+    debug.sf.predict_hwc_composition_strategy=0
+endif
+
 # Props
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     dalvik.vm.debug.alloc=0 \
@@ -448,7 +457,6 @@ PERF_ANIM_OVERRIDE ?= false
 TORCH_STR_SUPPORTED ?= true
 
 PRODUCT_SYSTEM_PROPERTIES += \
-    persist.sys.activity_anim_perf_override=$(PERF_ANIM_OVERRIDE)
     persist.sys.battery_bypass_supported=$(BYPASS_CHARGE_SUPPORTED)
     persist.sys.battery_bypass_supported=$(BYPASS_CHARGE_SUPPORTED) \
     persist.sys.torch_str_support=$(TORCH_STR_SUPPORTED)
