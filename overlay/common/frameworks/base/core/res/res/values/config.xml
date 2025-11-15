@@ -524,4 +524,7 @@
 
     <!-- AOD wallpaper -->
     <bool name="config_dozeSupportsAodWallpaper">true</bool>
+
+    <!-- Whether the developer option for desktop mode is supported on the current device  -->
+    <bool name="config_isDesktopModeDevOptionSupported">true</bool>
 </resources>
