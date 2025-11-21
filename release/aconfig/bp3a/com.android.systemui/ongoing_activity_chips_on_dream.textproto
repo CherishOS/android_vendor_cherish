@@ -1,0 +1,6 @@
+flag_value {
+  package: "com.android.systemui"
+  name: "ongoing_activity_chips_on_dream"
+  state: ENABLED
+  permission: READ_ONLY
+}

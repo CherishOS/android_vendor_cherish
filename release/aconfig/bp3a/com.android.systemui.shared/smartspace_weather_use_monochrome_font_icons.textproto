@@ -1,0 +1,6 @@
+flag_value {
+  package: "com.android.systemui.shared"
+  name: "smartspace_weather_use_monochrome_font_icons"
+  state: ENABLED
+  permission: READ_ONLY
+}

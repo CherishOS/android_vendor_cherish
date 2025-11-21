@@ -1,0 +1,6 @@
+flag_value {
+  package: "com.android.settings.flags"
+  name: "device_state"
+  state: ENABLED
+  permission: READ_ONLY
+}

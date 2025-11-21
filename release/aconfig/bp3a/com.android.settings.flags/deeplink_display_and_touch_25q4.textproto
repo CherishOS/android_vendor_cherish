@@ -1,0 +1,6 @@
+flag_value {
+  package: "com.android.settings.flags"
+  name: "deeplink_display_and_touch_25q4"
+  state: ENABLED
+  permission: READ_ONLY
+}

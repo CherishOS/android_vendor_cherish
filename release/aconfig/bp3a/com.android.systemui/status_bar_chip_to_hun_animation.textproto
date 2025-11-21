@@ -1,0 +1,6 @@
+flag_value {
+  package: "com.android.systemui"
+  name: "status_bar_chip_to_hun_animation"
+  state: ENABLED
+  permission: READ_ONLY
+}

@@ -1,0 +1,6 @@
+flag_value {
+  package: "com.android.systemui"
+  name: "screen_reactions"
+  state: ENABLED
+  permission: READ_ONLY
+}

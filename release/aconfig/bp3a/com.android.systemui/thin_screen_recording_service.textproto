@@ -1,0 +1,6 @@
+flag_value {
+  package: "com.android.systemui"
+  name: "thin_screen_recording_service"
+  state: ENABLED
+  permission: READ_ONLY
+}

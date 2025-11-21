@@ -1,0 +1,6 @@
+flag_value {
+  package: "com.android.settings.flags"
+  name: "catalyst_device_model"
+  state: ENABLED
+  permission: READ_ONLY
+}

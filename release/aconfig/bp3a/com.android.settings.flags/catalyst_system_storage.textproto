@@ -1,0 +1,6 @@
+flag_value {
+  package: "com.android.settings.flags"
+  name: "catalyst_system_storage"
+  state: ENABLED
+  permission: READ_ONLY
+}

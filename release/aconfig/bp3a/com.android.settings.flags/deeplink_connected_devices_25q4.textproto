@@ -1,0 +1,6 @@
+flag_value {
+  package: "com.android.settings.flags"
+  name: "deeplink_connected_devices_25q4"
+  state: ENABLED
+  permission: READ_ONLY
+}

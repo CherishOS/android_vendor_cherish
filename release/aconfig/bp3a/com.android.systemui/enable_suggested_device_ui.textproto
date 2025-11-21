@@ -1,0 +1,6 @@
+flag_value {
+  package: "com.android.systemui"
+  name: "enable_suggested_device_ui"
+  state: ENABLED
+  permission: READ_ONLY
+}
