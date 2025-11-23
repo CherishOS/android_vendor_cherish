@@ -421,6 +421,9 @@ PRODUCT_PACKAGES += \
     NetworkStackOverlay \
     NfcOverlay \
     PermissionControllerOverlay
+	
+# Themes
+$(call inherit-product-if-exists, vendor/themes/themes.mk)
 
 # Translations
 CUSTOM_LOCALES += \
