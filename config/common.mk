@@ -10,7 +10,6 @@ PRODUCT_BRAND ?= Cherish OS
 # Pixel additions
 ifeq ($(WITH_GMS),true)
 $(call inherit-product, vendor/google/overlays/ThemeIcons/config.mk)
-$(call inherit-product, vendor/pixel-framework/config.mk)
 $(call inherit-product, vendor/pixel-style/config/common.mk)
 
 # Don't dexpreopt prebuilts. (For GMS).
@@ -307,7 +306,7 @@ PRODUCT_PACKAGES += \
     OmniStyle
 
 # Overlays
-include packages/overlays/Themes/themes.mk
+#include packages/overlays/Themes/themes.mk
 
 # PERF_ANIM_OVERRIDE
 PRODUCT_PRODUCT_PROPERTIES += \
